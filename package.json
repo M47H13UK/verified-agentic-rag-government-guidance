@@ -15,7 +15,8 @@
     "test": "vitest run",
     "db:ping": "tsx scripts/db-ping.ts",
     "review": "tsx scripts/review.ts",
-    "step": "tsx scripts/step.ts"
+    "step": "tsx scripts/step.ts",
+    "ingest:fetch": "tsx src/ingest/cli.ts fetch"
   },
   "dependencies": {
     "mongodb": "^7.7.0"
