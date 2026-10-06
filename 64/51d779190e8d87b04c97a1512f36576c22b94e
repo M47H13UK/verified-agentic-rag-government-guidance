@@ -1,0 +1,89 @@
+tests/eval/judge.test.ts
+  s_341627b47f195a::t_311dc2dab00e10 1-159
+docs/step-09.md
+  s_341627b47f195a::t_bb15004550dc24 1-2,4-6,9-10,19-30,32-34,38,40-44,48,50
+  s_341627b47f195a::t_ec8bba85789560 3,7-8,11-18,31,35-37,39,45-47,49
+tests/eval/frontier.test.ts
+  s_341627b47f195a::t_3aca4bd7471b43 1-110
+src/eval/grade.ts
+  s_341627b47f195a::t_a94a892a134ef3 1-239,242
+  s_341627b47f195a::t_11c275c0e77990 240-241,243-251
+tests/eval/judgeAudit.test.ts
+  s_341627b47f195a::t_ceec0455e249fa 1-237
+  s_341627b47f195a::t_97ecdc3ad53982 238-240
+src/eval/run.ts
+  s_341627b47f195a::t_7cf022da7d0dff 1-255
+  s_341627b47f195a::t_5553c78b5b1ceb 256-265
+src/eval/cli.ts
+  s_341627b47f195a::t_6cc19e22ad2b03 1-228
+  s_341627b47f195a::t_5b7a0762ecbccd 229-230
+src/eval/deps.ts
+  s_341627b47f195a::t_cf5be6850634ff 1-18
+eval/rubric.md
+  s_341627b47f195a::t_248609074a9835 1-115
+tests/eval/setups.test.ts
+  s_341627b47f195a::t_315d39932f13d9 1-44
+src/eval/report.ts
+  s_341627b47f195a::t_d7b9a39aefc112 1-334
+  s_341627b47f195a::t_b0198d94f78684 335-360
+tests/eval/run.test.ts
+  s_341627b47f195a::t_bf6d8877c2b06e 1-264
+  s_341627b47f195a::t_f6570b173355c2 265-357
+src/eval/metrics.ts
+  s_341627b47f195a::t_28798b8da6042e 1-81
+src/eval/wiring.ts
+  s_341627b47f195a::t_7b3c92e7b32e61 1-30
+tests/eval/builders.ts
+  s_341627b47f195a::t_da3d3bb911d0e6 1-144
+  s_341627b47f195a::t_5b161f21f9185f 145-153
+tests/eval/questions.test.ts
+  s_341627b47f195a::t_e17727d0288f4c 1-62
+src/eval/frontier.ts
+  s_341627b47f195a::t_d36d7ec39425a9 1-106
+src/eval/setups.ts
+  s_341627b47f195a::t_ca87236ce76919 1-48
+src/eval/questions.ts
+  s_341627b47f195a::t_52cc8d40aa93ad 1-97
+  s_341627b47f195a::t_45a12ca0c211e0 98
+src/eval/judge.ts
+  s_341627b47f195a::t_0e3e354ebbd759 1-235
+src/eval/judgeAudit.ts
+  s_341627b47f195a::t_af4df69d538eb1 1-349,354,356-357,361
+  s_341627b47f195a::t_20095c7271f32d 350-353,355,358-360,362-394
+src/eval/files.ts
+  s_341627b47f195a::t_28335646b09384 1-87
+  s_341627b47f195a::t_1b764c159ae7b1 88-94
+tests/eval/grade.test.ts
+  s_341627b47f195a::t_da4db1aa18c9e7 1-335
+  s_341627b47f195a::t_02a360931ecbf9 336-355
+tests/eval/metrics.test.ts
+  s_341627b47f195a::t_8f62f311297cfa 1-127
+  s_341627b47f195a::t_a6821497279294 128-141
+tests/eval/report.test.ts
+  s_341627b47f195a::t_3a4a9be94df51f 1-200
+  s_341627b47f195a::t_61a8dd8cea41ba 201-241
+package-lock.json
+  s_341627b47f195a::t_3b8e0042dd0a13 12-13,3102-3110
+package.json
+  s_341627b47f195a::t_d804e04d84df6d 18-19,22-23
+src/eval/types.ts
+  s_341627b47f195a::t_2b70e8dcdc8cac 1-119
+src/llm/types.ts
+  s_341627b47f195a::t_d4a725a3818b62 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6451d779190e8d87b04c97a1512f36576c22b94e",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
