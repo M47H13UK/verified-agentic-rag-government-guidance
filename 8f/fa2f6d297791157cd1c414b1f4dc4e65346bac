@@ -1,0 +1,67 @@
+src/eval/types.ts
+  s_341627b47f195a::t_439180d1cb1fd8 1,37-124
+src/eval/files.ts
+  s_341627b47f195a::t_f0113e8fb599de 1-94
+src/eval/judgeAudit.ts
+  s_341627b47f195a::t_150ad9eb968d3d 1-394
+src/eval/setups.ts
+  s_341627b47f195a::t_42268098e193ba 1-50
+src/eval/metrics.ts
+  s_341627b47f195a::t_edc83fe92fc947 1-81
+tests/eval/judgeAudit.test.ts
+  s_341627b47f195a::t_a83410b1271a63 1-240
+src/eval/run.ts
+  s_341627b47f195a::t_e07fcf05d9485e 1-289
+tests/eval/metrics.test.ts
+  s_341627b47f195a::t_96911f38d76d7b 1-143
+tests/eval/report.test.ts
+  s_341627b47f195a::t_f4e041ee0041bb 1-241
+src/eval/cli.ts
+  s_341627b47f195a::t_95300a7012bd25 1-240
+package-lock.json
+  s_341627b47f195a::t_f54daf05605474 2189-2200,2936-2938,2940,2946-2949,4721-4732
+src/eval/frontier.ts
+  s_341627b47f195a::t_bd137a77d3b304 1-106
+tests/eval/frontier.test.ts
+  s_341627b47f195a::t_5a7beb7383bce3 1-110
+src/eval/grade.ts
+  s_341627b47f195a::t_17f44de492cc2b 1-251
+src/eval/report.ts
+  s_341627b47f195a::t_bace7fc9080c47 1-360
+tests/eval/grade.test.ts
+  s_341627b47f195a::t_297278046f1ad1 1-355
+src/eval/wiring.ts
+  s_341627b47f195a::t_4f3a8d8377ac80 1-39
+package.json
+  s_341627b47f195a::t_2166aee588be6a 24-27
+tests/eval/judge.test.ts
+  s_341627b47f195a::t_7be54564a8c8e3 1-159
+eval/rubric.md
+  s_341627b47f195a::t_3a318f286938be 1-115
+tests/eval/builders.ts
+  s_341627b47f195a::t_028abec579642d 1-153
+tests/eval/setups.test.ts
+  s_341627b47f195a::t_e86bb45518eaec 1-44
+src/eval/judge.ts
+  s_341627b47f195a::t_af253589fc964c 1-235
+tests/eval/run.test.ts
+  s_341627b47f195a::t_bd4cc5f2328a78 1-392
+docs/how-it-works.md
+  s_341627b47f195a::t_85d7d4b0f99c6f 392-444
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8ffa2f6d297791157cd1c414b1f4dc4e65346bac",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
