@@ -1,0 +1,23 @@
+src/ingest/http.ts
+  s_341627b47f195a::t_7851df855d19ad 117-123
+docs/step-01.md
+  s_341627b47f195a::t_84577d32023baf 7
+tests/http.test.ts
+  s_341627b47f195a::t_f40cbdd8b392ab 1,42-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "df8fc267550d5d66e26c5b67edadec96245c94e2",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
