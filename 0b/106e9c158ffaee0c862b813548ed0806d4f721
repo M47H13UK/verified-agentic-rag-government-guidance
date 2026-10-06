@@ -1,0 +1,75 @@
+eval/rubric.md
+  s_650e8b4808e1e5::t_b4f40dd535b872 1-115
+package-lock.json
+  s_341627b47f195a::t_17819c030b4cf1 2189-2200,2936-2938,2940,2946-2949,4721-4732
+package.json
+  s_650e8b4808e1e5::t_3379d92f32ae02 24-27
+src/eval/cli.ts
+  s_650e8b4808e1e5::t_c28550b208c646 1-240
+src/eval/files.ts
+  s_650e8b4808e1e5::t_f4c1c6a29f67cc 1-94
+src/eval/frontier.ts
+  s_650e8b4808e1e5::t_d797fcb1702d00 1-106
+src/eval/grade.ts
+  s_650e8b4808e1e5::t_76d8be45ac5806 1-251
+src/eval/judge.ts
+  s_650e8b4808e1e5::t_85ff675ffc41b0 1-235
+src/eval/judgeAudit.ts
+  s_650e8b4808e1e5::t_6aa2a6b9578a43 1-394
+src/eval/metrics.ts
+  s_650e8b4808e1e5::t_7ace789384bed2 1-81
+src/eval/report.ts
+  s_650e8b4808e1e5::t_71deeacd908fff 1-360
+src/eval/run.ts
+  s_650e8b4808e1e5::t_717b3798f73e29 1-289
+src/eval/setups.ts
+  s_650e8b4808e1e5::t_5fb46d1da49c55 1-50
+src/eval/types.ts
+  s_650e8b4808e1e5::t_01e1cad2ff9668 1,37-124
+src/eval/wiring.ts
+  s_650e8b4808e1e5::t_091cebc0e9bcc2 1-39
+tests/eval/builders.ts
+  s_650e8b4808e1e5::t_c0de9fb83ba98c 1-153
+tests/eval/frontier.test.ts
+  s_650e8b4808e1e5::t_2a97df2364df78 1-110
+tests/eval/grade.test.ts
+  s_650e8b4808e1e5::t_50ecc8eabe1dc1 1-355
+tests/eval/judge.test.ts
+  s_650e8b4808e1e5::t_eda9c6c6ae8afc 1-159
+tests/eval/judgeAudit.test.ts
+  s_650e8b4808e1e5::t_a542b894bb0066 1-240
+tests/eval/metrics.test.ts
+  s_650e8b4808e1e5::t_9d2c431c34ff34 1-143
+tests/eval/report.test.ts
+  s_650e8b4808e1e5::t_8717242c8db9f9 1-241
+tests/eval/run.test.ts
+  s_650e8b4808e1e5::t_7f75ef817f9437 1-392
+tests/eval/setups.test.ts
+  s_650e8b4808e1e5::t_49ae7be77bfa22 1-44
+docs/step-09.md
+  s_650e8b4808e1e5::t_91f4f61cee4c32 1-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0b106e9c158ffaee0c862b813548ed0806d4f721",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    },
+    "s_650e8b4808e1e5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "98a75bc0-53c5-4711-a111-318c3bcff9c9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
