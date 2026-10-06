@@ -1,0 +1,49 @@
+src/llm/types.ts
+  s_341627b47f195a::t_51961354ff97e8 1-19
+src/pipeline.ts
+  s_341627b47f195a::t_cc31ce6de4dd42 186-194
+  s_341627b47f195a::t_47abf2a240386a 1-18,21-56,58-139,141-185,195,198-267
+  s_341627b47f195a::t_522b900737ec54 196-197
+  s_341627b47f195a::t_e1a2bef5639f0e 19-20
+  s_341627b47f195a::t_7048151e819a13 140
+  s_341627b47f195a::t_7bf59b3fabaf43 57
+tests/repair.test.ts
+  s_341627b47f195a::t_b77d862a57cf7e 1-76
+tests/pipeline.test.ts
+  s_341627b47f195a::t_f5cc2a7ed099bd 21-26
+  s_341627b47f195a::t_cc7074171d2c51 183-184
+  s_341627b47f195a::t_e1ebc15b89f587 1-20,27-182,185-433,454-480,482-485
+  s_341627b47f195a::t_c1cdf81d64e06d 434-453
+  s_341627b47f195a::t_1576428f2a17f6 481
+docs/step-07.md
+  s_341627b47f195a::t_6a8a99041fd5a2 1-50
+src/verify/verifier.ts
+  s_341627b47f195a::t_3e04e7b09c70ab 67-68
+  s_341627b47f195a::t_8bb487fd939dfa 1-66,69-157
+tests/verifier.test.ts
+  s_341627b47f195a::t_789cce4d2aac1d 1-171
+  s_341627b47f195a::t_d752497523ae68 172-173
+src/verify/repair.ts
+  s_341627b47f195a::t_2a6d37536d53fe 33,36-37
+  s_341627b47f195a::t_4a6465e63e70d8 1-32,34-35,38-45
+package-lock.json
+  s_341627b47f195a::t_6849e064abc6be 13-14,4494-4502
+package.json
+  s_341627b47f195a::t_ee385d9f39e027 26-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d573e3797782616b34b2b817fc97aa6e783b9386",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
