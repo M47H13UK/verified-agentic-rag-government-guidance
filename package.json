@@ -18,7 +18,9 @@
     "step": "tsx scripts/step.ts",
     "ingest:fetch": "tsx src/ingest/cli.ts fetch",
     "ingest:load": "tsx src/ingest/cli.ts load",
-    "ingest": "npm run ingest:fetch && npm run ingest:load"
+    "ingest": "npm run ingest:fetch && npm run ingest:load",
+    "search": "tsx src/cli.ts search",
+    "read": "tsx src/cli.ts read"
   },
   "dependencies": {
     "mongodb": "^7.7.0",

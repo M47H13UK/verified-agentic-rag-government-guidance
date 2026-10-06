@@ -91,3 +91,28 @@ This file explains the project one build step at a time. Each section says what 
 - Something reads the corpus during a load. The collections are missing or half full for a few seconds.
 - `ensureIndexes` is called on its own when an index named `passage_text` exists with other weights. MongoDB refuses to change an index. A load is not affected, because it drops the collection first.
 - `npm run ingest:load` is run before any fetch. It stops and says to run `npm run ingest:fetch` first.
+
+## Step 3. Search tools
+
+**What it does.** It gives the agent its only two abilities, as plain functions that can be run from the command line. `searchGuidance` finds passages by keyword. `readPassage` returns one passage in full.
+
+**The pieces.**
+
+- `src/tools/searchGuidance.ts` runs a MongoDB text search and returns up to 8 hits, best first. Each hit has the passage ID, page title, heading path, link, last updated date and a snippet of about 80 words.
+- `makeSnippet` in the same file picks which 80 words to show. It slides a window over the passage and keeps the one that contains the most query words.
+- `src/tools/readPassage.ts` returns the full text of one passage and the IDs of the passages before and after it. `getPassagesById` looks up several passages at once, which the verifier and the page need later.
+- `src/cli.ts` is the command line entry point. `npm run search -- "graduate visa how long"` and `npm run read -- "/graduate-visa#overview#2"`.
+
+**Why it is built this way.**
+
+- The tools are plain functions that take a database and return data. They know nothing about the agent. The agent step wraps them, and a different model provider could wrap the same functions later.
+- Search returns snippets, not full passages. Eight full passages would be about 2,000 words per search, and the agent often searches twice. Short results keep each run cheap, and the agent opens only what it needs.
+- The text index does the ranking. MongoDB stems words, so "studying" matches "study". It drops common words such as "how". It scores a match in the title or a heading five times higher than a match in the body, because the weights are set that way in the index.
+- The sort has a tie-break on the passage ID. Two passages can score the same, and without the tie-break the order could change between runs.
+- The snippet ignores words from the page title. Every passage of the Graduate visa guide contains "Graduate visa", so those words say nothing about which part of the passage matters. This came from a real run. The first version showed the start of the passage, the agent never saw the line about work, and it never opened the passage.
+
+**What could break.**
+
+- The corpus is not loaded. The search returns nothing and the command line says to run `npm run ingest`.
+- The text index is missing. MongoDB rejects a `$text` query with "text index required". The index is created by the load step.
+- Keyword search misses a passage that uses different words from the question. "Can I work full time" does not match "work in most jobs" on the word "full". The eval measures how often this happens with the retrieval hit rate. Embeddings are the next step only if that number shows a problem.
