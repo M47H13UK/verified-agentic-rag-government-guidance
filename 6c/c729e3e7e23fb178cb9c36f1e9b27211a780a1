@@ -1,0 +1,21 @@
+docs/step-07.md
+  s_341627b47f195a::t_f4b579bb745b51 27-28
+src/pipeline.ts
+  s_341627b47f195a::t_65555b59909ccd 140-142,146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6cc729e3e7e23fb178cb9c36f1e9b27211a780a1",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
