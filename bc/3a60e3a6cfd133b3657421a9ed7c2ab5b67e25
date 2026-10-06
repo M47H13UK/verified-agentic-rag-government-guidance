@@ -1,0 +1,38 @@
+src/ingest/listPages.ts
+  s_341627b47f195a::t_e643b55681ea42 1-106
+src/ingest/fetchPages.ts
+  s_341627b47f195a::t_9e13a3ebc392bc 1-191,194
+  s_341627b47f195a::t_81597185864c05 192-193,195-210
+src/ingest/http.ts
+  s_341627b47f195a::t_c1525f852b985d 1-139
+docs/step-01.md
+  s_341627b47f195a::t_00840393f37e2f 1-31
+package.json
+  s_341627b47f195a::t_58a1b6045e606d 18,24
+src/ingest/cli.ts
+  s_341627b47f195a::t_4c8a5dd8e7f164 1-115
+tests/fetchPages.test.ts
+  s_341627b47f195a::t_fac19f27e0f877 1-139
+tests/helpers/fakeFetch.ts
+  s_341627b47f195a::t_f4403a4017aa57 1-29
+tests/http.test.ts
+  s_341627b47f195a::t_5663722416e714 1-128
+tests/listPages.test.ts
+  s_341627b47f195a::t_e97b8177b9c406 1-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bc3a60e3a6cfd133b3657421a9ed7c2ab5b67e25",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
