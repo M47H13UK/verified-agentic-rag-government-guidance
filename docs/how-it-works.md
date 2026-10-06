@@ -200,3 +200,36 @@ This file explains the project one build step at a time. Each section says what 
 - The model writes a quote that is not word for word. The agent does not catch this. The quote check in step 6 does.
 - The summary says more than the claims do. In one live run the summary said "you can work full-time" while no claim or passage said so. The verifier in step 7 deals with this. The prompt also tells the model that every fact in the summary must be a claim with its own quote.
 - The plan's usage limit is reached. The SDK run fails, and the error is recorded on the run.
+
+## Step 6. Quote check
+
+**What it does.** It checks in plain code that every quote in an answer really appears in the passage it cites. A claim whose quotes cannot be found is marked `not_supported` before any model looks at it.
+
+**The pieces.**
+
+- `src/verify/quoteCheck.ts` holds the whole check. It makes no model call and no database call. The caller passes the passages in as a `Map` keyed by passage ID.
+- `normaliseForQuote(text)` prepares a quote and a passage for comparison. It turns every run of whitespace into one space, trims the ends, and maps curly quotes, long dashes and non-breaking spaces to their plain forms. It does not change case. It also drops punctuation at the end of a word, and keeps punctuation inside a number, so `£1,035` and `1.5` must still match exactly.
+- `checkCitation(citation, passages)` checks one quote. It fails with `passage_not_found` when the passage ID is unknown, with `quote_too_short` when the quote has fewer than 3 words, and with `quote_not_found` when the normalised quote is not inside the normalised passage text.
+- `checkClaim(claim, passages)` passes a claim only when it has at least one citation and every citation passes. A claim with no citations fails with `no_citations`.
+- `quoteCheck(answer, passages)` returns one `ClaimVerdict` per claim with `checked_by: "quote_check"`. A failed claim gets a one sentence reason such as "Quote not found in passage /graduate-visa#overview#2."
+- The agent prompt asks for quotes of at most 40 words (`MAX_QUOTE_WORDS` in `src/agent/schema.ts`).
+- `tests/quoteCheck.test.ts` runs the check against the 5 real quotes in `data/sample/quotes.json` and against quotes that were changed on purpose.
+
+**Why it is built this way.**
+
+- A model can write a quote that looks right and is not in the source. Comparing strings catches that every time. It costs nothing and gives the same result on every run. So it runs first, and the verifier model only sees claims with real quotes.
+- The comparison is exact apart from a short list of harmless differences. List items in a passage are separate lines, and a quote that covers several items comes back with spaces between them. GOV.UK uses curly apostrophes, and models often retype them as straight ones. Without these rules, real quotes would fail.
+- The list stops there. Every extra rule makes it easier for a made-up quote to pass. Case is kept, because copying text never changes its case.
+- A quote needs at least 3 words. Words such as "the UK" are in almost every passage, so a very short quote proves nothing.
+- One bad citation fails the whole claim. The claim was written with that quote as evidence, so it cannot be trusted as written.
+- A quote longer than 40 words is not a failure. Length is a style rule for the prompt. This check is about whether the words are real.
+- `supported` from this check means only that the quotes are real. It does not mean the quotes back the claim. That is the job of step 7.
+
+- The punctuation rule came from a real run. A model quoted two list items as "…31 December 2026, 18 months if you apply on or after 1 January 2027." The page has those items on separate lines with no comma and no full stop. Every word was real, but the first version of the check failed the quote, and a true claim was removed. Word-end punctuation carries no facts, so the check now ignores it. Digits and the punctuation inside numbers do carry facts, so they are compared exactly.
+
+**What could break.**
+
+- GOV.UK uses a character the rules do not cover, for example a single ellipsis character. A real quote would then fail with `quote_not_found`. The fix is one more `replace` line in `normaliseForQuote` and a test for it.
+- A model shortens a quote with "..." in the middle. The check fails it, and that is intended. A quote must be one continuous run of words.
+- A quote starts in one passage and ends in the next. It fails, because each citation is checked against one passage.
+- The corpus is ingested again and a page has changed. A stored answer that quoted the old text would fail if it were checked again.
