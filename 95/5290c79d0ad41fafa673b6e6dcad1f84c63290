@@ -1,0 +1,27 @@
+docs/step-09.md
+  s_341627b47f195a::t_6b996727977140 42-43
+src/eval/cli.ts
+  s_341627b47f195a::t_c427b37f191cfc 111
+src/eval/report.ts
+  s_341627b47f195a::t_82a90beb91fd86 166
+src/eval/run.ts
+  s_341627b47f195a::t_0dfffe433ffda8 85-105,107,174,176-177,280
+tests/eval/run.test.ts
+  s_341627b47f195a::t_ac7df2178d410f 5,142-176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "955290c79d0ad41fafa673b6e6dcad1f84c63290",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
