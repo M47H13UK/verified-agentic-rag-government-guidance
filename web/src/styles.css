@@ -1,0 +1,704 @@
+/* One stylesheet for the whole page. Colours are named once here and used by name below. */
+
+:root {
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text: #0b0b0b;
+  --text-secondary: #52514e;
+  --muted: #898781;
+  --border: #c3c2b7;
+  --grid: #e1e0d9;
+  --accent: #2a78d6;
+  --link: #1c5cab;
+  --button: #1c5cab;
+  --button-text: #ffffff;
+  --focus: #1c5cab;
+  --good: #0ca30c;
+  --warning: #fab219;
+  --critical: #d03b3b;
+  --error-text: #a82a2a;
+  --banner: #fde9b6;
+}
+
+/* The same names with dark values. The browser picks this block when the device is in dark mode. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --text: #ffffff;
+    --text-secondary: #c3c2b7;
+    --muted: #898781;
+    --border: #52514e;
+    --grid: #2c2c2a;
+    --accent: #3987e5;
+    --link: #86b6ef;
+    --button: #256abf;
+    --button-text: #ffffff;
+    --focus: #86b6ef;
+    --error-text: #f08a8a;
+    --banner: #4a3a0c;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+h3 {
+  margin: 1rem 0 0.25rem;
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--link);
+}
+
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  /* Passage IDs and JSON have no spaces, so they are allowed to break anywhere. */
+  overflow-wrap: anywhere;
+}
+
+/* The attribute hides a view. Without this rule a `display` set below could show it again. */
+[hidden] {
+  display: none !important;
+}
+
+/* Keyboard users see which control has focus. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.tagline,
+.hint,
+.source,
+.run-facts,
+.range,
+footer {
+  color: var(--text-secondary);
+}
+
+.hint,
+.source,
+.run-facts,
+footer {
+  font-size: 0.9rem;
+}
+
+/* ---------- Mock banner ---------- */
+
+/* Sticky keeps the banner on screen while scrolling, so every made-up number is shown with its label. */
+.mock-banner {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: var(--banner);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+/* ---------- Tabs ---------- */
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tabs button[aria-current="page"] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------- Cards and forms ---------- */
+
+.card {
+  margin: 0 0 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.empty {
+  color: var(--text-secondary);
+}
+
+label {
+  display: block;
+  margin: 0.75rem 0 0.25rem;
+  font-weight: 600;
+}
+
+label:first-child {
+  margin-top: 0;
+}
+
+textarea,
+select,
+input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.hint {
+  margin: 0.25rem 0 0.75rem;
+}
+
+button {
+  font: inherit;
+}
+
+button.primary {
+  min-height: 2.75rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--button);
+  color: var(--button-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.primary:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-row button.primary {
+  margin-top: 0;
+}
+
+/* A button that looks like a link, for actions that stay on the page. */
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.loading {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+}
+
+.error {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--critical);
+  background: var(--surface);
+  color: var(--error-text);
+}
+
+/* ---------- Example questions ---------- */
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.examples button {
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.examples button:hover {
+  border-color: var(--accent);
+}
+
+/* ---------- The answer ---------- */
+
+.field-name {
+  margin-right: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.summary {
+  font-size: 1.1rem;
+}
+
+.claims {
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.claims > li {
+  margin-bottom: 1.25rem;
+}
+
+.claim-text {
+  margin-bottom: 0.25rem;
+}
+
+/* The words carry the verdict. The dot in front only repeats it in colour. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.badge-supported::before {
+  background: var(--good);
+}
+
+.badge-partially_supported::before {
+  background: var(--warning);
+}
+
+.badge-not_supported::before {
+  background: var(--critical);
+}
+
+/* Not checked is a hollow ring, so it also differs from the others in shape. */
+.badge-unchecked::before {
+  background: none;
+  border: 2px solid var(--muted);
+}
+
+.citations {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.citation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.citation-number {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+blockquote {
+  margin: 0 0 0.25rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--border);
+}
+
+.source {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.notice,
+.unconfirmed {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--warning);
+  border-radius: 6px;
+}
+
+.notice h3,
+.unconfirmed h3 {
+  margin-top: 0;
+}
+
+.notice p:last-child,
+.unconfirmed ul {
+  margin-bottom: 0;
+}
+
+.run-facts {
+  margin: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--grid);
+}
+
+/* ---------- Trace ---------- */
+
+/* Name on the left, value on the right. On a phone the value drops under the name. */
+.facts {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--text-secondary);
+}
+
+.facts dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.timeline {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.timeline > li {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--grid);
+}
+
+.timeline > li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.call-name {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.plain-list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+details {
+  margin-top: 0.75rem;
+}
+
+.facts details {
+  margin-top: 0;
+}
+
+summary {
+  cursor: pointer;
+}
+
+/* ---------- Tables ---------- */
+
+/* A wide table scrolls sideways inside its own box, so the page itself never does. */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table-tall {
+  max-height: 28rem;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--grid);
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-bottom-color: var(--border);
+}
+
+tbody th {
+  font-weight: 600;
+}
+
+/* Digits of equal width, right aligned, so a column of numbers lines up. */
+.number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* A second, smaller line inside a table cell. */
+.range {
+  display: block;
+  font-size: 0.85em;
+}
+
+/* Under a setup name the smaller line is not bold, so it reads the same as in the other cells. */
+tbody th .range {
+  font-weight: 400;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filters > div {
+  flex: 1 1 12rem;
+}
+
+.filters label {
+  margin-top: 0;
+}
+
+/* ---------- Chart ---------- */
+
+.chart {
+  margin: 0;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.chart-legend svg {
+  flex: none;
+}
+
+/* Below 560px the chart scrolls sideways instead of shrinking until the text is unreadable. */
+.chart-scroll {
+  overflow-x: auto;
+}
+
+.chart-box {
+  position: relative;
+  min-width: 560px;
+  max-width: 760px;
+}
+
+.chart-box svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart-grid {
+  stroke: var(--grid);
+  stroke-width: 1;
+}
+
+.chart-axis {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.chart-tick {
+  fill: var(--text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-title {
+  fill: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* The outline in the surface colour keeps a label readable where the frontier line runs behind it. */
+.chart-label {
+  fill: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  stroke: var(--surface);
+  stroke-width: 3px;
+  paint-order: stroke;
+}
+
+.chart-frontier-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* The thin ring in the surface colour keeps a dot readable where it sits on the line. */
+.chart-dot-frontier {
+  fill: var(--accent);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.chart-dot-other {
+  fill: var(--surface);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+.chart-range {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+}
+
+.chart-hit {
+  fill: transparent;
+}
+
+.chart-point {
+  outline: none;
+  cursor: default;
+}
+
+/* The focus ring is drawn on the big invisible circle, so it goes around the dot. */
+.chart-point:focus-visible .chart-hit {
+  stroke: var(--focus);
+  stroke-width: 2;
+}
+
+/* The readout sits to the right of the point. On the right half of the chart it flips to the left. */
+.chart-tooltip {
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.4rem 0.6rem;
+  transform: translate(14px, -50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.chart-tooltip strong {
+  color: var(--text);
+}
+
+.chart-tooltip-left {
+  transform: translate(calc(-100% - 14px), -50%);
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  margin-bottom: 0.25rem;
+}
+
+/* ---------- Phone width ---------- */
+
+@media (max-width: 30rem) {
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .facts dd {
+    margin-bottom: 0.5rem;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+}

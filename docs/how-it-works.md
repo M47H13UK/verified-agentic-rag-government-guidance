@@ -510,3 +510,74 @@ npm run eval -- audit-score
 - The audit sheet is drawn again with `--force` after it was labelled. The labels are gone. The page refuses a save when the row it loaded is no longer the row on disk.
 - The questions file is edited after the runs. A reworded question stops the report with an error. A changed expected point is not detected, so grade again.
 - The plan's usage limit is reached in the middle of a pass. The batch stops after 5 failures in a row and the same command carries on later.
+
+## Step 11. API and React page
+
+**What it does.** It adds a small web API and a one-page web app. The page has three views. Ask sends a question and shows the answer with its quoted sources. Trace shows what the agent did for one run. Results shows the eval table and a chart of correctness against cost. `npm run api` uses the real agent and verifier. `npm run api:mock` serves canned data, which costs nothing and needs no credential.
+
+Run it in two terminals:
+
+```sh
+npm run api:mock   # the API on port 8787, with mock data
+npm run web        # the page, on the address Vite prints
+```
+
+**The pieces.**
+
+- `src/server/app.ts` builds the API with Hono. `createApp(deps)` takes everything it needs as one object, so the real server, the mock server and the tests share the same routes. `POST /api/ask` checks the question, calls `deps.answer`, saves the run and returns it with the passages it cites. `GET /api/runs/:id` returns a stored run. `GET /api/results` returns the eval summary. `GET /api/setups` fills the dropdown and says whether the data is mock.
+- `src/server/types.ts` holds `ServerDeps` and the response shapes. `AnswerFn` and `PassageLookup` come from `src/types.ts`. That file imports nothing from Node, so the web page can import these types too.
+- `src/server/index.ts` starts the server. `createRealDeps()` is the one place where the real parts get connected. `answer` is the same `createAnswerFn` the command line and the eval use, runs are read and written in MongoDB, and the results come from `results/summary.json`.
+- `src/server/mock.ts` builds mock dependencies. The canned answer uses real passages and real quotes from `data/sample/`. Every number in it is made up. A question with the word "approved" gets a declined answer and a question under four words gets a clarifying question, so all three answer shapes can be seen. The mock summary uses the setup list from `src/eval/setups.ts` and the frontier rule from `src/eval/frontier.ts`. Four of its setups have three repeats and the rest have one, and it has a judge audit, so the Results view can be seen in full.
+- `src/eval/types.ts` holds the eval types that the Results view reads.
+- `vite.config.ts` tells Vite that the page lives in `web/` and passes `/api` calls on to the API.
+- `web/index.html` is the one HTML file. `web/src/main.tsx` starts React inside it.
+- `web/src/App.tsx` holds the tabs, the mock banner, the footer and the run on screen. `web/src/api.ts` has the four `fetch` calls.
+- `web/src/views/Ask.tsx`, `Trace.tsx` and `Results.tsx` are the three views. `web/src/components/Answer.tsx` draws one answer. `web/src/components/CostChart.tsx` draws the chart as plain SVG.
+- `web/src/format.ts` turns numbers and dates into text. `web/src/examples.ts` lists the example questions. `web/src/styles.css` is the one stylesheet.
+- `tests/server.test.ts` calls the routes with `app.request`, which needs no network and no open port.
+
+**Why it is built this way.**
+
+- The API gets its dependencies passed in. The routes never import the agent or MongoDB, so the tests run without either and mock mode cannot spend money.
+- The API sends the cited passages with the run. The page can show the page title, the link and the last-updated date next to each quote without a second request.
+- Every error is JSON with one `error` field. The details go to the server log. A stack trace never reaches the browser.
+- When saving a run fails, the answer is still returned. It has already been paid for.
+- The page calls `/api` on its own address and Vite passes the call on. The browser never makes a cross-origin request, so the API needs no CORS setup.
+- The server listens on `127.0.0.1` only. A question can cost money, so other machines on the network cannot reach it.
+- The page imports types from `src/` with `import type`. These imports vanish when the page is built, so no server code ends up in the browser. `npm run typecheck` checks the server and the page, so the two cannot disagree about a response.
+- All three views stay mounted and the tabs only hide them. An answer that is still loading is not lost when you look at another tab.
+- The chart is plain SVG with no chart library. The cost axis is a log scale, so each marked value is about double the one before it. The cheapest setup costs under one cent an answer and the most expensive costs tens of cents. On a straight scale the cheap setups would sit on top of each other in the left corner. The correctness axis starts at the ten below the lowest setup. The caption says both. Frontier setups are filled dots joined by a line and the others are hollow rings, so the chart can be read without colour. The table above it has the same numbers.
+- The eval repeats only some setups. A row that ran more than once shows its number of repeats, and the lowest and the highest repeat under correctness and unsupported claims. A row that ran once shows one number. The chart draws the same range as a thin line through the dot.
+- The Results view says in one sentence how often the judge agreed with a person. It reads `judge_audit` from the summary. When that is null it says the agreement has not been measured yet.
+- Nothing in the page counts the setups or reads meaning into a setup ID. The dropdown, the table and the chart are built from the lists the API sends, so a new setup such as `H5-0` needs no change in the page.
+- In mock mode a banner stays at the top of the screen while you scroll, so no made-up number is shown without its label.
+
+**Coming from React Native.**
+
+What is the same:
+
+- Components, props, `useState`, `useEffect`, `fetch` and TypeScript work the same way.
+- A list is still `array.map(...)` with a `key`.
+
+What differs:
+
+- There is no `View` or `Text`. You write HTML elements such as `div`, `p`, `button`, `table` and `form`. The element you pick matters, because keyboards and screen readers treat a `button` and a `div` differently.
+- Styles live in a CSS file and are attached with `className`. There is no `StyleSheet.create`. Layout is not flexbox by default, so a container asks for it with `display: flex` or `display: grid`.
+- `onPress` is `onClick`. `onChangeText` is `onChange`, and the text is in `event.target.value`.
+- A `form` reloads the page when it is submitted. `event.preventDefault()` stops that.
+- The page scrolls by itself. There is no `ScrollView`.
+- Light and dark colours come from the CSS rule `prefers-color-scheme`. There is no `useColorScheme`.
+- Vite does the job of Metro. It serves the code while you work, and `npm run web:build` bundles it into `web/dist`.
+
+**What could break.**
+
+- The API is not running. The page shows "Could not reach the API". Start it with `npm run api:mock`.
+- `npm run api` cannot reach MongoDB or has no credential. The server starts, and the first question returns an error that the page shows. Check `npm run db:ping` and the `.env` file.
+- Port 8787 is taken. Set `API_PORT` for both commands, for example `API_PORT=8911 npm run api:mock` and `API_PORT=8911 npm run web`.
+- A type imported by the web page starts to import Node code. The web type check then fails with an error about a missing `node:` module. Shared types belong in `src/types.ts`, which imports nothing.
+- Mock runs live in memory. They are gone when the server stops, so an old run ID no longer loads.
+- Nothing limits how often a person can ask, and each real answer costs money. The API must stay on `127.0.0.1` until it has a limit.
+- Two setups land on almost the same spot in the chart. A verifier-on setup often costs only a little more than its verifier-off twin, so their dots can touch. The labels are kept apart and a frontier dot is drawn on top of a ring. The table has the exact numbers.
+- A setup has a cost of zero. A log scale has no place for zero, so the chart draws it at a tenth of a cent.
+- React runs each effect twice in development because of `StrictMode`. The page then asks for the setups and the results twice. The built page asks once.
+- A claim cites a passage that is missing from the database. The quote is still shown, with a note that the source page was not found.
