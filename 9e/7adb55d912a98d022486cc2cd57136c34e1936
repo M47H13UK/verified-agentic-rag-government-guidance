@@ -1,19 +1,30 @@
 docs/review.md
   s_341627b47f195a::t_e64f30adc83a1a 1-20
+  s_341627b47f195a::t_c92ea3be9fcc25 1-20
 package-lock.json
   s_341627b47f195a::t_302d277f0dc43d 20,3214-3226
+  s_341627b47f195a::t_e0fd47bad05d53 20,3214-3226
 package.json
   s_341627b47f195a::t_6157d980a2e806 38-39
 scripts/lib/diff.ts
   s_341627b47f195a::t_001bf9c4564ea2 1-133
+  s_341627b47f195a::t_f7261acec32252 1-133
 scripts/lib/reviewHtml.ts
   s_341627b47f195a::t_9a43cd86a4de7b 1-428
+  s_341627b47f195a::t_ecb29723b4faf7 1-377,379-426
+  s_341627b47f195a::t_bf1bd3b1c64d07 378
+  s_341627b47f195a::t_a0e03630bfdc28 427-428
 scripts/review.ts
   s_341627b47f195a::t_282e7ca089b1da 1-128
+  s_341627b47f195a::t_a6e4f1b696f69b 1-128
 scripts/step.ts
   s_341627b47f195a::t_8bc9b166ace8dd 1-157
+  s_341627b47f195a::t_d4f93b4adb63bb 1-155
+  s_341627b47f195a::t_07010287e53930 156-157
 tests/reviewDiff.test.ts
   s_341627b47f195a::t_cce059f6a9a3ef 1-315
+  s_341627b47f195a::t_fc67e825d9947f 1-308
+  s_341627b47f195a::t_ad230c1eb6f4ab 309-315
 ---
 {
   "schema_version": "authorship/3.0.0",
