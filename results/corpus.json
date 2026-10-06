@@ -1,0 +1,41 @@
+{
+  "snapshot_date": "2026-10-06",
+  "total_documents": 2597,
+  "documents": 1966,
+  "documents_by_format": {
+    "guide": 101,
+    "answer": 35,
+    "detailed_guide": 59,
+    "guidance": 963,
+    "step_by_step_nav": 11,
+    "html_publication": 797
+  },
+  "html_attachments": 798,
+  "passages": 28392,
+  "total_words": 7457426,
+  "passage_words": {
+    "min": 2,
+    "median": 270,
+    "max": 932
+  },
+  "pages_skipped": {
+    "redirect": 1,
+    "not in English": 1
+  },
+  "files_skipped": {
+    "pdf": 1144,
+    "external link": 96,
+    "ods": 9,
+    "doc": 3,
+    "xls": 3,
+    "zip": 3,
+    "csv": 2,
+    "odt": 2,
+    "jpg": 1,
+    "xlsx": 1
+  },
+  "fetch_failures": 0,
+  "fetch_requests": 1974,
+  "fetch_seconds": 396.7,
+  "load_seconds": 20.2
+}

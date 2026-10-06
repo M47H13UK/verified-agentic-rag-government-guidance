@@ -16,10 +16,14 @@
     "db:ping": "tsx scripts/db-ping.ts",
     "review": "tsx scripts/review.ts",
     "step": "tsx scripts/step.ts",
-    "ingest:fetch": "tsx src/ingest/cli.ts fetch"
+    "ingest:fetch": "tsx src/ingest/cli.ts fetch",
+    "ingest:load": "tsx src/ingest/cli.ts load",
+    "ingest": "npm run ingest:fetch && npm run ingest:load"
   },
   "dependencies": {
-    "mongodb": "^7.7.0"
+    "mongodb": "^7.7.0",
+    "cheerio": "^1.2.0",
+    "domhandler": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

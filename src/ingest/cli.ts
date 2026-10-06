@@ -1,7 +1,12 @@
 // The data pipeline, run from the command line.
 // `npm run ingest:fetch` downloads the pages into data/raw. Add `-- --refresh` to ignore the cache.
-import { join } from "node:path";
+// `npm run ingest:load` chunks the downloaded pages and loads them into MongoDB.
+// `npm run ingest` does both.
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { parseArgs } from "node:util";
+import { closeDb, getDb, passagesCollection } from "../db";
+import { loadEnv } from "../env";
 import {
   contentFileName,
   fetchPages,
@@ -12,13 +17,15 @@ import {
 } from "./fetchPages";
 import { createHttp } from "./http";
 import { countFormats, listPages, ORGANISATION, type FormatCount } from "./listPages";
+import { buildCorpus, loadPassages, summariseCorpus } from "./load";
 
 const RAW_DIR = "data/raw";
+const CORPUS_FILE = "results/corpus.json";
 
 /** Prints a label and a right-aligned value, so the numbers line up in a column. */
 function row(label: string, value: number | string): void {
   const text = typeof value === "number" ? value.toLocaleString("en-GB") : value;
-  console.log(`${label.padEnd(30)}${text.padStart(8)}`);
+  console.log(`${label.padEnd(30)}${text.padStart(10)}`);
 }
 
 function sumDocuments(formats: FormatCount[]): number {
@@ -96,6 +103,47 @@ async function runFetch(refresh: boolean): Promise<void> {
   }
 }
 
+async function runLoad(): Promise<void> {
+  const started = Date.now();
+  const manifest = readManifest(RAW_DIR);
+  if (!manifest) {
+    throw new Error(`No ${manifestPath(RAW_DIR)} yet. Run "npm run ingest:fetch" first.`);
+  }
+
+  console.log(`Chunking the snapshot of ${manifest.snapshot_date} from ${RAW_DIR}`);
+  const corpus = buildCorpus(RAW_DIR, manifest);
+
+  loadEnv();
+  try {
+    const db = await getDb();
+    await loadPassages(db, corpus.pages, corpus.passages);
+    const summary = summariseCorpus(manifest, corpus, round1((Date.now() - started) / 1000));
+
+    mkdirSync(dirname(CORPUS_FILE), { recursive: true });
+    writeFileSync(CORPUS_FILE, JSON.stringify(summary, null, 2) + "\n");
+
+    row("Pages loaded", summary.documents);
+    for (const [format, count] of Object.entries(summary.documents_by_format)) {
+      row(`  ${format}`, count);
+    }
+    row("Pages skipped", corpus.skipped.length);
+    for (const [reason, count] of Object.entries(summary.pages_skipped)) {
+      row(`  ${reason}`, count);
+    }
+    row("Passages", summary.passages);
+    row("Total words", summary.total_words);
+    row("Shortest passage, in words", summary.passage_words.min);
+    row("Median passage, in words", summary.passage_words.median);
+    row("Longest passage, in words", summary.passage_words.max);
+    row("Passages now in MongoDB", await passagesCollection(db).countDocuments());
+    row("Time taken", formatDuration(summary.load_seconds));
+    console.log(`Database      ${db.databaseName}`);
+    console.log(`Summary       ${CORPUS_FILE}`);
+  } finally {
+    await closeDb();
+  }
+}
+
 const { values, positionals } = parseArgs({
   options: { refresh: { type: "boolean", default: false } },
   allowPositionals: true,
@@ -105,8 +153,11 @@ const command = positionals[0];
 try {
   if (command === "fetch") {
     await runFetch(values.refresh);
+  } else if (command === "load") {
+    await runLoad();
   } else {
     console.error("Usage: tsx src/ingest/cli.ts fetch [--refresh]");
+    console.error("       tsx src/ingest/cli.ts load");
     process.exitCode = 1;
   }
 } catch (error) {
