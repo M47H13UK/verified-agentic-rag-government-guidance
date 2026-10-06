@@ -1,0 +1,41 @@
+docs/step-08.md
+  s_341627b47f195a::t_61c7e212fafe46 1-92
+eval/personas.md
+  s_341627b47f195a::t_823be076fea535 1-29
+eval/questions.jsonl
+  s_341627b47f195a::t_bc29ee3388fe92 1-60
+package.json
+  s_341627b47f195a::t_26f89e0713c75a 26-28,31,34,41,46
+scripts/gold-check.html
+  s_341627b47f195a::t_77e4460c0c7478 1-1580
+scripts/gold-check.ts
+  s_341627b47f195a::t_bdd7a97ba1b2c4 1-237
+scripts/gold-lint.ts
+  s_341627b47f195a::t_e935cc23082071 1-96
+src/eval/lint.ts
+  s_341627b47f195a::t_5d05c4c0525475 1-208
+src/eval/questions.ts
+  s_341627b47f195a::t_e0a9b46b4df960 1-132
+src/eval/types.ts
+  s_341627b47f195a::t_f89b4bc9513891 1-36
+tests/eval/lint.test.ts
+  s_341627b47f195a::t_178329682b5b3b 1-259
+tests/eval/questions.test.ts
+  s_341627b47f195a::t_97279bc4f79ea0 1-219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2e7aa1639a0c59f34c4866bc53e093407492ad9",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "unknown"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
