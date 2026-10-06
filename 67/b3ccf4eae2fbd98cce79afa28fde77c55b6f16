@@ -1,0 +1,47 @@
+docs/step-05.md
+  s_341627b47f195a::t_1ee4e846c3ca37 1-48
+tests/agent/trace.test.ts
+  s_341627b47f195a::t_148fe752a9cf4e 1-163
+src/runs.ts
+  s_341627b47f195a::t_bfbf7dfc377787 1-12
+src/agent/prompt.ts
+  s_341627b47f195a::t_7a1480a629c5e9 3-5
+  s_341627b47f195a::t_bff3e2dc5b9716 13-14
+  s_341627b47f195a::t_7b8319fdf4cdb0 1-2,6-12,15-38
+src/llm/sdk.ts
+  s_341627b47f195a::t_191087de89f9e0 1-95
+src/agent/trace.ts
+  s_341627b47f195a::t_dfcc734f9b4f80 1-132
+src/agent/schema.ts
+  s_341627b47f195a::t_d519e9b0ae81a1 1-39
+src/cli.ts
+  s_341627b47f195a::t_3726f72f23dd41 4-7,10-12,14,18-25,36-38,40-42,76-118
+  s_341627b47f195a::t_4fd2156180bd56 119
+tests/agent/schema.test.ts
+  s_341627b47f195a::t_949092e71d4ffb 1-103
+src/agent/backend.ts
+  s_341627b47f195a::t_65a194e0060b60 1-10,12-95
+  s_341627b47f195a::t_7a1480a629c5e9 11
+src/print.ts
+  s_341627b47f195a::t_4e7f1f011aea54 1-61
+src/agent/tools.ts
+  s_341627b47f195a::t_2c7b53f0aac3af 1-68
+package.json
+  s_341627b47f195a::t_7afcc1f9e1ee22 21-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "67b3ccf4eae2fbd98cce79afa28fde77c55b6f16",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
