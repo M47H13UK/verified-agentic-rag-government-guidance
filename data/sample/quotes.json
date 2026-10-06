@@ -1,0 +1,92 @@
+{
+  "note": "Each quote is an exact substring of its passage text after whitespace normalisation (checked by _work/build_passages.py). quote_lines is the same quote split on the page's own line breaks (list items). heading_path is the passage's stored heading_path, which names the heading the passage starts at. section_heading_path is the heading the quoted words sit under on the page. also_verbatim_in lists other passages that contain the same words.",
+  "source": "https://www.gov.uk/api/content/graduate-visa",
+  "fetched_at_utc": "2026-10-05T22:26:25Z",
+  "fetched_at_uk": "2026-10-05 23:26:25 BST",
+  "quotes": [
+    {
+      "question": "How long does a Graduate visa let you stay?",
+      "quote": "A Graduate visa lasts for: 2 years if you apply on or before 31 December 2026 18 months if you apply on or after 1 January 2027",
+      "quote_lines": [
+        "A Graduate visa lasts for:",
+        "2 years if you apply on or before 31 December 2026",
+        "18 months if you apply on or after 1 January 2027"
+      ],
+      "quote_word_count": 27,
+      "passage_id": "/graduate-visa#overview#2",
+      "heading_path": "Graduate visa > Overview > How long you can stay",
+      "section_heading_path": "Graduate visa > Overview > How long you can stay",
+      "also_verbatim_in": [],
+      "url": "https://www.gov.uk/graduate-visa",
+      "updated": "2024-10-31T17:01:07+00:00",
+      "verified_substring": true
+    },
+    {
+      "question": "How long does a Graduate visa let you stay?",
+      "quote": "If you have a PhD or other doctoral qualification, it will last for 3 years.",
+      "quote_lines": [
+        "If you have a PhD or other doctoral qualification, it will last for 3 years."
+      ],
+      "quote_word_count": 15,
+      "passage_id": "/graduate-visa#overview#2",
+      "heading_path": "Graduate visa > Overview > How long you can stay",
+      "section_heading_path": "Graduate visa > Overview > How long you can stay",
+      "also_verbatim_in": [],
+      "url": "https://www.gov.uk/graduate-visa",
+      "updated": "2024-10-31T17:01:07+00:00",
+      "verified_substring": true
+    },
+    {
+      "question": "Can you work on a Graduate visa?",
+      "quote": "With a Graduate visa you can: work in most jobs look for work be self-employed",
+      "quote_lines": [
+        "With a Graduate visa you can:",
+        "work in most jobs",
+        "look for work",
+        "be self-employed"
+      ],
+      "quote_word_count": 15,
+      "passage_id": "/graduate-visa#overview#3",
+      "heading_path": "Graduate visa > Overview > How much it costs",
+      "section_heading_path": "Graduate visa > Overview > What you can and cannot do",
+      "also_verbatim_in": [],
+      "url": "https://www.gov.uk/graduate-visa",
+      "updated": "2024-10-31T17:01:07+00:00",
+      "verified_substring": true
+    },
+    {
+      "question": "How much does a Graduate visa cost?",
+      "quote": "When you apply for a Graduate visa, you’ll need to: pay the £937 application fee pay the healthcare surcharge - this is usually £1,035 for each year you’ll be in the UK",
+      "quote_lines": [
+        "When you apply for a Graduate visa, you’ll need to:",
+        "pay the £937 application fee",
+        "pay the healthcare surcharge - this is usually £1,035 for each year you’ll be in the UK"
+      ],
+      "quote_word_count": 32,
+      "passage_id": "/graduate-visa#how-much-it-costs#1",
+      "heading_path": "Graduate visa > How much it costs",
+      "section_heading_path": "Graduate visa > How much it costs",
+      "also_verbatim_in": [
+        "/graduate-visa#overview#3"
+      ],
+      "url": "https://www.gov.uk/graduate-visa/how-much-it-costs",
+      "updated": "2024-10-31T17:01:07+00:00",
+      "verified_substring": true
+    },
+    {
+      "question": "When must you apply for a Graduate visa?",
+      "quote": "You must apply before your Student visa or Tier 4 (General) student visa expires.",
+      "quote_lines": [
+        "You must apply before your Student visa or Tier 4 (General) student visa expires."
+      ],
+      "quote_word_count": 14,
+      "passage_id": "/graduate-visa#overview#2",
+      "heading_path": "Graduate visa > Overview > How long you can stay",
+      "section_heading_path": "Graduate visa > Overview > When to apply",
+      "also_verbatim_in": [],
+      "url": "https://www.gov.uk/graduate-visa",
+      "updated": "2024-10-31T17:01:07+00:00",
+      "verified_substring": true
+    }
+  ]
+}

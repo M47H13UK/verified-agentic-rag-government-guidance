@@ -1,0 +1,24 @@
+# secrets, never commit
+.env
+.env.*
+!.env.example
+
+# dependencies and build output
+node_modules/
+dist/
+web/dist/
+coverage/
+
+# cached GOV.UK responses, rebuilt by `npm run ingest`
+data/raw/
+
+# local review page and notes, built by `npm run review`
+review/
+
+.DS_Store
+
+# trial eval runs on questions nobody has checked yet
+results/mini/
+
+# temporary file written while the gold set is saved
+eval/questions.jsonl.tmp
