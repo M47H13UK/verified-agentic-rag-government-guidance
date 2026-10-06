@@ -1,0 +1,24 @@
+scripts/gold-check.html
+  s_341627b47f195a::t_05a504a4aa3377 1359-1365
+  s_341627b47f195a::t_21ee0833713cb6 1345-1346
+eval/personas.md
+  s_341627b47f195a::t_f8ee773b1565bd 1-29
+docs/step-08.md
+  s_341627b47f195a::t_2d8c9615ba1a52 1,5-6,9-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd42eedb58c129841df57119607f9eb236ab6dc5",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
