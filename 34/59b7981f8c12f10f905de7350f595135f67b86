@@ -1,0 +1,21 @@
+src/pipeline.ts
+  s_341627b47f195a::t_6744616e84d029 212,249
+tests/pipeline.test.ts
+  s_341627b47f195a::t_d7751ff7d49755 248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3459b7981f8c12f10f905de7350f595135f67b86",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
