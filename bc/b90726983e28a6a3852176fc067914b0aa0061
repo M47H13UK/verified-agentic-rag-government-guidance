@@ -1,0 +1,59 @@
+package.json
+  s_341627b47f195a::t_5eb1f24edf67c4 12,29-33,40-44,55-59
+src/server/app.ts
+  s_341627b47f195a::t_e8324728332d45 1-123
+src/server/index.ts
+  s_341627b47f195a::t_47c909d1ab8229 1-58
+src/server/mock.ts
+  s_341627b47f195a::t_b381874810ebef 1-456
+src/server/types.ts
+  s_341627b47f195a::t_106042f5a12439 1-49
+tests/server.test.ts
+  s_341627b47f195a::t_34bcab07b36b85 1-173
+vite.config.ts
+  s_341627b47f195a::t_7df6be73fe2ed0 1-16
+web/index.html
+  s_341627b47f195a::t_5c1a7fb12785ee 1-16
+web/src/App.tsx
+  s_341627b47f195a::t_e316feeb67ec32 1-106
+web/src/api.ts
+  s_341627b47f195a::t_1a1a5de44cb6d9 1-55
+web/src/components/Answer.tsx
+  s_341627b47f195a::t_852bc744f1554a 1-175
+web/src/components/CostChart.tsx
+  s_341627b47f195a::t_eb94e90b6af783 1-345
+web/src/examples.ts
+  s_341627b47f195a::t_815b65fd39855d 1-54
+web/src/format.ts
+  s_341627b47f195a::t_22cdb9e4ecad8c 1-52
+web/src/main.tsx
+  s_341627b47f195a::t_c494b1dbd1705e 1-15
+web/src/styles.css
+  s_341627b47f195a::t_3f221e3f270d65 1-699
+web/src/views/Ask.tsx
+  s_341627b47f195a::t_59bd1466e0d889 1-105
+web/src/views/Results.tsx
+  s_341627b47f195a::t_73e321a2de39b9 1-203
+web/src/views/Trace.tsx
+  s_341627b47f195a::t_50df4f482bd13e 1-299
+web/tsconfig.json
+  s_341627b47f195a::t_2efbf67617b3f7 1-16
+docs/step-11.md
+  s_341627b47f195a::t_09f53480d59309 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bcb90726983e28a6a3852176fc067914b0aa0061",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
