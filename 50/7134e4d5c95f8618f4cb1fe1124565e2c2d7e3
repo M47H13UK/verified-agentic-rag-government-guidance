@@ -1,0 +1,41 @@
+src/eval/wiring.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 4-10,12-13,16,18,28,30-38
+tests/eval/metrics.test.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 124-125
+src/eval/run.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 4
+src/eval/setups.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 2,4-6
+tests/eval/report.test.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 4
+tests/eval/judgeAudit.test.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 4
+src/eval/judgeAudit.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 6
+src/eval/grade.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 4
+tests/eval/run.test.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 3
+tests/eval/grade.test.ts
+  s_341627b47f195a::t_7b4aa642fe7d92 2
+package-lock.json
+  s_341627b47f195a::t_1d8d07c4ca3042 13-14,1805-1810,1898-1939,2016-2043,2089-2143,2176-2212,2883-2913,3637-3648,3759-3807,4095,4491-4499,4708-4741
+src/eval/cli.ts
+  s_341627b47f195a::t_37e6147af70a01 19,112,232-239
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "507134e4d5c95f8618f4cb1fe1124565e2c2d7e3",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
