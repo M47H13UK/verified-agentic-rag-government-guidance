@@ -1,0 +1,78 @@
+docs/how-it-works.md
+  s_341627b47f195a::t_0a67bc4c7ef327 1-27
+.gitignore
+  s_341627b47f195a::t_f8a3274c136411 5-18
+  s_341627b47f195a::t_f00fd74aae438c 2-4
+  s_341627b47f195a::t_702e701b0a15a4 1
+tests/helpers/fixtures.ts
+  s_341627b47f195a::t_6f397831421764 1-5,9-25
+  s_341627b47f195a::t_b05bc82d028627 6-8
+package.json
+  s_341627b47f195a::t_ca96b793f7c148 1-33
+.github/workflows/ci.yml
+  s_341627b47f195a::t_162661f7c33aaf 1-40
+src/types.ts
+  s_341627b47f195a::t_43561cb4407c9f 1-199
+data/sample/README.md
+  s_341627b47f195a::t_a1cb1eb1289c17 1-15
+src/env.ts
+  s_341627b47f195a::t_ee3d968ee7c483 1-12
+eslint.config.js
+  s_341627b47f195a::t_91865268bf3039 1-8
+.prettierignore
+  s_341627b47f195a::t_8f10db6dc0dea5 1-9
+vitest.config.ts
+  s_341627b47f195a::t_535b49c023f21a 1-9
+tests/db.test.ts
+  s_341627b47f195a::t_77d77b168cd83e 1-31
+.env.example
+  s_341627b47f195a::t_a822be3b6f62e9 1-11
+scripts/db-ping.ts
+  s_341627b47f195a::t_9e609d03e676d4 1-17
+tsconfig.json
+  s_341627b47f195a::t_6a87d45fed6513 1-16
+.prettierrc.json
+  s_341627b47f195a::t_f3fcbbc9041190 1-3
+tests/helpers/testDb.ts
+  s_341627b47f195a::t_f88d942e933ee6 1-19
+tests/fixtures.test.ts
+  s_341627b47f195a::t_9a0c6fd8035ce4 1-30
+LICENSE
+  s_341627b47f195a::t_5c67720a63d6cd 1-25
+README.md
+  s_341627b47f195a::t_ee91f37ce97c0e 1-28
+src/db.ts
+  s_341627b47f195a::t_0b394d9f57d131 1-44
+data/sample/content-employee-lose-sponsor-licence.json
+  s_341627b47f195a::t_af9d2042df4f83 1
+data/sample/content-graduate-visa.json
+  s_341627b47f195a::t_965a8b2c470a10 1
+data/sample/content-skilled-worker-visa.json
+  s_341627b47f195a::t_1c2d61d2c83d80 1
+data/sample/passages.json
+  s_341627b47f195a::t_17f5998b62526e 1-228
+data/sample/quotes.json
+  s_341627b47f195a::t_087879927f5120 1-92
+data/sample/search-facets.json
+  s_341627b47f195a::t_88970dc7cfb8fa 1
+data/sample/search-guides.json
+  s_341627b47f195a::t_5f7c302a5f22af 1
+package-lock.json
+  s_341627b47f195a::t_973217c25d7e78 1-3103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "30bbfe19bffd0f19cf2b8c90d7d74cbb1471fbe9",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
