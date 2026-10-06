@@ -22,7 +22,8 @@
     "search": "tsx src/cli.ts search",
     "read": "tsx src/cli.ts read",
     "spike": "tsx scripts/spike.ts",
-    "ask": "tsx src/cli.ts ask"
+    "ask": "tsx src/cli.ts ask",
+    "demo:verify": "tsx scripts/demo-verify.ts"
   },
   "dependencies": {
     "mongodb": "^7.7.0",

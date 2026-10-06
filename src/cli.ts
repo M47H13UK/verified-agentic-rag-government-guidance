@@ -2,24 +2,27 @@
 //   npm run search -- "graduate visa how long"
 //   npm run read -- "/graduate-visa#overview#2"
 //   npm run ask -- "How long does a Graduate visa last?" --model claude-sonnet-5-5
-import { randomUUID } from "node:crypto";
+//   npm run ask -- "How long does a Graduate visa last?" --no-verify
 import { parseArgs } from "node:util";
-import { createAgentBackend } from "./agent/backend";
+import { createAnswerFn } from "./answer";
 import { closeDb, getDb } from "./db";
 import { loadEnv } from "./env";
-import { printAnswer, printTrace, printUsage } from "./print";
+import { printAnswer, printTrace, printUsage, printVerification } from "./print";
 import { saveRun } from "./runs";
 import { getPassagesById, readPassage } from "./tools/readPassage";
 import { searchGuidance } from "./tools/searchGuidance";
-import type { Effort, Run, Setup } from "./types";
+import type { Effort, Setup } from "./types";
 
 loadEnv();
 
 const { values: flags, positionals } = parseArgs({
   allowPositionals: true,
+  // Lets `--no-verify` switch the verifier off.
+  allowNegative: true,
   options: {
     model: { type: "string", default: "claude-haiku-4-5" },
     effort: { type: "string" },
+    verify: { type: "boolean", default: true },
   },
 });
 const [command, ...rest] = positionals;
@@ -38,7 +41,7 @@ try {
       break;
     default:
       console.error(
-        'Usage: npm run search -- "<query>"\n       npm run read -- "<passage id>"\n       npm run ask -- "<question>" [--model <id>] [--effort <level>]',
+        'Usage: npm run search -- "<query>"\n       npm run read -- "<passage id>"\n       npm run ask -- "<question>" [--model <id>] [--effort <level>] [--no-verify]',
       );
       process.exitCode = 1;
   }
@@ -87,33 +90,18 @@ async function ask(question: string): Promise<void> {
     id: "cli",
     model: flags.model,
     ...(flags.effort ? { effort: flags.effort as Effort } : {}),
-    verifier: false,
+    verifier: flags.verify,
   };
 
-  console.log(`Asking ${setup.model}. This takes about 10 to 30 seconds.\n`);
-  const draft = await createAgentBackend(db).answer(question, {
-    model: setup.model,
-    effort: setup.effort,
-  });
-
-  // With no verifier yet, the draft is the final answer.
-  const run: Run = {
-    _id: randomUUID(),
-    question,
-    setup,
-    created_at: new Date().toISOString(),
-    draft,
-    verification: null,
-    final_answer: draft.answer,
-    final_verdicts: [],
-    total_usage: draft.usage,
-    total_latency_ms: draft.latencyMs,
-  };
+  const checking = setup.verifier ? "with the verifier" : "without the verifier";
+  console.log(`Asking ${setup.model} ${checking}. This takes about 10 to 60 seconds.\n`);
+  const run = await createAnswerFn(db)(question, setup);
   await saveRun(db, run);
 
-  const cited = draft.answer?.claims.flatMap((c) => c.citations.map((x) => x.passage_id)) ?? [];
+  const cited = run.final_answer?.claims.flatMap((c) => c.citations.map((x) => x.passage_id)) ?? [];
   printAnswer(run, await getPassagesById(db, cited));
-  printTrace(draft);
-  printUsage("Tokens", run.total_usage);
+  if (run.verification) printVerification(run.verification);
+  printTrace(run.draft);
+  printUsage("Total", run.total_usage);
   console.log(`Stored as run ${run._id}`);
 }

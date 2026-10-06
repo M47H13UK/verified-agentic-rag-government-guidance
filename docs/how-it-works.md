@@ -233,3 +233,66 @@ This file explains the project one build step at a time. Each section says what 
 - A model shortens a quote with "..." in the middle. The check fails it, and that is intended. A quote must be one continuous run of words.
 - A quote starts in one passage and ends in the next. It fails, because each citation is checked against one passage.
 - The corpus is ingested again and a page has changed. A stored answer that quoted the old text would fail if it were checked again.
+
+## Step 7. Verifier and repair
+
+**What it does.** It checks every claim of a draft answer twice before the answer is shown. The quote check from step 6 runs first. Then a second model reads each claim next to the passages it cites. The same model call checks the summary against the claims. A claim that fails gets one repair attempt. A claim that still fails is removed. A summary that cannot be trusted is rebuilt from the claims that are left.
+
+**The pieces.**
+
+- `src/llm/types.ts` defines `StructuredCall`. It is one model call that returns an object matching a Zod schema. The verifier receives this function as an argument, so tests pass a fake and never call a model. This step adds the `zod` dependency.
+- `src/verify/verifier.ts` holds the verifier.
+- `VERIFIER_MODEL` is the model ID of the verifier. It is the same in every setup, so the setups differ only in the answering model.
+- `verdictSchema` is the Zod schema for the verifier's output. It has one verdict per claim. A verdict is `supported`, `partially_supported` or `not_supported`, with a one sentence reason and an optional `fix`. It also has `summary_supported`, which is true or false, and a one sentence `summary_reason`. Both are required.
+- `VERIFIER_SYSTEM_PROMPT` tells the model to judge only whether the cited passage text supports the claim as written, and to use no outside knowledge. A claim that is stronger or broader than the text is `not_supported`. The example in the prompt is a claim that says "any job" when the passage says "most jobs". For the summary, the prompt asks whether every fact in it is covered by a claim that was marked `supported` or `partially_supported`. A sentence saying that something could not be confirmed is allowed.
+- `buildVerifierPrompt(question, summary, claims, passages)` writes the question, the summary, then each claim with its index, its quotes and the full text of every passage it cites. Each passage comes with its heading path, URL and updated date.
+- `makeVerifier(call, model)` returns a `VerifierFn`. It makes one model call for all claims and the summary. It returns one verdict per claim with `checked_by: "verifier"`, and `summarySupported`.
+- `src/verify/repair.ts` has `buildRepairFeedback(answer, failedVerdicts)`. It writes the text that goes to the agent as `RunOptions.feedback` on the repair attempt. The text names each failed claim, the reason and the suggested fix. It also lists the claims that passed with their quotes, and asks for the full answer again.
+- `src/pipeline.ts` has `runPipeline(question, setup, deps, existingDraft)`. It runs the steps below in order and returns a `Run`.
+- `src/usage.ts` has `ZERO_USAGE` and `addUsage(a, b)`, which adds two usage records.
+- `tests/verifier.test.ts`, `tests/repair.test.ts` and `tests/pipeline.test.ts` use a fake backend and a fake model call with the sample passages.
+
+`runPipeline` does this:
+
+1. It gets the draft from the backend, or uses `existingDraft` when one is passed.
+2. With the verifier off, the draft is the final answer. `verification` is null and `final_verdicts` is empty.
+3. With the verifier on, it looks up every cited passage once and runs the quote check on all claims. The claims that passed go to the verifier model, together with the summary. When no claim passed, there is no model call and the summary is not checked.
+4. When no claim is `not_supported`, there is no repair. A `partially_supported` claim is kept and does not start a repair. A summary that is not supported does not start a repair either.
+5. When a claim is `not_supported`, the agent runs once more with the feedback text. The repaired answer goes through both checks again, and so does its summary. The summary verdict of this second pass is then the one that counts.
+6. Claims of the repaired answer that are still `not_supported` are removed. When the repair returned no valid answer, the draft is used with its failed claims removed, and the summary verdict of the first pass counts.
+7. The summary is replaced when a claim was removed, or when the verifier said the summary is not supported. Code builds the new summary. It is the texts of the kept claims joined with one space. When neither happened, the model's summary is kept.
+8. When every claim was removed, the summary is `NOT_CONFIRMED`, which reads "The draft answer could not be confirmed against the guidance." An answered answer with no claims left becomes `declined`. Its summary and its `declined_reason` are both set to that text.
+
+The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropped_by_verifier` count the `not_supported` claims of the first pass. `claims_after_repair` is the size of the repaired answer before it was checked. `unconfirmed` holds the text of each claim that was removed from the answer that is shown. `summary_replaced` is true when a claim was removed or the verifier did not support the summary. `extra_usage` and `extra_latency_ms` add up the verifier calls and the repair run.
+
+**Why it is built this way.**
+
+- A confident answer is not proof. The quote check proves the quoted words are real. It cannot tell that "you can work in any job" goes further than "work in most jobs". A model that reads the claim and the passage side by side can.
+- The verifier is a separate call with a narrow job. It did not write the answer. It sees only the claim and the cited text, and it is told to use nothing else.
+- The quote check runs first because it is free and exact. Claims that fail it never reach the model, so no tokens are spent on them.
+- One call for all claims is cheaper than one call per claim. Each claim still carries its own passages, so a claim is judged only against what it cites.
+- The summary is checked because the user reads it first and it has no quotes of its own. In a live run a model wrote "you can work full-time" in the summary. No claim and no passage said so. Checking the claims alone does not catch that.
+- The summary is compared with the claims, not with the passages. The claims have already been checked against the passages. A summary that stays within the supported claims stays within the guidance.
+- The summary check is part of the same model call as the claims. It adds a few tokens and no extra call.
+- The verifier fails closed. When the model call fails, or the output skips a claim, that claim is `not_supported` with the reason "Verifier did not return a verdict." A broken verifier can remove a true claim. It can never let an unchecked claim through. The same goes for the summary. When the call fails, the summary counts as not supported.
+- There is exactly one repair. Each attempt costs a full agent run, and a claim that fails twice is more likely to be wrong than badly worded.
+- A summary that is not supported does not start a repair. A repair costs a full agent run, and the confirmed claims already hold everything that may be shown.
+- The repaired answer is checked from the start. The repair can change claims that had passed or add new ones, so the first verdicts are not reused. It also writes a new summary, so the first summary verdict is not reused either.
+- A failed claim is removed, not shown with a warning. The summary is then rebuilt, because the model wrote it before the checks and it may repeat the removed claim.
+- The new summary is built by code from the texts of the kept claims. No model writes it, so it cannot say anything that has not passed both checks, and it needs no further check.
+- The backend, the verifier and the passage lookup are passed in as `deps`. The pipeline imports no model SDK and no database, so the tests run it with fakes.
+- `existingDraft` lets a caller verify a draft it already has. The same draft can then be compared with the verifier off and on, and the agent is paid for once.
+
+- The summary is only replaced when the status is `answered`. The summary of a declined answer explains the refusal, and the summary of a clarifying answer asks the question. Neither is a summary of claims. A trial eval run showed the first version replacing a decline message with claim texts, which made a refusal read like an answer.
+
+**What could break.**
+
+- The verifier model is wrong. It can pass a claim the text does not support, or reject one the text does support. The eval measures this with the unsupported claim rate, with the verifier off and on.
+- The verifier is wrong about the summary. It can pass a summary that says more than the claims do. It can also reject a good summary, and the user then reads the claim texts in its place.
+- A declined or needs-clarification answer with no claims has its summary shown unchecked, because there are no claims to compare it with. No verifier call is made for it. A visa fact written in such a summary would reach the user.
+- A rebuilt summary reads less well than a written one. It repeats the claims word for word, so with five claims it is five sentences long. It also drops any sentence in which the model said what it could not confirm.
+- The verifier call fails often, for example on a rate limit. Because it fails closed, most answers would then end as declined. The sign is a high `dropped_by_verifier` with the reason "Verifier did not return a verdict." in `first_pass`.
+- The repair makes the answer worse. It can drop a claim that was fine, or return no valid answer. Every claim of the repaired answer is checked again, and a failed repair falls back to the draft without its failed claims.
+- The backend throws instead of returning `answer: null`. `runPipeline` then rejects, and the caller has to handle the error.
+- The record has no field for the verifier's error message, for its `summary_reason`, or for the trace of the repair run. To debug those, log them where the real model call and the real backend are built.
+- `extra_latency_ms` adds up the times that the calls report. The passage lookup and the quote check add a few milliseconds that are not counted.

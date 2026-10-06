@@ -1,4 +1,4 @@
-import type { AnswerResult, Passage, Run, Usage } from "./types";
+import type { AnswerResult, Passage, Run, Usage, VerificationRecord } from "./types";
 
 // Plain text output for the command line.
 
@@ -35,6 +35,26 @@ export function printAnswer(run: Run, passages: Map<string, Passage>): void {
   });
 
   console.log(`\n${DISCLAIMER}`);
+}
+
+/** Prints what the two checks and the repair attempt did to the draft. */
+export function printVerification(record: VerificationRecord): void {
+  console.log("\nVerification");
+  console.log(`  Claims in the draft: ${record.claims_before}`);
+  console.log(`  Dropped by the quote check: ${record.dropped_by_quote_check}`);
+  console.log(`  Dropped by the verifier: ${record.dropped_by_verifier}`);
+  const repair = record.repair_ran
+    ? `yes, the repaired answer had ${record.claims_after_repair} claims`
+    : "no";
+  console.log(`  Repair attempt: ${repair}`);
+  console.log(`  Claims shown: ${record.claims_final}`);
+  if (record.summary_replaced) {
+    console.log("  The summary was rebuilt from the confirmed claims.");
+  }
+  for (const claim of record.unconfirmed) {
+    console.log(`  Could not be confirmed: ${claim}`);
+  }
+  printUsage("  Checking added", record.extra_usage);
 }
 
 /** Prints every tool call of one agent run, in order. */
