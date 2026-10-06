@@ -116,3 +116,38 @@ This file explains the project one build step at a time. Each section says what 
 - The corpus is not loaded. The search returns nothing and the command line says to run `npm run ingest`.
 - The text index is missing. MongoDB rejects a `$text` query with "text index required". The index is created by the load step.
 - Keyword search misses a passage that uses different words from the question. "Can I work full time" does not match "work in most jobs" on the word "full". The eval measures how often this happens with the retrieval hit rate. Embeddings are the next step only if that number shows a problem.
+
+## Step 4. Agent SDK spike
+
+**What it does.** It runs the smallest possible agent before the real one is built. One `query()` call, one custom tool, built-in tools off, a structured answer and tracing hooks. The SDK docs leave five points open, and everything later depends on them, so they are tested first.
+
+**The pieces.**
+
+- `scripts/spike.ts` is the whole spike. `npm run spike` prints one line per message from the stream. `npm run spike -- --raw` prints every message in full. Flags change the model, the effort and the turn cap.
+- It needs no database. Its one tool reads the sample passages from `data/sample/`.
+
+**What the spike found.** Tested on 6 October 2026 with SDK version 0.3.285.
+
+| Open point                                                                 | Answer                                                                                                                                                                                                                                                     |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Does `outputFormat` still work with `tools: []`?                           | Yes. The SDK adds its own tool called `StructuredOutput`, and `tools: []` does not remove it. The init message lists exactly two tools, `StructuredOutput` and the custom one.                                                                             |
+| Does the structured answer count toward `maxTurns`?                        | Yes. One tool call needs `maxTurns: 2`. With `maxTurns: 1` the run ends with `error_max_turns`. So the cap must be the number of tool turns plus one.                                                                                                      |
+| Does `tools: []` remove `ToolSearch`?                                      | Yes. `ToolSearch` is not in the tool list and the model calls the custom tool directly. `alwaysLoad: true` is not needed.                                                                                                                                  |
+| Does a hook with no matcher fire for internal calls?                       | Yes. `PreToolUse` and `PostToolUse` both fire for `StructuredOutput`. The trace must skip any tool that is not one of ours.                                                                                                                                |
+| Does `effort: "xhigh"` work on Opus 5.5? What about `effort` on Haiku 4.5? | `xhigh` on Opus 5.5 runs normally. Passing `effort` with Haiku 4.5 also runs with no error. The SDK types say the effort goes through "model-support downgrades", so it is dropped for a model without the setting. The project leaves it unset for Haiku. |
+
+**Other things the spike showed.**
+
+- `query()` does throw after an error result. With the turn cap hit, the stream yields a result with subtype `error_max_turns`, and then the loop throws "Reached maximum number of turns". The result message still carries usage and cost.
+- `apiKeySource` on the init message is `none` when the subscription token is used.
+- Every run makes one extra small call on Haiku, about 900 input tokens, whatever the main model is. It shows up as a second entry in `modelUsage` and is included in `total_cost_usd`. It adds about $0.001 per run at list prices. The project counts it, because it is part of what a run costs.
+- `total_cost_usd` matches the list prices. One Haiku run used 3,133 input and 466 output tokens and reported $0.005463, which is 3,133 at $1 per million plus 466 at $5 per million.
+- Prompt caching is automatic. The second run on a model reads most of its input from the cache, so a run costs less when another run came shortly before it.
+- The stream includes a `rate_limit_event` with the share of the plan's five hour and seven day windows already used. Long eval runs print it.
+- The init message lists bundled skills and agents even with `settingSources: []`. They cannot be used, because `tools: []` removes the `Skill` and `Agent` tools.
+- On the first run the model joined two lines of the passage with a full stop that is not in the source. The quote was no longer word for word. This is exactly what the quote check in step 6 is for.
+
+**What could break.**
+
+- A newer SDK version changes one of these answers. The spike is kept in the repo so it can be run again after an upgrade.
+- An API key is set in the shell. It outranks the subscription token. The init line of the spike shows which one was used.

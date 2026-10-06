@@ -20,12 +20,15 @@
     "ingest:load": "tsx src/ingest/cli.ts load",
     "ingest": "npm run ingest:fetch && npm run ingest:load",
     "search": "tsx src/cli.ts search",
-    "read": "tsx src/cli.ts read"
+    "read": "tsx src/cli.ts read",
+    "spike": "tsx scripts/spike.ts"
   },
   "dependencies": {
     "mongodb": "^7.7.0",
     "cheerio": "^1.2.0",
-    "domhandler": "^5.0.3"
+    "domhandler": "^5.0.3",
+    "@anthropic-ai/claude-agent-sdk": "^0.3.285",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
