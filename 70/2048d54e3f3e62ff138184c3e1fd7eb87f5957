@@ -1,0 +1,41 @@
+docs/step-08.md
+  s_650e8b4808e1e5::t_4522ab2a175ef6 1-92
+eval/personas.md
+  s_650e8b4808e1e5::t_fb0953e79531db 1-29
+eval/questions.jsonl
+  s_650e8b4808e1e5::t_66253ea567dfea 1-60
+package.json
+  s_650e8b4808e1e5::t_c5b2d30f0f3d5e 26-28,31,34,41,46
+scripts/gold-check.html
+  s_650e8b4808e1e5::t_0647c15ae5b79c 1-1580
+scripts/gold-check.ts
+  s_650e8b4808e1e5::t_3e5b8764060cc1 1-237
+scripts/gold-lint.ts
+  s_650e8b4808e1e5::t_a9981cf874a92d 1-96
+src/eval/lint.ts
+  s_650e8b4808e1e5::t_350a5ae735b1e9 1-208
+src/eval/questions.ts
+  s_650e8b4808e1e5::t_5e5152e6d95b6c 1-132
+src/eval/types.ts
+  s_650e8b4808e1e5::t_0a2e20c58ddcc1 1-36
+tests/eval/lint.test.ts
+  s_650e8b4808e1e5::t_95f66c571d5fe5 1-259
+tests/eval/questions.test.ts
+  s_650e8b4808e1e5::t_8d4dfb0d513b65 1-219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "702048d54e3f3e62ff138184c3e1fd7eb87f5957",
+  "prompts": {},
+  "sessions": {
+    "s_650e8b4808e1e5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "98a75bc0-53c5-4711-a111-318c3bcff9c9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
