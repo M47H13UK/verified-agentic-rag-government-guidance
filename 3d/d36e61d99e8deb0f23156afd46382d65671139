@@ -1,0 +1,19 @@
+src/types.ts
+  s_341627b47f195a::t_e5ab5408a24f2b 165-166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3dd36e61d99e8deb0f23156afd46382d65671139",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
