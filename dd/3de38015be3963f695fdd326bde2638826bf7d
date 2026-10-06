@@ -1,0 +1,21 @@
+tests/quoteCheck.test.ts
+  s_341627b47f195a::t_f848fbb730fbf1 2,4
+docs/step-06.md
+  s_341627b47f195a::t_f848fbb730fbf1 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dd3de38015be3963f695fdd326bde2638826bf7d",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
