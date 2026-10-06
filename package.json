@@ -21,7 +21,8 @@
     "ingest": "npm run ingest:fetch && npm run ingest:load",
     "search": "tsx src/cli.ts search",
     "read": "tsx src/cli.ts read",
-    "spike": "tsx scripts/spike.ts"
+    "spike": "tsx scripts/spike.ts",
+    "ask": "tsx src/cli.ts ask"
   },
   "dependencies": {
     "mongodb": "^7.7.0",

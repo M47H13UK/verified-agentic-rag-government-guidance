@@ -151,3 +151,52 @@ This file explains the project one build step at a time. Each section says what 
 
 - A newer SDK version changes one of these answers. The spike is kept in the repo so it can be run again after an upgrade.
 - An API key is set in the shell. It outranks the subscription token. The init line of the spike shows which one was used.
+
+## Step 5. The agent
+
+**What it does.** It answers one question. The model searches the passages, reads the ones it needs, and returns a typed answer where every claim carries a passage ID and a word for word quote. Every tool call is recorded, and the run is stored in MongoDB.
+
+**The pieces.**
+
+- `src/agent/backend.ts` is the one `query()` call. `createAgentBackend(db)` returns an `AnswerBackend`, which is the only thing the verifier and the eval know about the agent.
+- `src/agent/tools.ts` wraps the two functions from step 3 as tools on an MCP server that runs inside this process. The server key is `guidance`, so the model sees `mcp__guidance__search_guidance` and `mcp__guidance__read_passage`.
+- `src/agent/prompt.ts` holds the system prompt, five numbered rules with their reasons, and the turn cap.
+- `src/agent/schema.ts` defines the answer with Zod and converts it to JSON Schema for the SDK.
+- `src/agent/trace.ts` records every tool call with hooks.
+- `src/llm/sdk.ts` holds small helpers shared by every SDK call. It reads tokens and cost from the result message, builds the child process environment, and reports which credential is in use.
+- `src/runs.ts` saves and loads runs. `src/print.ts` prints an answer and its trace.
+- `npm run ask -- "How long does a Graduate visa last?"` runs it. Add `--model claude-sonnet-5-5` or `--effort medium` to change the setup.
+
+**The options, one by one.**
+
+| Option            | Value                         | Why                                                                                                                                              |
+| ----------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `tools`           | `[]`                          | Removes every built-in tool. No files, no shell, no web. The corpus is the only source, which is what makes every claim checkable.               |
+| `mcpServers`      | `{ guidance: server }`        | The in-process server with the two tools.                                                                                                        |
+| `allowedTools`    | the two full tool names       | MCP tools need explicit permission. This option only pre-approves. It does not restrict, which is why `tools: []` is also needed.                |
+| `permissionMode`  | `"dontAsk"`                   | Never prompts. Anything not pre-approved is denied. Left out, a run can start in auto mode.                                                      |
+| `settingSources`  | `[]`                          | Left out, the SDK loads the user's own Claude Code settings, instructions and hooks into the agent.                                              |
+| `strictMcpConfig` | `true`                        | Only the server passed here is used.                                                                                                             |
+| `persistSession`  | `false`                       | One question is one run, so no session file is written.                                                                                          |
+| `maxTurns`        | 8 tool turns plus 2           | The spike showed that the structured answer uses a turn. The second spare turn lets the SDK ask again when the answer does not match the schema. |
+| `outputFormat`    | the answer's JSON Schema      | The SDK validates the final answer and returns it in `structured_output`.                                                                        |
+| `hooks`           | three tool hooks, no matcher  | They record every tool call.                                                                                                                     |
+| `env`             | `process.env` plus one flag   | Passing `env` replaces the child's environment, so the parent's is spread in.                                                                    |
+| `effort`          | only when the setup names one | Left out, the model uses its own default.                                                                                                        |
+
+**Why it is built this way.**
+
+- The answer is an object, not text. Plain code can then check each claim, which is the next step.
+- The schema is written once in Zod. `satisfies z.ZodType<StructuredAnswer>` makes the compiler fail if the schema and the shared type drift apart. `structured_output` is typed `unknown`, so it is parsed with the same schema before use.
+- The trace has two sources. Hooks are the main one. They give the input, the response and the duration of each call. The docs warn that hooks may not fire when the turn cap is hit, so the message stream fills in any call the hooks missed.
+- The trace keeps the passage IDs each call returned. The eval uses them to tell "the agent never saw the right page" apart from "it saw the page and still got it wrong".
+- A new MCP server is made for every run. Runs that happen at the same time then never share one.
+- `query()` throws after an error result, so the loop sits in a `try`. A failed run still returns its trace, tokens and cost, with `answer: null` and an `error`.
+- The prompt tells the model about the turn cap. In the first live test Haiku searched 11 times for the words "full time", hit the cap and returned nothing. The prompt now says that a few searches are normally enough, and that a fact it cannot find should be reported as not confirmed.
+
+**What could break.**
+
+- The model keeps searching and hits the turn cap. The run returns no answer and the error says `error_max_turns`. The eval counts it as a failed answer.
+- The model writes a quote that is not word for word. The agent does not catch this. The quote check in step 6 does.
+- The summary says more than the claims do. In one live run the summary said "you can work full-time" while no claim or passage said so. The verifier in step 7 deals with this. The prompt also tells the model that every fact in the summary must be a claim with its own quote.
+- The plan's usage limit is reached. The SDK run fails, and the error is recorded on the run.
