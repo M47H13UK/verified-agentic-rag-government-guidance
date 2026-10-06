@@ -410,3 +410,56 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 - `open` only exists on macOS. On another system the server prints the address to open by hand.
 - The passages of a whole page are ordered by part slug, which is alphabetical and not the order of the guide. A passage does not store the position of its part.
 - The process is killed between the write and the rename. `eval/questions.jsonl.tmp` is left behind and the real file is untouched. Delete the leftover file.
+
+## Step 9. Eval harness
+
+**What it does.** It runs every gold question through every model setup, has a judge model read each answer, and turns the results into a table and a cost and correctness frontier. Every model call is passed in as a function, so the harness is tested with fakes and no test spends money.
+
+**The pieces.**
+
+- `eval/rubric.md` defines each metric, holds the judge's instructions word for word and states the rule that picks the two headline setups. It was fixed before any results existed.
+- `src/eval/types.ts` and `src/llm/types.ts` hold the shared shapes. `EvalRecord` is one run. `Grade` is the scoring of one run. `StructuredCall` is one model call that returns an object matching a Zod schema.
+- `src/eval/wiring.ts` builds the real parts the eval needs. `answer` is the same `createAnswerFn` the command line uses, `judge` is one call to the judge model, and `getPassages` reads MongoDB. Everything else in `src/eval` takes these as plain functions, so the tests run on fakes.
+- `src/eval/setups.ts` lists the 8 setups, the verifier model and the judge model. `twinOf` pairs H1 with H0, and so on.
+- `src/eval/questions.ts` loads `eval/questions.jsonl` and checks every line. A bad line stops the load, and the error names the line number.
+- `src/eval/files.ts` reads and writes JSONL. A line is only ever added at the end of a file.
+- `src/eval/run.ts` is the runner. It keeps a few runs under way at once and writes each one to `results/runs/<setup>-r<repeat>.jsonl` as it finishes.
+- `src/eval/judge.ts` makes one judge call per answer. The judge says which expected points are present and whether each claim is supported by the passages it cites.
+- `src/eval/grade.ts` turns a run and the judge's reading of it into a `Grade`, with plain code. It writes `results/grades/<setup>-r<repeat>.jsonl`.
+- `src/eval/metrics.ts` and `src/eval/frontier.ts` build the rows of the results table, find the frontier and apply the headline rule.
+- `src/eval/report.ts` writes `results/summary.json`, `results/summary.md` and `results/frontier.md`.
+- `src/eval/judgeAudit.ts` draws a seeded random sample of the judge's decisions for a person to label. It then scores how often the person and the judge agree.
+- `src/eval/cli.ts` is the command line. `src/eval/wiring.ts` is the one place that connects the eval to the real pipeline, the judge model and the database.
+
+The commands, in the order they are used:
+
+```bash
+npm run eval -- run --setups H0,H1 --limit 5 --repeat 1 --concurrency 4
+npm run eval -- grade --setups H0,H1 --repeat 1
+npm run eval -- report
+npm run eval -- audit-sample
+npm run eval -- audit-score
+```
+
+`--repeat` is the number of the repeat, not a count. For three repeats, run the first two commands with `--repeat 1`, then `--repeat 2`, then `--repeat 3`.
+
+**Why it is built this way.**
+
+- The judge reads and code scores. The judge returns small yes or no decisions and `grade.ts` does the arithmetic. A score can be traced back to the decisions behind it, and a formula can change without a new judge call.
+- The judge names points and claims by number, so nothing depends on a model copying a sentence exactly. It never sees which setup wrote an answer, so it cannot favour one. If it skips a point or a claim, the run is judged again. A gap is never filled with a guess.
+- Runs and grades are files that only grow. Each finished run is written at once, so a crash loses only the runs that were under way. On the next start the runner skips what is done.
+- A failed run is written down, not hidden. It is not counted as done, so the next start runs it again. After 5 failures in a row the batch stops, because that usually means a rate limit or an auth problem.
+- A verifier-on setup reuses the draft of its verifier-off twin. The gap between the two is then the verifier and nothing else. If each wrote its own draft, the gap would also include the random difference between two drafts. Reuse also halves the agent calls.
+- The rubric and the headline rule were written before any results existed. A test checks that the judge prompt and the rule in the code match the rubric word for word.
+
+- A run with no answer is one of two things. When the agent itself failed, by using up its turns or never producing an answer in the right shape, the record is a result. It scores 0 and is never run again, because running a question until it passes would flatter the setup. When something around the agent failed, such as a rate limit or a dropped connection, the record is not a result and the question is run again on the next start.
+
+**What could break.**
+
+- The plan's usage limit is reached in the middle of a run. Five failures in a row stop the batch with a clear message. Finished questions are on disk, so the same command carries on later. The progress line shows the share of the plan already used.
+- A run ends without an answer. It scores 0, shows in the Errors column, and the report opens with a warning. It may be a rate limit and not the fault of the model. Run the same command again to retry it, then grade and report again. A retry gives the model a second attempt, so do not rerun a finished batch only to clear errors that are real.
+- The questions file is edited after a run. The runner, the grader and the report stop with an error when a question was reworded. A change to the expected points alone is not detected, so delete `results/grades` and grade again. Give a trial run with `--allow-unverified` its own `--out` folder, or the real run will treat its answers as finished.
+- A verifier-on setup is run before its twin. It then writes its own drafts and the pair no longer shares them. Run both setups of a pair in one command.
+- The grades are stale. After a rerun, run `grade` again before `report`. The report leaves out any run whose grade no longer matches it and says how many it left out.
+- The judge is wrong. It is a model, and it is the same model as four of the setups it grades. `audit-sample` and `audit-score` measure how often it agrees with a person.
+- A gap between two setups is noise. With 61 questions, one question is worth 1.6 points of correctness. Run more repeats and read the lowest and highest repeat in the table before trusting a gap of a few points.

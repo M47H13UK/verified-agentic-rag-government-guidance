@@ -26,7 +26,8 @@
     "demo:verify": "tsx scripts/demo-verify.ts",
     "gold:lint": "tsx scripts/gold-lint.ts",
     "gold:check": "tsx scripts/gold-check.ts",
-    "gold:audio": "tsx scripts/gold-audio.ts"
+    "gold:audio": "tsx scripts/gold-audio.ts",
+    "eval": "tsx src/eval/cli.ts"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.3.285",
