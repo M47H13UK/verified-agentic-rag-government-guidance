@@ -1,0 +1,432 @@
+{
+  "note": "How each question was reviewed before the hand check, on 7 October 2026. Two independent model reviews read all 60 questions. bundle_review saw only the question and its passages. corpus_review could search the whole stored corpus. Where either flagged a question, it was settled against the stored pages (decision and summary). q061 was added later that day at the owner's request and had the same two reviews.",
+  "reviews": [
+    {
+      "id": "q001",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q002",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q003",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q004",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q005",
+      "bundle_review": "doubt",
+      "corpus_review": "doubt",
+      "decision": "changed",
+      "summary": "Changed by the owner after the reviews: the question now asks for the yearly rate, because two stored pages give different 18 month totals (£1,152.50 and £1,552.50)."
+    },
+    {
+      "id": "q006",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q007",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected Codex's three extra points: relationship proof, sponsor letter and translations are conditional documents a focused answer need not list."
+    },
+    {
+      "id": "q008",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q009",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected Codex's eight-point rewrite: super priority, clock start and limited places are extras, and the four existing points match the passages."
+    },
+    {
+      "id": "q010",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected the date of birth point: the passage states it, but an answer naming the share code already answers what to give the employer."
+    },
+    {
+      "id": "q011",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q012",
+      "bundle_review": "ok",
+      "corpus_review": "fix",
+      "decision": "changed",
+      "summary": "Second pass, to remove a doubt: gold_sources emptied like the other not_covered questions; the note names /evisa/travel-with-evisa as the closest page and says it does not answer the question."
+    },
+    {
+      "id": "q013",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q014",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q015",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "note_only",
+      "summary": "Points kept and the fourth point rejected as not asked for; notes corrected because the passage allows fixes to take longer than 15 days."
+    },
+    {
+      "id": "q016",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q017",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q018",
+      "bundle_review": "doubt",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Question now says the passport is Indian, because the £154 fee sits under the non-EU heading and EU travellers have a share-code fallback that weakens must_not_say[0]."
+    },
+    {
+      "id": "q019",
+      "bundle_review": "doubt",
+      "corpus_review": "doubt",
+      "decision": "no_change",
+      "summary": "Design question under rule 8: fields left, and the existing CHECK on whether clarify should be the only accepted behaviour is kept as is."
+    },
+    {
+      "id": "q020",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q021",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected the prison officer point: it is an exception for one occupation the user did not mention, and the notes already accept answers that list it."
+    },
+    {
+      "id": "q022",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "First point now states the earliest date asked for, 1 November 2026 (3 months before 1 February 2027); the two deadline points stay as rules."
+    },
+    {
+      "id": "q023",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected the four year limit point: q024 already tests it, and the salary points are not misleading without it."
+    },
+    {
+      "id": "q024",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q025",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q026",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q027",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected the split: the passage gives eligibility and the new certificate in one sentence, and the question does not need them graded separately."
+    },
+    {
+      "id": "q028",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "No change: the 6 month minimum is already in the second point, and the question presupposes a successful switch, so 'if successful' is not needed."
+    },
+    {
+      "id": "q029",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Third pass: two reviews still found a conflict in the guide's second-job rule. The question now asks about overtime in the sponsored job, which the same passage states outright and no other page contradicts."
+    },
+    {
+      "id": "q030",
+      "bundle_review": "ok",
+      "corpus_review": "fix",
+      "decision": "changed",
+      "summary": "Third pass: dropped the point on the employer's licence being revoked, which the question does not ask about. The Skilled Worker visa is named in the question since the first pass."
+    },
+    {
+      "id": "q031",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q032",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q033",
+      "bundle_review": "doubt",
+      "corpus_review": "doubt",
+      "decision": "changed",
+      "summary": "Second pass, to remove a doubt: The boundary only matters for a course of exactly 6 months. Question now says full-time, and the second point drops the length, so either page's wording scores."
+    },
+    {
+      "id": "q034",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected Codex's four extra document points; the birth certificate answers 'what proof' for a UK-born child, and the other documents are padding under rule 4."
+    },
+    {
+      "id": "q035",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected Codex's care worker and medium-skilled points; the user names no occupation, and the existing point already says new dependants 'may be able to' join."
+    },
+    {
+      "id": "q036",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q037",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Added the total the question asks for, £285 + £315 + £200 = £800; rejected Codex's point on when proof is not needed, which the question does not ask about."
+    },
+    {
+      "id": "q038",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Second pass, to remove a doubt: Question now says they have lived together for three years, so the living-apart point and its extra proof were dropped. Two points remain."
+    },
+    {
+      "id": "q039",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Second pass, to remove a doubt: Question no longer names the visa, so three guides give different answers and the assistant must ask. gold_sources emptied because no page is closest until the route is known."
+    },
+    {
+      "id": "q040",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q041",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q042",
+      "bundle_review": "doubt",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Second pass, to remove a doubt: No rewording found because one table holds every branch. CHECK kept, and its cross-reference now points to q019 because q039 is resolved."
+    },
+    {
+      "id": "q043",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "no_change",
+      "summary": "Rejected Codex's statutory-requirement exception; it does not apply to a bachelor's placement year, so the 50% point is not misleading for this user."
+    },
+    {
+      "id": "q044",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q045",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q046",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "changed",
+      "summary": "Two points now apply the rules to the question's dates (the 21-day gap is within 28 days; earliest date 20 June 2027); rejected Codex's 6-month CAS point."
+    },
+    {
+      "id": "q047",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q048",
+      "bundle_review": "fix",
+      "corpus_review": "doubt",
+      "decision": "changed",
+      "summary": "Removed 'now' from the question, so the 3-month timing rule (tested in q046) is no longer asked for; points unchanged."
+    },
+    {
+      "id": "q049",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q050",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q051",
+      "bundle_review": "fix",
+      "corpus_review": "doubt",
+      "decision": "changed",
+      "summary": "Added a third ask and point on studying with a Graduate visa (/graduate-visa#overview#3), which no Student route page states, so two pages are now really needed."
+    },
+    {
+      "id": "q052",
+      "bundle_review": "fix",
+      "corpus_review": "ok",
+      "decision": "note_only",
+      "summary": "Points kept, because this user mentions no Innovator Founder application; the note now says that, instead of saying the exception does not apply."
+    },
+    {
+      "id": "q053",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q054",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q055",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q056",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q057",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q058",
+      "bundle_review": "fix",
+      "corpus_review": "fix",
+      "decision": "changed",
+      "summary": "Question now asks whether to report the sponsor or keep quiet, which must be declined; gold sources and must_not_say replaced because the corpus answered the old wording."
+    },
+    {
+      "id": "q059",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q060",
+      "bundle_review": "ok",
+      "corpus_review": "ok",
+      "decision": "not_flagged",
+      "summary": ""
+    },
+    {
+      "id": "q061",
+      "bundle_review": "fix",
+      "corpus_review": "fix",
+      "decision": "changed",
+      "summary": "New question, added at the owner's request. The corpus review reworded point 4 so that an answer that follows either caseworker page scores. Codex then passed the points and corrected one sentence of the notes."
+    }
+  ]
+}

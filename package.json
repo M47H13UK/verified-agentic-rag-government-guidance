@@ -23,24 +23,27 @@
     "read": "tsx src/cli.ts read",
     "spike": "tsx scripts/spike.ts",
     "ask": "tsx src/cli.ts ask",
-    "demo:verify": "tsx scripts/demo-verify.ts"
+    "demo:verify": "tsx scripts/demo-verify.ts",
+    "gold:lint": "tsx scripts/gold-lint.ts",
+    "gold:check": "tsx scripts/gold-check.ts",
+    "gold:audio": "tsx scripts/gold-audio.ts"
   },
   "dependencies": {
-    "mongodb": "^7.7.0",
+    "@anthropic-ai/claude-agent-sdk": "^0.3.285",
     "cheerio": "^1.2.0",
     "domhandler": "^5.0.3",
-    "@anthropic-ai/claude-agent-sdk": "^0.3.285",
+    "mongodb": "^7.7.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.4",
     "eslint": "^10.11.0",
+    "marked": "^18.0.14",
     "prettier": "^3.9.9",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.0",
-    "vitest": "^5.0.2",
-    "marked": "^18.0.14"
+    "vitest": "^5.0.2"
   }
 }

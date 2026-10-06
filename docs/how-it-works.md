@@ -296,3 +296,117 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 - The backend throws instead of returning `answer: null`. `runPipeline` then rejects, and the caller has to handle the error.
 - The record has no field for the verifier's error message, for its `summary_reason`, or for the trace of the repair run. To debug those, log them where the real model call and the real backend are built.
 - `extra_latency_ms` adds up the times that the calls report. The passage lookup and the quote check add a few milliseconds that are not counted.
+
+## Step 8. Gold set
+
+**What it does.** It fixes the file format of the gold set, checks the file for drafting mistakes by code, and gives a local page where a person checks every question against GOV.UK before any eval run.
+
+**How the questions were written.** `eval/personas.md` describes six invented users. A model drafted 60 questions from the stored passages, 20 at a time, with a quote as evidence for every expected point. A second model then answered each question from scratch, compared its answer with the draft, and fixed or flagged what it found. Two more reviews followed. One was by a model from a different vendor, which saw only the questions and their passages. The other could search the whole corpus. They disagreed on 28 questions, and each of those was settled against the stored pages. A 61st question was added later that day at the owner's request. It was drafted from the stored passages in the same way and had the same two reviews. The doubts that the pages could not settle are in the `notes` field, starting with `CHECK:`. Every question is still marked as not verified. A person checks each one against the live site, and only then does the eval run.
+
+**The pieces.**
+
+- `eval/personas.md` holds the six personas. Each question carries the number of one of them.
+
+- `eval/questions.jsonl` is the gold set. Each line is one question as a JSON object. Shown here over several lines:
+
+  ```json
+  {
+    "id": "gq-001",
+    "persona": 1,
+    "category": "single_page",
+    "question": "How long does a Graduate visa last?",
+    "expected_behaviour": "answer",
+    "expected_points": ["It lasts 3 years if you have a PhD or other doctoral qualification."],
+    "gold_sources": ["/graduate-visa/overview"],
+    "must_not_say": ["A Graduate visa can be extended."],
+    "notes": "The point is in the overview part.",
+    "evidence": [
+      {
+        "point": "It lasts 3 years if you have a PhD or other doctoral qualification.",
+        "passage_id": "/graduate-visa#overview#2",
+        "quote": "If you have a PhD or other doctoral qualification, it will last for 3 years."
+      }
+    ],
+    "verified_by": null,
+    "verified_on": null
+  }
+  ```
+
+  | Field                        | Meaning                                                                                                                           |
+  | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+  | `id`                         | Unique ID. Results are stored under it.                                                                                           |
+  | `persona`                    | 1 to 6.                                                                                                                           |
+  | `category`                   | `single_page`, `multi_page`, `numbers`, `not_covered`, `personal_judgement`, `false_premise` or `ambiguous`.                      |
+  | `expected_behaviour`         | `answer`, `decline` or `clarify`.                                                                                                 |
+  | `expected_points`            | Facts a correct answer must contain. Empty for decline and clarify questions.                                                     |
+  | `gold_sources`               | Page paths that hold the answer. `/graduate-visa` is a whole page. `/graduate-visa/overview` is one part of a guide.              |
+  | `must_not_say`               | Known wrong or outdated statements.                                                                                               |
+  | `notes`                      | Optional drafting notes.                                                                                                          |
+  | `evidence`                   | Optional. Where each expected point comes from, as a passage ID and a quote. It helps the hand check. It is not used for scoring. |
+  | `verified_by`, `verified_on` | Who checked the question by hand and on which date. Both are `null` until then.                                                   |
+
+- `eval/review-log.json` records what the two model reviews said about each question. Each entry has the question `id`, a `bundle_review` and a `corpus_review` that are each `ok`, `doubt` or `fix`, a `decision` and a one-line `summary`. The decision is `not_flagged`, `no_change`, `note_only` or `changed`. The check page uses the file to sort its queue. The file is optional.
+- `src/eval/types.ts` holds the `GoldQuestion` and `Category` types.
+- `src/eval/questions.ts` reads and writes the file. `questionSchema` is the Zod schema. It rejects an unknown category, a persona outside 1 to 6 and a misspelt key. `loadQuestions(path)` skips blank lines and stops at a bad line with an error that names the line number. `saveQuestions(path, questions)` writes a temporary file and renames it over the real one. `assertAllVerified(questions)` throws and lists the IDs of the questions nobody has checked. It is there for the eval runner to call before a run.
+- `src/eval/lint.ts` holds `lintQuestions(questions, passages, sourceExists)`. It is plain code with no database. It returns a list of problems, each with a question ID, a level and a message. A problem about the whole set has the ID `null`. Errors are a duplicate ID, an answer question with no expected point or no gold source, a gold source that matches no passage, an evidence passage that does not exist, an evidence quote that fails the quote check of step 6, evidence written for a point the question does not have, and `verified_by` set without `verified_on` or the other way round. Warnings are a decline or clarify question with expected points, an expected point with no evidence, evidence from a passage that no gold source covers, and a category more than 2 questions away from its target. The targets are single_page 18, multi_page 10, numbers 10, not_covered 8, personal_judgement 6, false_premise 5 and ambiguous 3.
+- The same file has two MongoDB lookups. `findPassagesForSource(db, source)` returns the passages a gold source points at. `lintWithDb(db, questions)` fetches what the lint needs and runs it. `passageMatchesSource` is the one place that holds the rule for matching a gold source to a passage.
+- `scripts/gold-lint.ts` is `npm run gold:lint`. It prints the problems under the ID of their question, a table of counts by category and persona, and how many questions are verified. The exit code is 1 when there is any error. `--file` reads another file, for example a batch of drafts.
+- `scripts/gold-check.ts` is `npm run gold:check`. It starts a small HTTP server on `127.0.0.1:4174`, built with `node:http` only, and opens the page in the browser. `--port` changes the port. `--no-open` leaves the browser alone. `--name` sets the name written to `verified_by`. Without it the name comes from `git config user.name`. The API has six routes:
+
+  | Route                       | What it returns                                                                                                                          |
+  | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+  | `GET /api/questions`        | Every question, the lint problems and the verifier's name. Also `reviews` when `review-log.json` is in the folder of the questions file. |
+  | `GET /api/passages?source=` | The passages a gold source points at, ordered by part and position.                                                                      |
+  | `GET /api/passage?id=`      | One passage.                                                                                                                             |
+  | `GET /api/search?q=`        | The hits of `searchGuidance`, the same search the agent uses.                                                                            |
+  | `GET /api/audio?id=`        | The recorded clip of that question as WAV audio, or a 404 when it has none.                                                              |
+  | `PUT /api/questions/<id>`   | Checks the body against `questionSchema`, replaces that question in the file and returns it.                                             |
+
+  `reviews` is an object keyed by question ID. Each value has `bundle_review`, `corpus_review`, `decision` and `summary`. When `review-log.json` is missing or cannot be read, the reply has no `reviews` key.
+
+- `scripts/gold-check.html` is the page. It is one file with inline CSS and plain JavaScript, with a light and a dark theme. It is laid out as a marking desk. A person reads an answer key next to its source and confirms it.
+  - The strip at the top is the mark sheet. It has one cell per question in file order. A verified cell is green with a check mark. A red corner marks a question that needs a decision from the person checking. A grey corner marks a question that was reworded after the reviews. The count next to it says how many questions are verified.
+  - The left column is the queue. It sorts the questions into four groups, and a question sits in the first one whose rule it meets. "Needs your decision" holds every question with `CHECK:` in its notes. "Reworded after review" holds the questions with the decision `changed` in the review log. "Reviewers disagreed" holds the other questions where either review was not `ok`. "Both reviewers passed" holds the rest. Without a review log there are two groups, "Needs your decision" and "The rest". A checkbox hides the verified questions.
+  - The middle column shows the open question as a document. Nothing in it is a field. It gives the persona and the category in words, then the question, then a statement of what a correct reply does. For an answer question the expected points follow, each with its evidence quote under it. For a decline or clarify question a short text says what to check instead. For a clarify question the missing fact follows, then a table of how the answer changes with it, one case per row. Then come the must-not-say statements, the notes, one line from the review log and the lint problems. A sentence in the notes that starts with `CHECK:` is set apart under the words "To check" and comes first. The rest of the notes is a list with one sentence to a line. A passage ID in the notes is cut short and is a button that brings that passage into view in the right column.
+  - The `notes` field is plain text, and the page reads three marks in it. A line break starts a new line. A line that starts with `- ` is a list item. A sentence that starts with `Missing fact:` names what a clarify question leaves out. The list right after it holds the cases. Each case is a short label, a colon and a sentence, such as `- Graduate: a wife on her own visa cannot become a dependant.` A passage ID in brackets in a case is shown under its sentence. Notes without these marks still work. They are cut into sentences.
+  - The bar under the question has the buttons "Verify and next", "Edit" and "Next". For a verified question it shows who verified it and when, with a button to remove the verification.
+  - "Edit" swaps the document for a form with every field of the question. "Save changes" writes the file and goes back to the document. "Cancel" drops the edits. It asks first when there are any.
+  - The right column shows the stored passages of each gold source with a link to the live GOV.UK page. A passage that the evidence or the notes point at is shown in full, with the evidence quotes highlighted. The other passages of the source wait behind one button. Clicking a piece of evidence scrolls to its quote. For a decline or clarify question, and for any question with no gold source, the column also lists what `GET /api/search` returns for the question text. That is what the agent's own search finds. A search field at the bottom finds any other passage.
+  - A round button before the question ID reads the question aloud, at 1, 1.5 or 2 times normal speed. It plays the clip that `npm run gold:audio` recorded for the question with the local Kokoro voice. When there is no clip, the browser's own voice reads the text. The clips are optional and live in `data/audio/`, which is not in git. A clip is named by a hash of the question text, so it can never play for a question that was edited after it was recorded.
+  - The keys are `J` for the next question, `K` to read the question aloud or to stop it, `H` for the previous question, `V` to verify the open question and go to the next, `E` to edit, `/` for the search field and `Esc` to leave a field or the edit view. `P` reads aloud as well. The keys are off while a field has the cursor.
+  - Below 1100 pixels the queue becomes a menu and the source moves under the question.
+  - The address keeps the open question after `#`. `?theme=dark` forces the dark theme and `?edit=1` opens the edit view. Both are there for testing.
+- `tests/eval/questions.test.ts` and `tests/eval/lint.test.ts` cover the file format and every lint check, using the sample passages and quotes in `data/sample/`.
+
+**Why it is built this way.**
+
+- A person checks every question because every score in the eval is measured against these answers. The questions are drafted by a model from the stored passages. A model can misread a page, and the stored copy can be older than the live page. A wrong gold answer marks a correct answer as wrong, or a wrong answer as correct, and no later step can notice. So the check is done once, by hand, against the live site, before any eval run.
+- The lint runs first because a person's time is the expensive part. Code can tell that a quote is not in its passage or that a page path does not exist. The person then only judges what code cannot, which is whether the question is realistic and whether the points are right and complete.
+- The drafter records evidence for each point. Finding one sentence on a long page takes minutes. Reading a highlighted sentence takes seconds. The evidence quote goes through the same quote check as the agent's answers, so a made-up quote is caught before anyone reads it.
+- Editing the question text, the expected behaviour, the points, the sources or the must-not-say statements of a verified question removes its verification on save. The person checked the old words, so the check no longer applies. Editing the notes or the evidence keeps it, because neither is used for scoring.
+- The file is JSONL with keys in a fixed order. A changed question is one changed line in a git diff, and saving a question never reorders the others.
+- `saveQuestions` writes a temporary file and renames it. A rename either happens or does not, so a crash during the write cannot leave half a file.
+- The server reads the file again on every request. The file is the only copy of the questions, so an edit made in an editor or by git shows up on the next request and the server can never hold stale data.
+- The page has no build step and no library. It is opened a few times, by one person, and the code has to stay easy to read from top to bottom.
+- The page opens on a document to read, not on a form. The work is to read a question and confirm it, and most questions need no edit. The form is one key away.
+- The queue starts with the questions that a model review changed or left a doubt on. A person with little time then spends it where a mistake is most likely.
+- A decline question has no evidence to check. What can be checked is that the agent's search really finds no answer, so the page shows the search results for the question.
+- The server binds to `127.0.0.1`, because the page can change a file on the machine. It also refuses any request whose `Host` header is not its own address. That stops a website in the same browser from pointing its domain name at 127.0.0.1 and calling the API.
+- Text from the questions file and from GOV.UK is always added to the page as text nodes, never as HTML.
+- Errors and warnings are separate. An error means the file is wrong and fails `npm run gold:lint`. A warning is something to look at, such as a category that is short of its target while the set is still being drafted.
+
+**What could break.**
+
+- The corpus is not loaded. Every gold source and evidence passage is then reported as missing. `npm run gold:lint` prints a line that says the database has no passages.
+- A line of the file is not valid. Both commands stop with an error that names the line number.
+- The corpus is ingested again and a page has changed. An evidence quote that is no longer in its passage becomes a lint error. That is the signal to check the question again.
+- The page copies the rules of `normaliseForQuote` in JavaScript to place the highlights. If the rules in `src/verify/quoteCheck.ts` change and the page is not updated, a quote can pass the lint and still show "This quote is not in the passage" on the page.
+- Two questions share an ID. The lint reports it. The page opens and saves the first of the two, so fix the IDs in the file first.
+- `review-log.json` is missing or is not valid. The page still works. Its queue then has two groups, sorted by the notes alone.
+- The corpus is ingested again. The last line of the source column gives the date of the stored copy as fixed text, so it has to be changed by hand.
+- The page sets its colours with the CSS function `light-dark()`. A browser from before 2024 does not know it and shows the page without its colours.
+- Port 4174 is in use. The server says so. Pass `--port`.
+- Git has no user name and `--name` is not given. The server stops and asks for a name.
+- `open` only exists on macOS. On another system the server prints the address to open by hand.
+- The passages of a whole page are ordered by part slug, which is alphabetical and not the order of the guide. A passage does not store the position of its part.
+- The process is killed between the write and the rename. `eval/questions.jsonl.tmp` is left behind and the real file is untouched. Delete the leftover file.

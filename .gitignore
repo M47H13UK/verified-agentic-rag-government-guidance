@@ -22,3 +22,6 @@ results/mini/
 
 # temporary file written while the gold set is saved
 eval/questions.jsonl.tmp
+
+# spoken clips of the gold questions, made by `npm run gold:audio`
+data/audio/

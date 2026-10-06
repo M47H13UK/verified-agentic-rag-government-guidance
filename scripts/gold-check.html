@@ -1,0 +1,3051 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gold set check</title>
+    <!-- An empty icon, so the browser does not ask the server for one. -->
+    <link rel="icon" href="data:," />
+    <script>
+      // `?theme=dark` or `?theme=light` in the address forces a theme, to test one without
+      // changing the system setting. It runs before the page is drawn, so the other theme never flashes.
+      {
+        const theme = new URLSearchParams(location.search).get("theme");
+        if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+      }
+    </script>
+    <style>
+      /* ---------- Tokens ---------- */
+
+      :root {
+        color-scheme: light dark;
+        /* Each colour is light-dark(light theme, dark theme). The browser picks one from the colour scheme in use. */
+        --paper: light-dark(#f2f4f7, #0e151d);
+        --sheet: light-dark(#ffffff, #151e29);
+        --ink: light-dark(#16212e, #e6ecf3);
+        --ink-soft: light-dark(#5b6878, #93a1b3);
+        --rule: light-dark(#d5dbe3, #263241);
+        --highlighter: #ffe35a;
+        --red-pen: light-dark(#c4162a, #ff7a85);
+        --tick: light-dark(#1e7b4f, #55c48f);
+        --link: light-dark(#1a56b8, #7fb0ff);
+        /* A highlight is solid yellow on a light sheet. On a dark sheet that would glare, so it is a tint with a yellow line under it. */
+        --highlight-fill: light-dark(var(--highlighter), rgba(255, 227, 90, 0.22));
+        --highlight-line: light-dark(transparent, var(--highlighter));
+        /* The check mark on a verified cell. White is too faint on the light green of the dark theme. */
+        --on-tick: light-dark(#ffffff, #0e151d);
+
+        --sans: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+        --mono: ui-monospace, "SF Mono", Menlo, monospace;
+        /* About 70 characters of the 18px reading text. */
+        --measure: 576px;
+      }
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+      }
+      :root[data-theme="light"] {
+        color-scheme: light;
+      }
+
+      /* ---------- Base ---------- */
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 15px/1.45 var(--sans);
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      ol,
+      ul {
+        margin: 0;
+        font-size: inherit;
+        font-weight: 400;
+      }
+      ol,
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      a {
+        color: var(--link);
+      }
+      :focus-visible {
+        outline: 2px solid var(--link);
+        outline-offset: 2px;
+      }
+      /* An element with a display rule of its own would otherwise ignore the hidden attribute. */
+      [hidden] {
+        display: none !important;
+      }
+      .mono {
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+      .quiet {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .problem {
+        color: var(--red-pen);
+      }
+      /* Text for screen readers only. It says in words what a check mark says by sight. */
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .icon {
+        flex: none;
+        width: 14px;
+        height: 14px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sheet {
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        background: var(--sheet);
+      }
+
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .btn {
+        padding: 6px 14px;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        background: var(--sheet);
+        white-space: nowrap;
+      }
+      .btn:hover:not(:disabled) {
+        border-color: var(--ink-soft);
+      }
+      .btn.primary {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 600;
+      }
+      .btn.small {
+        padding: 3px 10px;
+        font-size: 13px;
+      }
+      /* The key that does the same as the button. */
+      kbd {
+        margin-left: 8px;
+        padding: 0 5px;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        font: 400 13px var(--sans);
+        opacity: 0.65;
+      }
+
+      /* A highlight. Only evidence quotes get one. */
+      mark {
+        padding: 1px 0;
+        border-bottom: 2px solid var(--highlight-line);
+        background: var(--highlight-fill);
+        color: var(--ink);
+        /* A quote that runs over several lines keeps its padding and line on each of them. */
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+      /* The quote that was clicked last keeps a ring, so it can be told from the other highlights of the passage. */
+      mark.active {
+        outline: 2px solid var(--ink);
+        outline-offset: 1px;
+      }
+      mark.pulse {
+        animation: pulse 500ms ease-out;
+      }
+      @keyframes pulse {
+        40% {
+          outline-offset: 7px;
+        }
+      }
+
+      /* ---------- The top strip ---------- */
+
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 24px;
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--rule);
+      }
+      h1 {
+        font-weight: 600;
+      }
+      /* The mark sheet. The cells make 1, 2, 3 or 4 even rows, and the window width decides which. */
+      /* The page works out how many cells each of those takes per row, from the number of questions. */
+      #mark-sheet {
+        --per-row: var(--per-row-2, 30);
+        display: grid;
+        grid-template-columns: repeat(var(--per-row), 18px);
+        gap: 3px;
+      }
+      @media (min-width: 1900px) {
+        #mark-sheet {
+          --per-row: var(--per-row-1, 60);
+        }
+      }
+      @media (max-width: 700px) {
+        #mark-sheet {
+          --per-row: var(--per-row-3, 20);
+        }
+      }
+      @media (max-width: 460px) {
+        #mark-sheet {
+          --per-row: var(--per-row-4, 15);
+        }
+      }
+      .cell {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid var(--rule);
+        border-radius: 3px;
+        background: var(--sheet);
+      }
+      .cell.verified {
+        border-color: var(--tick);
+        background: var(--tick);
+      }
+      /* The check mark is the corner of a small box, turned 45 degrees. */
+      .cell.verified::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 1.5px;
+        width: 4px;
+        height: 8px;
+        border: solid var(--on-tick);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      /* A red corner on a question that needs a decision. A grey one on a question reworded after review. */
+      .cell.look::before,
+      .cell.reworded::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-top: 7px solid var(--red-pen);
+        border-left: 7px solid transparent;
+      }
+      .cell.reworded::before {
+        border-top-color: var(--ink-soft);
+      }
+      /* The ring on the open question is the border plus one more pixel, 2px in all. */
+      .cell.current {
+        border-color: var(--ink);
+        box-shadow: 0 0 0 1px var(--ink);
+      }
+      .cell.just-verified {
+        animation: cell-fill 150ms ease-out;
+      }
+      @keyframes cell-fill {
+        from {
+          transform: scale(0.6);
+        }
+      }
+      #progress {
+        white-space: nowrap;
+      }
+      .keys {
+        margin-left: auto;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+
+      /* ---------- Three columns ---------- */
+
+      /* The page itself never scrolls. Each column scrolls on its own, so the question and its source stay side by side. */
+      main {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr) 44%;
+        grid-template-rows: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "queue question source"
+          "queue actions source";
+      }
+      #queue {
+        grid-area: queue;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        border-right: 1px solid var(--rule);
+      }
+      #question {
+        grid-area: question;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      #actions {
+        grid-area: actions;
+        padding: 12px 20px;
+        border-top: 1px solid var(--rule);
+        background: var(--paper);
+      }
+      #source {
+        grid-area: source;
+        overflow-y: auto;
+        padding: 20px;
+        border-left: 1px solid var(--rule);
+      }
+
+      /* ---------- Left, the queue ---------- */
+
+      .queue-select {
+        display: none;
+      }
+      .hide-verified {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px 4px;
+        font-size: 13px;
+      }
+      .hide-verified input {
+        margin: 0;
+        accent-color: var(--ink);
+      }
+      #queue-list {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding-bottom: 12px;
+      }
+      /* A group heading stays in view while its rows scroll under it. */
+      .group-head {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 12px 16px 6px;
+        background: var(--paper);
+        font-weight: 600;
+      }
+      .group-head .count {
+        font-size: 13px;
+        font-weight: 400;
+        color: var(--ink-soft);
+      }
+      .group-empty {
+        padding: 0 16px 6px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 6px 14px 6px 13px;
+        border: 0;
+        border-left: 3px solid transparent;
+        background: none;
+        font-size: 13px;
+        text-align: left;
+        /* Keeps the open row clear of the sticky heading when it is scrolled into view. */
+        scroll-margin-top: 40px;
+      }
+      .row:hover,
+      .row.current {
+        background: var(--sheet);
+      }
+      .row.current {
+        border-left-color: var(--ink);
+      }
+      /* An outline outside the row would be cut off by the edge of the column. */
+      .row:focus-visible {
+        outline-offset: -2px;
+      }
+      .row .excerpt {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .row.verified .mono,
+      .row.verified .excerpt {
+        opacity: 0.55;
+      }
+      .row .icon {
+        color: var(--tick);
+      }
+      .row .lint-flag {
+        color: var(--red-pen);
+        font-weight: 600;
+      }
+      #set-problems {
+        padding: 10px 16px;
+        border-top: 1px solid var(--rule);
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      #set-problems ul {
+        display: grid;
+        gap: 4px;
+        margin-top: 6px;
+      }
+
+      /* ---------- Middle, the question as a marked document ---------- */
+
+      #question-sheet {
+        max-width: calc(var(--measure) + 66px);
+        margin: 0 auto;
+        padding: 28px 32px 32px;
+      }
+      /* The sheet takes the focus when the edit view opens. It is not a control, so it shows no ring. */
+      #question-sheet:focus {
+        outline: none;
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 18px;
+        font-size: 13px;
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      /* The first line of the question starts with the read-aloud button and its speeds. */
+      .question-meta {
+        align-items: center;
+      }
+      .read-aloud,
+      .speeds {
+        display: flex;
+        align-items: center;
+      }
+      .read-aloud {
+        gap: 6px;
+      }
+      .read-aloud kbd {
+        margin-left: 0;
+      }
+      .play {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border: 1px solid var(--rule);
+        border-radius: 50%;
+        background: var(--sheet);
+        color: var(--ink);
+      }
+      .play:hover {
+        border-color: var(--ink-soft);
+      }
+      /* While it reads, the button is filled like the primary button. */
+      .play.reading {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--paper);
+      }
+      /* The triangle and the square are solid shapes, not lines. */
+      .play .icon {
+        fill: currentColor;
+        stroke-width: 1.5;
+      }
+      .speed {
+        padding: 2px 5px;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        color: var(--ink-soft);
+      }
+      .speed:hover {
+        color: var(--ink);
+      }
+      /* The chosen speed is told apart by more than its colour. */
+      .speed[aria-pressed="true"] {
+        color: var(--ink);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .question-text {
+        margin-top: 10px;
+        font: 400 28px/1.3 var(--serif);
+        overflow-wrap: break-word;
+      }
+      .statement {
+        margin: 32px 0 12px;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .explain + .explain {
+        margin-top: 8px;
+      }
+      .points {
+        display: grid;
+        gap: 18px;
+        counter-reset: point;
+      }
+      .explain + .points {
+        margin-top: 18px;
+      }
+      /* The number hangs to the left, so the points and their evidence share one left edge. */
+      .points > li {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+        counter-increment: point;
+      }
+      .points > li::before {
+        content: counter(point);
+        padding-top: 6px;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .point-text,
+      .must-not li {
+        font: 400 18px/1.55 var(--serif);
+        overflow-wrap: break-word;
+      }
+      /* Evidence reads as a marked quote, not as a control. Only the hover and the focus ring show it is a button. */
+      .evidence-line {
+        display: block;
+        width: calc(100% + 16px);
+        margin: 4px -8px 0;
+        padding: 6px 8px;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        text-align: left;
+      }
+      .evidence-line:hover {
+        background: var(--paper);
+      }
+      .evidence-line .quote {
+        font: 400 15px/1.6 var(--serif);
+        /* A quote can run over several list items. Each one stays on its own line, as in the passage. */
+        white-space: pre-line;
+        overflow-wrap: break-word;
+      }
+      .evidence-line .passage-id {
+        display: block;
+        margin-top: 4px;
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      .evidence-note,
+      .no-proof {
+        font-size: 13px;
+        color: var(--red-pen);
+      }
+      .no-proof {
+        margin-top: 4px;
+      }
+      /* Lines up with the text of the points above it. */
+      .stray {
+        margin: 18px 0 0 24px;
+      }
+      .must-not {
+        display: grid;
+        gap: 10px;
+      }
+      .must-not li {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+      }
+      .must-not .icon {
+        margin-top: 7px;
+        color: var(--red-pen);
+      }
+      /* What a clarify question leaves out, then how the answer changes with it, one case per row. */
+      .missing-fact,
+      .cases {
+        margin-top: 20px;
+      }
+      .caption {
+        margin-bottom: 2px;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .cases .caption {
+        margin-bottom: 8px;
+      }
+      .case-list {
+        margin: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .case-list > div {
+        display: grid;
+        grid-template-columns: minmax(0, 10em) minmax(0, 1fr);
+        gap: 2px 18px;
+        padding: 10px 0;
+        border-top: 1px solid var(--rule);
+      }
+      .case-list dt {
+        padding-top: 2px;
+        font-weight: 600;
+        overflow-wrap: break-word;
+      }
+      .case-list dd {
+        margin: 0;
+        font: 400 17px/1.5 var(--serif);
+        overflow-wrap: break-word;
+      }
+      .case-refs {
+        display: grid;
+        justify-items: start;
+        gap: 2px;
+        margin-top: 4px;
+        font: 400 13px/1.45 var(--sans);
+      }
+      .case-refs .passage-ref {
+        padding: 0;
+        background: none;
+      }
+      @media (max-width: 520px) {
+        .case-list > div {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      /* A passage ID inside a sentence. It is cut short, and a click shows the passage in the source column. */
+      .passage-ref {
+        /* It wraps like the words around it. A button is a box of its own by default and would break the line. */
+        display: inline;
+        padding: 0 4px;
+        border: 0;
+        border-radius: 4px;
+        background: var(--paper);
+        color: var(--link);
+        font-size: 0.86em;
+        text-align: left;
+        overflow-wrap: anywhere;
+      }
+      .passage-ref:hover {
+        text-decoration: underline;
+      }
+      /* The passage that was asked for last keeps a ring, like the quote that was clicked last. */
+      .passage.pointed {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+      /* The notes, one sentence to a line. */
+      .note-list {
+        display: grid;
+        gap: 8px;
+      }
+      .note-list li {
+        display: grid;
+        grid-template-columns: 14px minmax(0, 1fr);
+      }
+      .note-list li::before {
+        content: "•";
+      }
+      .note-list strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      /* Notes, the review line and the lint problems. A hairline sets them apart from the answer key. */
+      .small-print {
+        display: grid;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid var(--rule);
+        font-size: 13px;
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      .to-check,
+      #reset-notice {
+        padding: 2px 0 2px 12px;
+        border-left: 3px solid var(--red-pen);
+        font-size: 15px;
+        color: var(--ink);
+      }
+      .to-check strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--red-pen);
+      }
+      .lint {
+        display: grid;
+        gap: 4px;
+        color: var(--red-pen);
+      }
+
+      /* ---------- Middle, the action bar ---------- */
+
+      .actions-inner {
+        display: grid;
+        gap: 10px;
+        max-width: calc(var(--measure) + 66px);
+        margin: 0 auto;
+      }
+      #reset-notice {
+        font-size: 13px;
+      }
+      .bar,
+      #action-buttons,
+      .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+      .verified-by {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: 6px;
+      }
+      .verified-by .icon {
+        color: var(--tick);
+      }
+      #status {
+        margin-left: auto;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      #status.error {
+        color: var(--red-pen);
+        font-weight: 600;
+      }
+
+      /* ---------- Middle, the edit view ---------- */
+
+      .form {
+        display: grid;
+        gap: 18px;
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      /* An ID is a few characters. The persona next to it is a whole phrase and gets the rest of the row. */
+      .field-row.id-row {
+        grid-template-columns: 110px minmax(0, 1fr);
+      }
+      .field,
+      .group {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+      }
+      .label {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .form input,
+      .form select,
+      .form textarea,
+      #search-input,
+      #queue-select {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        background: var(--paper);
+      }
+      .form input.mono {
+        /* The ID fields are as tall as the other fields, though their text is smaller. */
+        line-height: 21.75px;
+      }
+      textarea {
+        /* The box grows with its text. A browser that does not know this property shows two rows. */
+        field-sizing: content;
+        min-height: 2.6em;
+        resize: vertical;
+      }
+      .list,
+      .point {
+        display: grid;
+        gap: 8px;
+        justify-items: start;
+        width: 100%;
+      }
+      .point {
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--rule);
+      }
+      .list-item {
+        display: flex;
+        gap: 8px;
+        align-items: start;
+        width: 100%;
+      }
+      .list-item .number {
+        min-width: 16px;
+        padding-top: 7px;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      /* Evidence is indented under its point. */
+      .evidence {
+        display: grid;
+        gap: 6px;
+        width: calc(100% - 24px);
+        margin-left: 24px;
+        padding-left: 12px;
+        border-left: 3px solid var(--rule);
+      }
+      .evidence.missing {
+        border-left-color: var(--red-pen);
+      }
+
+      /* ---------- Right, the source ---------- */
+
+      #source > * {
+        max-width: calc(var(--measure) + 50px);
+      }
+      #sources {
+        display: grid;
+        gap: 28px;
+      }
+      #sources:empty {
+        display: none;
+      }
+      .source-group {
+        display: grid;
+        gap: 12px;
+      }
+      .source-title {
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      .source-group .statement {
+        margin: 0;
+      }
+      .passage {
+        padding: 20px 24px 24px;
+      }
+      .passage h3,
+      .hit h3 {
+        font-weight: 600;
+        overflow-wrap: anywhere;
+      }
+      .passage .meta {
+        margin: 4px 0 14px;
+      }
+      .passage-text {
+        max-width: var(--measure);
+        font: 400 18px/1.55 var(--serif);
+        /* A passage keeps one list item per line, so line breaks are shown as they are stored. */
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .more {
+        justify-self: start;
+        white-space: normal;
+        text-align: left;
+      }
+      .hit {
+        display: grid;
+        gap: 6px;
+        justify-items: start;
+        padding-top: 14px;
+        border-top: 1px solid var(--rule);
+      }
+      .hit .mono {
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      .hit .snippet {
+        /* About 70 characters of this smaller serif text. */
+        max-width: 480px;
+        font: 400 15px/1.55 var(--serif);
+        overflow-wrap: anywhere;
+      }
+      .hit .passage {
+        justify-self: stretch;
+        margin-top: 4px;
+      }
+      /* An open hit shows the whole passage, which repeats the heading and holds the snippet. */
+      .hit.open > h3,
+      .hit.open > .mono,
+      .hit.open > .snippet {
+        display: none;
+      }
+      #search {
+        display: grid;
+        gap: 6px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid var(--rule);
+      }
+      #sources:empty + #search {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+      #search label {
+        font-weight: 600;
+      }
+      .search-line {
+        display: flex;
+        gap: 8px;
+      }
+      #search-input {
+        flex: 1;
+        min-width: 0;
+        background: var(--sheet);
+      }
+      .hits,
+      #search-results {
+        display: grid;
+        gap: 14px;
+      }
+      #search-results {
+        margin-top: 14px;
+      }
+      .licence {
+        margin-top: 28px;
+      }
+
+      /* ---------- From 1100px to 1300px, three tight columns ---------- */
+
+      /* The middle column is at its narrowest here, so the question gives up some of its margin. */
+      @media (min-width: 1100px) and (max-width: 1299px) {
+        #question {
+          padding: 12px;
+        }
+        #question-sheet {
+          padding: 20px;
+        }
+        #actions {
+          padding: 12px;
+        }
+      }
+      /* Slimmer buttons in a narrow action bar, so the three of them stay on one row. */
+      @media (max-width: 1299px) {
+        #actions .btn {
+          padding: 6px 10px;
+        }
+        #actions kbd {
+          margin-left: 6px;
+        }
+      }
+
+      /* ---------- Below 1100px, one column ---------- */
+
+      /* The page scrolls as a whole. The queue is a menu, the source comes under the question, */
+      /* and the action bar stays at the bottom of the window. */
+      @media (max-width: 1099px) {
+        html,
+        body {
+          height: auto;
+        }
+        body {
+          display: block;
+        }
+        main {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+          grid-template-areas: "queue" "question" "source" "actions";
+        }
+        #queue {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 8px 16px;
+          padding: 10px 16px;
+          border-right: 0;
+          border-bottom: 1px solid var(--rule);
+        }
+        #queue-list,
+        #set-problems {
+          display: none;
+        }
+        .queue-select {
+          display: block;
+          flex: 1 1 240px;
+          min-width: 0;
+        }
+        #queue-select {
+          background: var(--sheet);
+        }
+        .hide-verified {
+          padding: 0;
+        }
+        #question,
+        #source {
+          overflow: visible;
+          padding: 16px;
+        }
+        #question-sheet {
+          padding: 20px;
+        }
+        #source {
+          border-top: 1px solid var(--rule);
+          border-left: 0;
+        }
+        /* The source lines up with the question above it. */
+        #source > * {
+          max-width: calc(var(--measure) + 66px);
+          margin-right: auto;
+          margin-left: auto;
+        }
+        .passage {
+          padding: 16px 20px 20px;
+        }
+        #actions {
+          position: sticky;
+          bottom: 0;
+          padding: 10px 16px;
+        }
+      }
+
+      /* On a phone every field of the form gets a row of its own. */
+      @media (max-width: 600px) {
+        .field-row,
+        .field-row.id-row {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cell.just-verified,
+        mark.pulse {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Gold set check</h1>
+      <div id="mark-sheet" role="group" aria-label="All questions in file order"></div>
+      <p id="progress">Loading</p>
+      <p class="keys">J next, K read aloud, H previous, V verify, E edit</p>
+    </header>
+
+    <main>
+      <nav id="queue" aria-label="Queue">
+        <!-- Below 1100px this menu takes the place of the list. -->
+        <div class="queue-select">
+          <select id="queue-select" aria-label="Question"></select>
+        </div>
+        <label class="hide-verified"
+          ><input id="hide-verified" type="checkbox" />Hide verified</label
+        >
+        <div id="queue-list"></div>
+        <details id="set-problems" hidden>
+          <summary></summary>
+          <ul></ul>
+        </details>
+      </nav>
+
+      <section id="question" aria-label="Question">
+        <article id="question-sheet" class="sheet" tabindex="-1"></article>
+      </section>
+
+      <div id="actions">
+        <div class="actions-inner">
+          <p id="reset-notice" hidden>
+            This question is verified. You changed what was checked, so saving removes the
+            verification. Verify it again when you have checked the new version.
+          </p>
+          <div class="bar">
+            <div id="action-buttons"></div>
+            <p id="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+
+      <aside id="source" aria-label="Source">
+        <div id="sources"></div>
+        <form id="search">
+          <label for="search-input">Search the stored guidance</label>
+          <div class="search-line">
+            <input id="search-input" type="search" placeholder="For example graduate visa cost" />
+            <button type="submit" class="btn">Search</button>
+            <button id="search-clear" type="button" class="btn" hidden>Clear</button>
+          </div>
+        </form>
+        <div id="search-results"></div>
+        <p class="licence quiet">
+          A stored copy of GOV.UK pages from 6 October 2026. Contains public sector information
+          licensed under the Open Government Licence v3.0. This tool is unofficial and not
+          affiliated with GOV.UK or the Home Office.
+        </p>
+      </aside>
+    </main>
+
+    <script>
+      // The check page. Plain JavaScript, no library and no build step.
+      // It only talks to its own server, scripts/gold-check.ts.
+      //
+      // How it fits together: `state.questions` is what the file holds. Opening a question makes
+      // `state.draft`, a copy of it. The read view draws the draft and changes nothing. The edit
+      // view writes every field into the draft as you type. Nothing reaches the file until a
+      // button sends the draft to the server.
+
+      /** The six personas of eval/personas.md, by their number. */
+      const PERSONAS = {
+        1: "Final-year student who wants to stay and work",
+        2: "Graduate visa holder with a job offer",
+        3: "Student working during studies",
+        4: "Student or graduate with a partner or child",
+        5: "Someone with a practical question",
+        6: "Someone asking for what the assistant must not give",
+      };
+      const CATEGORIES = {
+        single_page: "One page",
+        multi_page: "Several pages",
+        numbers: "Numbers, dates and money",
+        not_covered: "Not covered by the guidance",
+        personal_judgement: "Personal judgement",
+        false_premise: "False premise",
+        ambiguous: "Needs a clarifying question",
+      };
+      const BEHAVIOURS = { answer: "Answer", decline: "Decline", clarify: "Clarify" };
+
+      /** What a correct reply does, by expected behaviour. The read view puts it above the answer key. */
+      /** A passage ID written out in a text, such as "/graduate-visa#overview#2". */
+      const PASSAGE_ID = /\/[\w./-]+#[\w-]+#\d+/g;
+      /** What a sentence of the notes starts with when it is more than a remark. See `noteBlocks`. */
+      const NOTE_PREFIXES = { check: "CHECK:", missing: "Missing fact:" };
+
+      const STATEMENTS = {
+        answer: "A correct answer says",
+        decline: "A correct reply declines",
+        clarify: "A correct reply asks one question first",
+      };
+
+      /** A gold source with no evidence in it is shown whole when it has at most this many passages. */
+      const FEW_PASSAGES = 5;
+
+      /** True when the three columns are side by side and the source column scrolls on its own. */
+      const WIDE = matchMedia("(min-width: 1100px)");
+
+      const MONTHS = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      /** The drawn marks, as SVG paths on a 16 by 16 grid. */
+      const CHECK_PATH = "M3 8.5l3.2 3.2L13 4.8";
+      const CROSS_PATH = "M4 4l8 8M12 4l-8 8";
+      const PLAY_PATH = "M5.5 3.5v9l7-4.5z";
+      const STOP_PATH = "M4.5 4.5h7v7h-7z";
+
+      /** How fast a question can be read aloud, as a multiple of normal speed. */
+      const SPEEDS = [1, 1.5, 2];
+      const DEFAULT_SPEED = 2;
+      /** The name under which the browser keeps the chosen speed. */
+      const SPEED_KEY = "gold-check-reading-speed";
+
+      // ---------- State ----------
+
+      const state = {
+        /** The name written to `verified_by`. The server sends it. */
+        verifier: "",
+        /** The questions as saved in the file, and the lint problems found in them. */
+        questions: [],
+        problems: [],
+        /** What the model reviews said about each question, by ID. Null when the server has no review log. */
+        reviews: null,
+        /** The open question and its copy. */
+        currentId: null,
+        draft: null,
+        /** "read" shows the question as a marked document. "edit" shows the form. */
+        view: "read",
+        /** The draft as it was when the question was opened, to tell whether it has been edited. */
+        cleanJson: "",
+        cleanChecked: "",
+        /** The evidence that was clicked last. Its highlight keeps a ring. */
+        activeEvidence: null,
+        /** The gold sources of the open question whose collapsed passages were opened. */
+        expanded: new Set(),
+        /** Where things are on the page: evidence object to its row, evidence object to its highlight, passage ID to its sheet, source title to its group. */
+        evidenceRows: new Map(),
+        marks: new Map(),
+        cards: new Map(),
+        sections: new Map(),
+        /** True once the source column shows the open question. Until then `marks` and `cards` say nothing about it. */
+        sourcesDrawn: false,
+        /** Replies from the passage and search routes by address. The corpus does not change while the page is open. */
+        cache: new Map(),
+        /** Count the calls to renderSources and runSearch, so a slow old call cannot overwrite a newer one. */
+        sourcesTicket: 0,
+        searchTicket: 0,
+        /** True while a save is on its way to the server. */
+        saving: false,
+        /** The question that was verified a moment ago. Its cell on the mark sheet fills with a short animation. */
+        justVerified: null,
+        /** How fast questions are read aloud. */
+        speed: storedSpeed(),
+        /** The reading that is going on, or null. Its `audio` is the clip that plays. With the browser's voice it is null. */
+        reading: null,
+      };
+
+      // ---------- Small helpers ----------
+
+      const $ = (id) => document.getElementById(id);
+
+      /** Calls the page's own API and returns the JSON reply. Throws the server's error message. */
+      async function api(path, options) {
+        const response = await fetch(path, options);
+        const body = await response.json();
+        if (!response.ok) {
+          const error = new Error(
+            body.error ?? `The request failed with status ${response.status}.`,
+          );
+          error.status = response.status;
+          throw error;
+        }
+        return body;
+      }
+
+      /**
+       * Makes one DOM element. Children can be elements or strings.
+       * A string becomes a text node, so text from the questions file or from GOV.UK is never read as HTML.
+       */
+      function el(tag, props = {}, children = []) {
+        const node = document.createElement(tag);
+        Object.assign(node, props);
+        node.append(...children);
+        return node;
+      }
+
+      /** A button. `content` is its label, or a list of children. */
+      function button(content, onClick, props = {}) {
+        const node = el("button", { type: "button", className: "btn", ...props }, [content].flat());
+        node.addEventListener("click", onClick);
+        return node;
+      }
+
+      /** A button that shows the key that does the same. */
+      function keyButton(label, key, onClick, props = {}) {
+        return button([label, el("kbd", {}, [key])], onClick, props);
+      }
+
+      /** A small drawn mark. It is decoration. The words next to it say the same to a screen reader. */
+      function icon(path) {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "icon");
+        svg.setAttribute("viewBox", "0 0 16 16");
+        svg.setAttribute("aria-hidden", "true");
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("d", path);
+        svg.append(line);
+        return svg;
+      }
+
+      /** Makes a field write into the draft. `store` gets the new value on every edit. Returns the field. */
+      function bind(control, store) {
+        control.addEventListener("input", () => {
+          store(control.value);
+          refreshNotices();
+        });
+        return control;
+      }
+
+      /** A <select> with one option per key of `labels`, set to `value`. */
+      function select(labels, value) {
+        const node = el(
+          "select",
+          {},
+          Object.entries(labels).map(([key, label]) => el("option", { value: key }, [label])),
+        );
+        node.value = String(value);
+        return node;
+      }
+
+      /** A control with its label above it. */
+      function field(label, control) {
+        return el("label", { className: "field" }, [
+          el("span", { className: "label" }, [label]),
+          control,
+        ]);
+      }
+
+      function group(title, content) {
+        return el("div", { className: "group" }, [
+          el("h3", { className: "label" }, [title]),
+          content,
+        ]);
+      }
+
+      /** Trims every item and drops the empty ones, such as a row that was added and left blank. */
+      function cleanList(items) {
+        return items.map((item) => item.trim()).filter((item) => item !== "");
+      }
+
+      /** Today's date on this machine as YYYY-MM-DD. `toISOString` would give the UTC date, which differs near midnight. */
+      function today() {
+        const now = new Date();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return `${now.getFullYear()}-${month}-${day}`;
+      }
+
+      /** "2026-10-06" or a longer ISO time as "6 October 2026". The date is read as written, with no time zone shift. */
+      function formatDate(text) {
+        const parts = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
+        if (!parts || !MONTHS[Number(parts[2]) - 1]) return text;
+        return `${Number(parts[3])} ${MONTHS[Number(parts[2]) - 1]} ${parts[1]}`;
+      }
+
+      function isVerified(question) {
+        return question.verified_by !== null && question.verified_on !== null;
+      }
+
+      function hasErrors(id) {
+        return state.problems.some((p) => p.question_id === id && p.level === "error");
+      }
+
+      function savedQuestion() {
+        return state.questions.find((question) => question.id === state.currentId);
+      }
+
+      /** The line at the end of the action bar. It is announced to screen readers. */
+      function setStatus(text, isError = false) {
+        $("status").textContent = text;
+        $("status").className = isError ? "error" : "";
+      }
+
+      /**
+       * Swaps the children of a list that is built again on every draw.
+       * The keyboard focus stays on the button of the same question.
+       */
+      function replaceKeepingFocus(box, nodes) {
+        const focused = box.contains(document.activeElement) ? document.activeElement : null;
+        box.replaceChildren(...nodes);
+        if (!focused) return;
+        for (const node of box.querySelectorAll("[data-id]")) {
+          if (node.dataset.id === focused.dataset.id) node.focus();
+        }
+      }
+
+      // ---------- Which questions need attention ----------
+
+      /** The review log entry of a question, or null. */
+      function reviewOf(id) {
+        return state.reviews !== null && Object.hasOwn(state.reviews, id)
+          ? state.reviews[id]
+          : null;
+      }
+
+      /** True for a question whose notes hold a doubt that only the person checking can settle. */
+      function needsDecision(question) {
+        return (question.notes ?? "").includes("CHECK:");
+      }
+
+      /** True for a question that was rewritten after the model reviews. Its new wording has not been read by a person. */
+      function wasReworded(question) {
+        return reviewOf(question.id)?.decision === "changed";
+      }
+
+      function reviewersDisagreed(question) {
+        const review = reviewOf(question.id);
+        return review !== null && (review.bundle_review !== "ok" || review.corpus_review !== "ok");
+      }
+
+      /**
+       * The queue, as groups of questions with the ones that need most attention first.
+       * A question sits in the first group whose rule it meets. Inside a group the file order is kept.
+       */
+      function queueGroups() {
+        const rules =
+          state.reviews === null
+            ? [
+                ["Needs your decision", needsDecision],
+                ["The rest", () => true],
+              ]
+            : [
+                ["Needs your decision", needsDecision],
+                ["Reworded after review", wasReworded],
+                ["Reviewers disagreed", reviewersDisagreed],
+                ["Both reviewers passed", () => true],
+              ];
+        return rules.map(([title], index) => ({
+          title,
+          questions: state.questions.filter(
+            (question) => rules.findIndex(([, rule]) => rule(question)) === index,
+          ),
+        }));
+      }
+
+      /** True for a question that "Hide verified" takes out of the queue. The open question always stays. */
+      function isHidden(question) {
+        return (
+          $("hide-verified").checked && isVerified(question) && question.id !== state.currentId
+        );
+      }
+
+      /** The ID of the question after (1) or before (-1) the open one in the queue, or null at the end. */
+      function neighbourId(offset) {
+        const order = queueGroups().flatMap((group) => group.questions);
+        let index = order.findIndex((question) => question.id === state.currentId) + offset;
+        while (order[index] && isHidden(order[index])) index += offset;
+        return order[index]?.id ?? null;
+      }
+
+      // ---------- The top strip and the queue ----------
+
+      async function loadQuestions() {
+        const reply = await api("/api/questions");
+        state.verifier = reply.verifier;
+        state.questions = reply.questions;
+        state.problems = reply.problems;
+        state.reviews = reply.reviews ?? null;
+      }
+
+      /** Draws the mark sheet, one cell per question in file order, and the count next to it. */
+      function renderStrip() {
+        const verified = state.questions.filter(isVerified).length;
+        $("progress").textContent = `${verified} of ${state.questions.length} verified`;
+        for (const rows of [1, 2, 3, 4]) {
+          const perRow = Math.ceil(state.questions.length / rows);
+          $("mark-sheet").style.setProperty(`--per-row-${rows}`, String(perRow));
+        }
+        replaceKeepingFocus($("mark-sheet"), state.questions.map(markSheetCell));
+        // The animation is for the moment of verifying only, not for every later draw.
+        state.justVerified = null;
+      }
+
+      function markSheetCell(question) {
+        const verified = isVerified(question);
+        const decision = needsDecision(question);
+        const reworded = !decision && wasReworded(question);
+        // The state is in the label as words, so it does not depend on colour alone.
+        const firstWords = question.question.split(/\s+/).slice(0, 8).join(" ");
+        const flag = decision ? ", needs your decision" : reworded ? ", reworded after review" : "";
+        const label = `${question.id}, ${verified ? "verified" : "not verified"}${flag}. ${firstWords}…`;
+        const cell = button("", () => goTo(question.id), {
+          className: "cell",
+          title: label,
+          ariaLabel: label,
+        });
+        cell.dataset.id = question.id;
+        cell.classList.toggle("verified", verified);
+        cell.classList.toggle("look", decision);
+        cell.classList.toggle("reworded", reworded);
+        if (question.id === state.currentId) {
+          cell.classList.add("current");
+          cell.setAttribute("aria-current", "true");
+        }
+        cell.classList.toggle("just-verified", question.id === state.justVerified);
+        return cell;
+      }
+
+      /** Draws the queue, as a list for a wide window and as a menu for a narrow one. */
+      function renderQueue() {
+        const groups = queueGroups().map((group) => ({
+          ...group,
+          rows: group.questions.filter((question) => !isHidden(question)),
+        }));
+
+        replaceKeepingFocus(
+          $("queue-list"),
+          groups.flatMap((group) => [
+            el("h2", { className: "group-head" }, [
+              group.title,
+              el("span", { className: "count" }, [String(group.rows.length)]),
+            ]),
+            group.rows.length === 0
+              ? el("p", { className: "group-empty quiet" }, [
+                  group.questions.length === 0 ? "No questions." : "All verified.",
+                ])
+              : "",
+            ...group.rows.map(queueRow),
+          ]),
+        );
+        $("queue-list").querySelector(".current")?.scrollIntoView({ block: "nearest" });
+
+        $("queue-select").replaceChildren(
+          ...groups.map((group) =>
+            el(
+              "optgroup",
+              { label: `${group.title} (${group.rows.length})` },
+              group.rows.map((question) =>
+                el("option", { value: question.id }, [
+                  `${question.id}${isVerified(question) ? " ✓" : ""} ${question.question}`,
+                ]),
+              ),
+            ),
+          ),
+        );
+        $("queue-select").value = state.currentId;
+
+        // Problems about the whole set, such as a category with too few questions.
+        const setProblems = state.problems.filter((problem) => problem.question_id === null);
+        $("set-problems").hidden = setProblems.length === 0;
+        $("set-problems").querySelector("summary").textContent =
+          `Warnings about the whole set (${setProblems.length})`;
+        $("set-problems")
+          .querySelector("ul")
+          .replaceChildren(...setProblems.map((problem) => el("li", {}, [problem.message])));
+      }
+
+      function queueRow(question) {
+        const verified = isVerified(question);
+        const row = button(
+          [
+            el("span", { className: "mono" }, [question.id]),
+            el("span", { className: "excerpt" }, [question.question]),
+            hasErrors(question.id)
+              ? el("span", { className: "lint-flag", title: "Has lint errors" }, [
+                  "!",
+                  el("span", { className: "visually-hidden" }, ["has lint errors"]),
+                ])
+              : "",
+            ...(verified
+              ? [icon(CHECK_PATH), el("span", { className: "visually-hidden" }, ["verified"])]
+              : []),
+          ],
+          () => goTo(question.id),
+          { className: "row" },
+        );
+        row.dataset.id = question.id;
+        row.classList.toggle("verified", verified);
+        if (question.id === state.currentId) {
+          row.classList.add("current");
+          row.setAttribute("aria-current", "true");
+        }
+        return row;
+      }
+
+      /** Opens another question. Asks first when the open one has unsaved edits. */
+      function goTo(id) {
+        if (id === null || id === state.currentId || state.saving) return;
+        if (isDirty() && !confirm("This question has unsaved edits. Leave it and lose them?")) {
+          return;
+        }
+        openQuestion(id);
+      }
+
+      function openQuestion(id) {
+        stopReading();
+        state.currentId = id;
+        state.view = "read";
+        state.activeEvidence = null;
+        state.expanded = new Set();
+        clearSearch();
+        setStatus("");
+        // The passages of the last question must not stay next to the new one while the server answers.
+        $("sources").replaceChildren(el("p", { className: "quiet" }, ["Loading the source."]));
+        $("question").scrollTop = 0;
+        $("source").scrollTop = 0;
+        // In a narrow window the page itself scrolls.
+        scrollTo(0, 0);
+        showQuestion();
+      }
+
+      /** Starts a fresh draft from the saved question and draws the whole page. */
+      function showQuestion() {
+        state.draft = makeDraft(savedQuestion());
+        const built = buildQuestion(state.draft);
+        state.cleanJson = JSON.stringify(built);
+        state.cleanChecked = checkedContent(built);
+        state.marks = new Map();
+        state.cards = new Map();
+        state.sourcesDrawn = false;
+        // The address keeps the open question, so a reload comes back to it.
+        history.replaceState(null, "", `#${encodeURIComponent(state.currentId)}`);
+        renderStrip();
+        renderQueue();
+        renderActions();
+        renderMiddle();
+        renderSources();
+      }
+
+      // ---------- The draft ----------
+
+      /**
+       * The copy of a question that the page works on.
+       * Evidence is stored inside its point. When the words of a point are edited, its evidence stays
+       * attached, and `buildQuestion` writes the new words into the evidence too.
+       */
+      function makeDraft(question) {
+        const evidence = question.evidence ?? [];
+        return {
+          id: question.id,
+          persona: question.persona,
+          category: question.category,
+          question: question.question,
+          expected_behaviour: question.expected_behaviour,
+          points: question.expected_points.map((text, index) => ({
+            text,
+            // If the same point is listed twice, only the first copy gets the evidence.
+            evidence:
+              question.expected_points.indexOf(text) === index
+                ? evidence.filter((item) => item.point === text).map((item) => ({ ...item }))
+                : [],
+          })),
+          // Evidence whose point is not one of the expected points. Lint reports it as an error.
+          strayEvidence: evidence
+            .filter((item) => !question.expected_points.includes(item.point))
+            .map((item) => ({ ...item })),
+          must_not_say: [...question.must_not_say],
+          gold_sources: [...question.gold_sources],
+          notes: question.notes ?? "",
+          verified_by: question.verified_by,
+          verified_on: question.verified_on,
+        };
+      }
+
+      /** Turns the draft back into a question in the file's format. */
+      function buildQuestion(draft) {
+        const points = draft.points.filter((point) => point.text.trim() !== "");
+        const evidence = [];
+        for (const point of points) {
+          for (const item of point.evidence) {
+            evidence.push({ ...item, point: point.text.trim() });
+          }
+        }
+        evidence.push(...draft.strayEvidence);
+
+        const question = {
+          id: draft.id.trim(),
+          persona: Number(draft.persona),
+          category: draft.category,
+          question: draft.question.trim(),
+          expected_behaviour: draft.expected_behaviour,
+          expected_points: points.map((point) => point.text.trim()),
+          gold_sources: cleanList(draft.gold_sources),
+          must_not_say: cleanList(draft.must_not_say),
+        };
+        // The two optional keys are left out when they are empty.
+        if (draft.notes.trim() !== "") question.notes = draft.notes.trim();
+        const filled = evidence
+          .map((item) => ({
+            point: item.point,
+            passage_id: item.passage_id.trim(),
+            quote: item.quote.trim(),
+          }))
+          .filter((item) => item.passage_id !== "" || item.quote !== "");
+        if (filled.length > 0) question.evidence = filled;
+        question.verified_by = draft.verified_by;
+        question.verified_on = draft.verified_on;
+        return question;
+      }
+
+      /** Every evidence object of the draft. */
+      function allEvidence(draft) {
+        return [...draft.points.flatMap((point) => point.evidence), ...draft.strayEvidence];
+      }
+
+      /** The parts of a question that the hand check covers. Editing any of them undoes the check. */
+      function checkedContent(question) {
+        return JSON.stringify([
+          question.question,
+          question.expected_behaviour,
+          question.expected_points,
+          question.gold_sources,
+          question.must_not_say,
+        ]);
+      }
+
+      function isDirty() {
+        return (
+          state.draft !== null && JSON.stringify(buildQuestion(state.draft)) !== state.cleanJson
+        );
+      }
+
+      function checkedContentChanged() {
+        return checkedContent(buildQuestion(state.draft)) !== state.cleanChecked;
+      }
+
+      // ---------- Middle column, the read view ----------
+
+      /** Draws the middle column from the draft, as the marked document or as the form. */
+      function renderMiddle() {
+        state.evidenceRows = new Map();
+        $("question-sheet").replaceChildren(
+          ...(state.view === "edit" ? editView(state.draft) : readView(state.draft)),
+        );
+        markEvidenceRows(allEvidence(state.draft));
+        renderReadAloud();
+        refreshNotices();
+      }
+
+      /** The question as a document to read and confirm. Nothing in it is a field. */
+      function readView(draft) {
+        const blocks = noteBlocks(draft.notes);
+        const missing = missingFactBlocks(draft, blocks);
+        return [
+          el("div", { className: "meta question-meta" }, [
+            readAloudControls(),
+            el("span", { className: "mono" }, [draft.id]),
+            el("span", {}, [PERSONAS[draft.persona] ?? `Persona ${draft.persona}`]),
+            el("span", {}, [CATEGORIES[draft.category] ?? draft.category]),
+          ]),
+          el("h2", { className: "question-text" }, [draft.question]),
+          el("h3", { className: "statement" }, [STATEMENTS[draft.expected_behaviour]]),
+          ...explanation(draft, missing.length > 0).map((text) =>
+            el("p", { className: "explain" }, [text]),
+          ),
+          ...missing.map(missingFactPart),
+          pointsList(draft.points),
+          ...strayEvidenceList(draft.strayEvidence),
+          ...mustNotSayList(cleanList(draft.must_not_say)),
+          smallPrint(
+            draft,
+            blocks.filter((block) => !missing.includes(block)),
+          ),
+        ];
+      }
+
+      /**
+       * A decline or clarify question has no facts to tick off. These sentences say what to check instead.
+       * `factShown` is true when the missing fact of a clarify question is shown right under them.
+       */
+      function explanation(draft, factShown) {
+        if (draft.expected_behaviour === "clarify") {
+          const what =
+            "The answer depends on a fact the person did not give, so the assistant should ask for it before answering.";
+          return [factShown ? what : `${what} The note below says which fact.`];
+        }
+        if (draft.expected_behaviour !== "decline") return [];
+        const sentences = [
+          "There are no facts to check here. The assistant should say it cannot answer this from the guidance, and not guess.",
+        ];
+        if (draft.category === "not_covered") {
+          sentences.push(
+            "Check that the stored guidance really has no answer. The right-hand column shows what the assistant's own search finds for this question.",
+          );
+        }
+        if (draft.category === "personal_judgement") {
+          sentences.push(
+            "Check that this asks for a judgement of the person's own case, a prediction, legal advice or help with a form.",
+          );
+        }
+        return sentences;
+      }
+
+      /** The expected points, each with its evidence under it. */
+      function pointsList(points) {
+        if (points.length === 0) return "";
+        return el(
+          "ol",
+          { className: "points" },
+          points.map((point) =>
+            el("li", {}, [
+              el("div", {}, [
+                el("p", { className: "point-text" }, [point.text]),
+                ...(point.evidence.length > 0
+                  ? point.evidence.flatMap(evidenceLine)
+                  : [el("p", { className: "no-proof" }, ["No proof recorded"])]),
+              ]),
+            ]),
+          ),
+        );
+      }
+
+      /**
+       * One piece of evidence in the read view: the quote with the highlighter on it, and its passage ID.
+       * The whole line is a button that shows the quote in the source column.
+       */
+      function evidenceLine(evidence) {
+        const row = button(
+          [
+            el("mark", { className: "quote" }, [evidence.quote]),
+            el("span", { className: "passage-id mono" }, [evidence.passage_id]),
+          ],
+          () => showEvidence(evidence),
+          { className: "evidence-line", title: "Show this quote in the source" },
+        );
+        const note = el("p", { className: "evidence-note" });
+        state.evidenceRows.set(evidence, { row, note });
+        return [row, note];
+      }
+
+      /** Evidence whose point is not one of the expected points. Lint reports it, and it is shown so it can be found. */
+      function strayEvidenceList(strayEvidence) {
+        if (strayEvidence.length === 0) return [];
+        return [
+          el("div", { className: "stray" }, [
+            el("p", { className: "problem" }, ["Evidence that matches no expected point"]),
+            ...strayEvidence.flatMap((evidence) => [
+              el("p", { className: "quiet" }, [`Written for the point "${evidence.point}"`]),
+              ...evidenceLine(evidence),
+            ]),
+          ]),
+        ];
+      }
+
+      function mustNotSayList(statements) {
+        if (statements.length === 0) return [];
+        return [
+          el("h3", { className: "statement" }, ["It must not say"]),
+          el(
+            "ul",
+            { className: "must-not" },
+            statements.map((text) => el("li", {}, [icon(CROSS_PATH), el("span", {}, [text])])),
+          ),
+        ];
+      }
+
+      /**
+       * For a clarify question, the blocks of the notes that name the missing fact: the "Missing fact:"
+       * line and the list that follows it. They are shown with the answer key, not in the small print.
+       */
+      function missingFactBlocks(draft, blocks) {
+        if (draft.expected_behaviour !== "clarify") return [];
+        const start = blocks.findIndex((block) => block.kind === "missing");
+        if (start === -1) return [];
+        return blocks.slice(start, blocks[start + 1]?.kind === "list" ? start + 2 : start + 1);
+      }
+
+      /** The missing fact in the reading type, or the list of cases under it as a table of two columns. */
+      function missingFactPart(block) {
+        if (block.kind === "missing") {
+          return el("div", { className: "missing-fact" }, [
+            el("p", { className: "caption" }, ["Missing fact"]),
+            el("p", { className: "point-text" }, withPassageRefs(block.text)),
+          ]);
+        }
+        return el("div", { className: "cases" }, [
+          el("p", { className: "caption" }, ["How the answer changes"]),
+          el(
+            "dl",
+            { className: "case-list" },
+            block.items.map((item) => {
+              const { text, ids } = liftPassageRefs(item.text);
+              return el("div", {}, [
+                el("dt", {}, [item.label]),
+                el("dd", {}, [
+                  el("p", {}, withPassageRefs(text)),
+                  ...(ids.length > 0
+                    ? [el("p", { className: "case-refs" }, ids.map(passageRef))]
+                    : []),
+                ]),
+              ]);
+            }),
+          ),
+        ]);
+      }
+
+      /** The doubts to settle, the rest of the notes, the line from the review log and the lint problems, under a hairline. */
+      function smallPrint(draft, blocks) {
+        const parts = [
+          ...blocks
+            .filter((block) => block.kind === "check")
+            .map((block) =>
+              el("div", { className: "to-check" }, [
+                el("strong", {}, ["To check"]),
+                ...withPassageRefs(block.text),
+              ]),
+            ),
+          noteList(blocks.filter((block) => block.kind !== "check")),
+          reviewLine(draft.id),
+          lintBox(),
+        ].filter((part) => part !== "");
+        return parts.length > 0 ? el("div", { className: "small-print" }, parts) : "";
+      }
+
+      /** The notes as a list with one sentence or one list item per line. A single line is a plain paragraph. */
+      function noteList(blocks) {
+        const lines = blocks.flatMap((block) => {
+          if (block.kind === "list") return block.items;
+          return [{ label: block.kind === "missing" ? "Missing fact" : "", text: block.text }];
+        });
+        const content = (line) => [
+          ...(line.label ? [el("strong", {}, [line.label]), " "] : []),
+          ...withPassageRefs(line.text),
+        ];
+        if (lines.length === 0) return "";
+        if (lines.length === 1) return el("p", {}, content(lines[0]));
+        return el(
+          "ul",
+          { className: "note-list" },
+          lines.map((line) => el("li", {}, [el("span", {}, content(line))])),
+        );
+      }
+
+      /**
+       * Splits the notes into blocks, in the order they were written.
+       * A line that starts with "- " is a list item, and items that follow each other make one list.
+       * Every other line is cut into sentences, so notes written as one long line still come apart.
+       * A sentence that starts with "Missing fact:" names what a clarify question leaves out.
+       * A sentence that starts with "CHECK:" is a doubt for the person to settle.
+       */
+      function noteBlocks(notes) {
+        const blocks = [];
+        for (const line of notes.split("\n").map((line) => line.trim())) {
+          if (line.startsWith("- ")) {
+            const item = labelledItem(line.slice(2).trim());
+            const last = blocks[blocks.length - 1];
+            if (last?.kind === "list") last.items.push(item);
+            else blocks.push({ kind: "list", items: [item] });
+            continue;
+          }
+          for (const sentence of sentencesOf(line)) {
+            const kind = Object.keys(NOTE_PREFIXES).find((key) =>
+              sentence.startsWith(NOTE_PREFIXES[key]),
+            );
+            if (kind) {
+              const text = sentence.slice(NOTE_PREFIXES[kind].length).trim();
+              blocks.push({ kind, text: capitalised(text) });
+            } else {
+              blocks.push({ kind: "text", text: sentence });
+            }
+          }
+        }
+        return blocks;
+      }
+
+      /**
+       * A sentence ends at a full stop, question mark or exclamation mark, with a closing quote or bracket
+       * after it, when a capital letter follows. The full stop in "£1,152.50" has no space after it.
+       */
+      function sentencesOf(text) {
+        return text
+          .trim()
+          .split(/(?<=[.!?]["')’”]?)\s+(?=[A-Z])|\s+(?=CHECK:)/)
+          .filter((sentence) => sentence !== "");
+      }
+
+      /** A list item written as "Label: text" has its label set apart. A passage ID or a whole sentence is not a label. */
+      function labelledItem(item) {
+        const cut = item.indexOf(": ");
+        const label = cut === -1 ? "" : item.slice(0, cut);
+        if (label === "" || label.length > 80 || /[.#]/.test(label))
+          return { label: "", text: item };
+        return { label, text: capitalised(item.slice(cut + 2).trim()) };
+      }
+
+      /** The words after a prefix or a label start a line of their own, so a small first letter becomes a capital. */
+      function capitalised(text) {
+        return text.replace(/^[a-z]/, (letter) => letter.toUpperCase());
+      }
+
+      /** A text with every passage ID in it made into a button that shows that passage in the source column. */
+      function withPassageRefs(text) {
+        const parts = [];
+        let from = 0;
+        for (const match of text.matchAll(PASSAGE_ID)) {
+          parts.push(text.slice(from, match.index), passageRef(match[0]));
+          from = match.index + match[0].length;
+        }
+        parts.push(text.slice(from));
+        return parts.filter((part) => part !== "");
+      }
+
+      /**
+       * Takes every passage ID that stands alone in brackets out of a text, such as "(/graduate-visa#overview#2)".
+       * Returns the text without them and the IDs. A row of the cases table shows the IDs under its text.
+       */
+      function liftPassageRefs(text) {
+        const ids = [];
+        const inBrackets = new RegExp(`\\s*\\((${PASSAGE_ID.source})\\)`, "g");
+        const rest = text.replace(inBrackets, (_, id) => {
+          ids.push(id);
+          return "";
+        });
+        return { text: rest, ids };
+      }
+
+      /** A button that carries a shortened passage ID and shows that passage in the source column. */
+      function passageRef(id) {
+        return button(shortPassageId(id), () => showPassage(id), {
+          className: "passage-ref mono",
+          title: `Show ${id} in the source column`,
+        });
+      }
+
+      /** A passage ID that is short enough to sit in a sentence: the last part of the page path, then the part and the number. */
+      function shortPassageId(id) {
+        const [path, ...rest] = id.split("#");
+        const segments = path.split("/").filter((segment) => segment !== "");
+        const page = segments[segments.length - 1] ?? "";
+        let shown = `${segments.length > 1 ? "…" : ""}/${page}`;
+        if (page.length > 30) shown = `…${page.slice(-28)}`;
+        return [shown, ...rest].join("#");
+      }
+
+      /** Brings a passage that the notes name into view in the source column, and puts a ring on it. */
+      function showPassage(id) {
+        const card = state.cards.get(id);
+        if (!card) {
+          setStatus("That passage is not in the source column.", true);
+          return;
+        }
+        for (const other of document.querySelectorAll(".passage.pointed")) {
+          other.classList.remove("pointed");
+        }
+        card.classList.add("pointed");
+        card.scrollIntoView({ block: "start" });
+      }
+
+      /** What the two model reviews made of the open question, in one line. Empty when there is no review log. */
+      function reviewLine(id) {
+        const review = reviewOf(id);
+        if (review === null) return "";
+        const both = review.bundle_review !== "ok" && review.corpus_review !== "ok";
+        const who = both ? "Both reviews" : "One review";
+        const openings = {
+          not_flagged: "Two model reviews found nothing wrong.",
+          no_change: `${who} flagged this. It was checked against the pages and left as it was.`,
+          note_only: `${who} raised a doubt. See the note.`,
+          changed: "Changed after review.",
+        };
+        // A decision this page does not know gets no line.
+        if (!Object.hasOwn(openings, review.decision)) return "";
+        return el("p", {}, [[openings[review.decision], review.summary].filter(Boolean).join(" ")]);
+      }
+
+      /** The lint problems of the open question. They describe the saved file, not the unsaved edits. */
+      function lintBox() {
+        const mine = state.problems.filter((problem) => problem.question_id === state.currentId);
+        if (mine.length === 0) return "";
+        return el(
+          "ul",
+          { className: "lint" },
+          mine.map((problem) =>
+            el("li", {}, [
+              problem.level === "error" ? "Lint error. " : "Lint warning. ",
+              problem.message,
+            ]),
+          ),
+        );
+      }
+
+      // ---------- Middle column, the edit view ----------
+
+      /** The question as a form. Every field writes into the draft. */
+      function editView(draft) {
+        const strayRows = draft.strayEvidence.map((evidence, index) =>
+          evidenceRow(
+            evidence,
+            `Written for the point "${evidence.point}"`,
+            removeButton(draft.strayEvidence, index),
+          ),
+        );
+
+        return [
+          el("div", { className: "form" }, [
+            lintBox(),
+            el("div", { className: "field-row id-row" }, [
+              field(
+                "ID",
+                bind(el("input", { value: draft.id, className: "mono" }), (v) => (draft.id = v)),
+              ),
+              field(
+                "Persona",
+                bind(select(PERSONAS, draft.persona), (v) => (draft.persona = Number(v))),
+              ),
+            ]),
+            el("div", { className: "field-row" }, [
+              field(
+                "Category",
+                bind(select(CATEGORIES, draft.category), (v) => (draft.category = v)),
+              ),
+              field(
+                "Expected behaviour",
+                bind(
+                  select(BEHAVIOURS, draft.expected_behaviour),
+                  (v) => (draft.expected_behaviour = v),
+                ),
+              ),
+            ]),
+            field(
+              "Question",
+              bind(el("textarea", { value: draft.question }), (v) => (draft.question = v)),
+            ),
+            group("Expected points", pointsEditor(draft.points)),
+            strayRows.length > 0
+              ? group(
+                  "Evidence that matches no expected point",
+                  el("div", { className: "list" }, strayRows),
+                )
+              : "",
+            group(
+              "Must not say",
+              stringList(draft.must_not_say, {
+                tag: "textarea",
+                itemName: "Must not say statement",
+                addLabel: "Add statement",
+              }),
+            ),
+            group(
+              "Gold sources",
+              stringList(draft.gold_sources, {
+                tag: "input",
+                itemName: "Gold source",
+                addLabel: "Add source",
+                placeholder: "/graduate-visa or /graduate-visa/overview",
+                // The source column has one group per gold source, so it is drawn again after an edit.
+                onChange: renderSources,
+              }),
+            ),
+            field(
+              "Notes",
+              bind(el("textarea", { value: draft.notes }), (v) => (draft.notes = v)),
+            ),
+          ]),
+        ];
+      }
+
+      /**
+       * Draws the form and the source column again after a row was added or removed.
+       * The draft already holds everything that was typed, so nothing is lost.
+       * `focusLabel` is the aria-label of the field to put the cursor in.
+       */
+      function redraw(focusLabel) {
+        renderMiddle();
+        renderSources();
+        if (focusLabel) document.querySelector(`[aria-label="${focusLabel}"]`).focus();
+      }
+
+      function removeButton(items, index) {
+        return button(
+          "Remove",
+          () => {
+            items.splice(index, 1);
+            redraw();
+          },
+          { className: "btn small" },
+        );
+      }
+
+      /** An editable list of strings, with a remove button on each row and an add button below. */
+      function stringList(items, options) {
+        const rows = items.map((item, index) => {
+          const control = el(options.tag, {
+            value: item,
+            ariaLabel: `${options.itemName} ${index + 1}`,
+            placeholder: options.placeholder ?? "",
+          });
+          bind(control, (value) => (items[index] = value));
+          // `change` fires when the field loses focus, not on every key.
+          if (options.onChange) control.addEventListener("change", options.onChange);
+          return el("div", { className: "list-item" }, [control, removeButton(items, index)]);
+        });
+        const add = button(
+          options.addLabel,
+          () => {
+            items.push("");
+            redraw(`${options.itemName} ${items.length}`);
+          },
+          { className: "btn small" },
+        );
+        return el("div", { className: "list" }, [...rows, add]);
+      }
+
+      /** The expected points. Each one has its evidence under it. */
+      function pointsEditor(points) {
+        const cards = points.map((point, index) => {
+          const text = el("textarea", {
+            value: point.text,
+            ariaLabel: `Expected point ${index + 1}`,
+          });
+          bind(text, (value) => (point.text = value));
+          const evidenceRows = point.evidence.map((evidence, evidenceIndex) =>
+            evidenceRow(
+              evidence,
+              "Evidence. Click to show it in the source.",
+              removeButton(point.evidence, evidenceIndex),
+            ),
+          );
+          const addEvidence = button(
+            "Add evidence",
+            () => {
+              point.evidence.push({ passage_id: "", quote: "" });
+              redraw();
+            },
+            { className: "btn small" },
+          );
+          return el("div", { className: "point" }, [
+            el("div", { className: "list-item" }, [
+              el("span", { className: "number" }, [String(index + 1)]),
+              text,
+              removeButton(points, index),
+            ]),
+            ...evidenceRows,
+            addEvidence,
+          ]);
+        });
+        const addPoint = button(
+          "Add point",
+          () => {
+            points.push({ text: "", evidence: [] });
+            redraw(`Expected point ${points.length}`);
+          },
+          { className: "btn small" },
+        );
+        return el("div", { className: "list" }, [...cards, addPoint]);
+      }
+
+      /** One piece of evidence in the form: its quote and its passage ID. Clicking it shows the quote in the source column. */
+      function evidenceRow(evidence, caption, remove) {
+        const quote = el("textarea", {
+          value: evidence.quote,
+          ariaLabel: "Evidence quote",
+          placeholder: "Words copied exactly from the passage",
+        });
+        const passageId = el("input", {
+          value: evidence.passage_id,
+          ariaLabel: "Evidence passage ID",
+          className: "mono",
+          placeholder: "/graduate-visa#overview#2",
+        });
+        bind(quote, (value) => (evidence.quote = value));
+        bind(passageId, (value) => (evidence.passage_id = value));
+        // The highlights depend on both fields, so the source column is drawn again when either changes.
+        quote.addEventListener("change", renderSources);
+        passageId.addEventListener("change", renderSources);
+
+        const note = el("div", { className: "evidence-note" });
+        const row = el("div", { className: "evidence" }, [
+          el("span", { className: "label" }, [caption]),
+          quote,
+          el("div", { className: "list-item" }, [passageId, remove]),
+          note,
+        ]);
+        // In a narrow window the source is further down the page. Scrolling there would take the field out of sight.
+        row.addEventListener("click", () => showEvidence(evidence, WIDE.matches));
+        // `focusin` covers moving into the fields with the Tab key.
+        row.addEventListener("focusin", () => showEvidence(evidence, WIDE.matches));
+        state.evidenceRows.set(evidence, { row, note });
+        return row;
+      }
+
+      // ---------- Middle column, the action bar ----------
+
+      /** Draws the buttons of the action bar. They depend on the view and on whether the question is verified. */
+      function renderActions() {
+        const saved = savedQuestion();
+        const box = $("action-buttons");
+        const hadFocus = box.contains(document.activeElement);
+        const edit = keyButton("Edit", "E", enterEdit);
+        const next = keyButton("Next", "J", () => goTo(neighbourId(1)), {
+          disabled: neighbourId(1) === null,
+        });
+
+        if (state.view === "edit") {
+          box.replaceChildren(
+            button("Save changes", saveChanges, { id: "save", className: "btn primary" }),
+            button("Cancel", cancelEdit),
+          );
+        } else if (isVerified(saved)) {
+          box.replaceChildren(
+            el("span", { className: "verified-by" }, [
+              icon(CHECK_PATH),
+              `Verified by ${saved.verified_by} on ${formatDate(saved.verified_on)}`,
+            ]),
+            // The buttons are one unit. In a narrow column they move under the text together.
+            el("span", { className: "button-group" }, [
+              button("Remove verification", removeVerification),
+              edit,
+              next,
+            ]),
+          );
+        } else {
+          box.replaceChildren(
+            keyButton("Verify and next", "V", verifyAndGoToNext, { className: "btn primary" }),
+            edit,
+            next,
+          );
+        }
+        // The button that had the focus is gone. The focus goes to the first button of the new set.
+        if (hadFocus) box.querySelector("button").focus();
+        refreshNotices();
+      }
+
+      /** Updates what depends on whether the draft differs from the saved question. Runs on every edit. */
+      function refreshNotices() {
+        const editing = state.view === "edit";
+        const dirty = isDirty();
+        $("reset-notice").hidden = !(
+          editing &&
+          isVerified(savedQuestion()) &&
+          checkedContentChanged()
+        );
+        if ($("save")) $("save").disabled = !dirty;
+        if (editing) setStatus(dirty ? "Unsaved changes." : "");
+      }
+
+      function enterEdit() {
+        stopReading();
+        state.view = "edit";
+        renderActions();
+        renderMiddle();
+        $("question").scrollTop = 0;
+        // The focus moves to the form, so the Tab key starts at its first field.
+        $("question-sheet").focus({ preventScroll: true });
+      }
+
+      /** Leaves the edit view and drops the edits. Asks first when there are any. */
+      function cancelEdit() {
+        if (isDirty() && !confirm("Leave the edit view and lose the unsaved edits?")) return;
+        state.view = "read";
+        setStatus("");
+        showQuestion();
+      }
+
+      /**
+       * Sends the draft to the server and loads the questions again. Returns the saved question, or null on an error.
+       * `verification` is "keep", "set" or "remove".
+       */
+      async function save(verification) {
+        // No question is open when the file is empty. A second save waits for the first to finish.
+        if (state.draft === null || state.saving) return null;
+        const question = buildQuestion(state.draft);
+        if (verification === "set") {
+          question.verified_by = state.verifier;
+          question.verified_on = today();
+        } else if (verification === "remove" || checkedContentChanged()) {
+          // The person checked the old words. After an edit to the checked content the check no longer applies.
+          question.verified_by = null;
+          question.verified_on = null;
+        }
+
+        state.saving = true;
+        setStatus("Saving.");
+        try {
+          const saved = await api(`/api/questions/${encodeURIComponent(state.currentId)}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            // The server compares `loaded` with the file, and refuses the save if the file moved on.
+            body: JSON.stringify({ question, loaded: savedQuestion() }),
+          });
+          // The ID may have been edited. The reload also brings the new lint problems.
+          state.currentId = saved.id;
+          await loadQuestions();
+          return saved;
+        } catch (error) {
+          if (error.status === 412) {
+            // The file changed under the page. Show the new version, so nothing stale is saved.
+            await loadQuestions();
+            showQuestion();
+          }
+          setStatus(error.message, true);
+          return null;
+        } finally {
+          state.saving = false;
+        }
+      }
+
+      /** Saves the edits and goes back to the read view. */
+      async function saveChanges() {
+        const wasVerified = isVerified(savedQuestion());
+        const saved = await save("keep");
+        if (saved === null) return;
+        state.view = "read";
+        showQuestion();
+        setStatus(
+          wasVerified && !isVerified(saved) ? "Saved. The verification was removed." : "Saved.",
+        );
+      }
+
+      async function removeVerification() {
+        const saved = await save("remove");
+        if (saved === null) return;
+        showQuestion();
+        setStatus("Verification removed.");
+      }
+
+      async function verifyAndGoToNext() {
+        // The next question is chosen before the save. With "Hide verified" on,
+        // the open question leaves the queue as soon as it is saved.
+        const nextId = neighbourId(1);
+        // A question that is already verified keeps the name and the date of its check.
+        if (isVerified(savedQuestion())) {
+          goTo(nextId);
+          return;
+        }
+        const saved = await save("set");
+        if (saved === null) return;
+        state.justVerified = saved.id;
+        if (nextId !== null) {
+          openQuestion(nextId);
+          setStatus(`Verified ${saved.id}.`);
+        } else {
+          showQuestion();
+          setStatus(`Verified ${saved.id}. It is the last question in the queue.`);
+        }
+      }
+
+      // ---------- Reading the question aloud ----------
+
+      /** The speed chosen on an earlier visit, or the default. A browser can refuse to store anything, so this is only tried. */
+      function storedSpeed() {
+        try {
+          const stored = Number(localStorage.getItem(SPEED_KEY));
+          if (SPEEDS.includes(stored)) return stored;
+        } catch {
+          // No storage. The default is used.
+        }
+        return DEFAULT_SPEED;
+      }
+
+      function setSpeed(speed) {
+        state.speed = speed;
+        try {
+          localStorage.setItem(SPEED_KEY, String(speed));
+        } catch {
+          // No storage. The choice still holds until the page is closed.
+        }
+        // A clip changes speed while it plays. The browser's voice cannot, so it starts again.
+        if (state.reading?.audio) state.reading.audio.playbackRate = speed;
+        else if (state.reading) startReading();
+        renderReadAloud();
+      }
+
+      /** The round button that reads the question aloud, with the three speeds next to it. */
+      function readAloudControls() {
+        const speeds = SPEEDS.map((speed) => {
+          const choice = button(`${speed}x`, () => setSpeed(speed), { className: "speed" });
+          choice.dataset.speed = speed;
+          return choice;
+        });
+        // `renderReadAloud` gives the button its icon and label, and marks the chosen speed.
+        return el("span", { className: "read-aloud" }, [
+          button("", toggleReading, { id: "read-aloud", className: "play" }),
+          el("kbd", {}, ["K"]),
+          el("span", { className: "speeds", role: "group", ariaLabel: "Reading speed" }, speeds),
+        ]);
+      }
+
+      /** Makes the read-aloud controls show what is going on. The edit view has none, and then nothing happens. */
+      function renderReadAloud() {
+        const play = $("read-aloud");
+        if (!play) return;
+        const reading = state.reading !== null;
+        const label = reading ? "Stop reading" : "Read the question aloud";
+        play.replaceChildren(icon(reading ? STOP_PATH : PLAY_PATH));
+        play.ariaLabel = label;
+        play.title = `${label} (K)`;
+        play.classList.toggle("reading", reading);
+        for (const choice of document.querySelectorAll(".speed")) {
+          choice.setAttribute("aria-pressed", String(Number(choice.dataset.speed) === state.speed));
+        }
+      }
+
+      function toggleReading() {
+        if (state.reading === null) startReading();
+        else stopReading();
+      }
+
+      /**
+       * Reads the open question aloud. A clip recorded by `npm run gold:audio` is tried first.
+       * When the question has none, the browser's own voice reads the text.
+       */
+      function startReading() {
+        stopReading();
+        const text = state.draft.question;
+        const audio = new Audio(`/api/audio?id=${encodeURIComponent(state.currentId)}`);
+        // Each reading is an object of its own. A late callback of an older one finds that
+        // `state.reading` is no longer its object, and does nothing.
+        const reading = { audio };
+        state.reading = reading;
+        // The browser keeps the pitch of a clip that is played faster, so the voice does not turn squeaky.
+        audio.defaultPlaybackRate = state.speed;
+        audio.playbackRate = state.speed;
+        audio.addEventListener("ended", () => finishReading(reading));
+
+        // With no clip the server answers 404. The audio element reports that as an error,
+        // and `play` fails too, so this can be called twice. It acts once.
+        const useBrowserVoice = () => {
+          if (state.reading !== reading || reading.audio === null) return;
+          reading.audio = null;
+          speak(reading, text);
+        };
+        audio.addEventListener("error", useBrowserVoice);
+        audio.play().catch(useBrowserVoice);
+        renderReadAloud();
+      }
+
+      /** Reads a text with the browser's built-in voice. */
+      function speak(reading, text) {
+        if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+          finishReading(reading);
+          setStatus("This browser has no voice to read aloud with.", true);
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = state.speed;
+        const voice = englishVoice();
+        if (voice) utterance.voice = voice;
+        utterance.lang = voice?.lang ?? "en-GB";
+        utterance.onend = () => finishReading(reading);
+        utterance.onerror = () => finishReading(reading);
+        // Anything still waiting in the browser's queue would be read first.
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }
+
+      /**
+       * The voice to read with, or null to leave the choice to the browser.
+       * Only voices on this machine count. Some browsers also list voices that send the text to a server.
+       */
+      function englishVoice() {
+        const voices = speechSynthesis
+          .getVoices()
+          .filter((voice) => voice.localService && /^en([-_]|$)/i.test(voice.lang));
+        // The system's own voice is the best one when it is English. Then a British voice, as the guidance is British.
+        return (
+          voices.find((voice) => voice.default) ??
+          voices.find((voice) => /^en[-_]GB/i.test(voice.lang)) ??
+          voices[0] ??
+          null
+        );
+      }
+
+      /** Called when a reading has come to its end by itself. */
+      function finishReading(reading) {
+        if (state.reading !== reading) return;
+        state.reading = null;
+        renderReadAloud();
+      }
+
+      function stopReading() {
+        const reading = state.reading;
+        if (reading === null) return;
+        // Cleared first, so the callbacks of the clip and of the voice find nothing left to do.
+        state.reading = null;
+        if (reading.audio) reading.audio.pause();
+        else window.speechSynthesis?.cancel();
+        renderReadAloud();
+      }
+
+      // ---------- Right column, the source ----------
+
+      /** Fetches a passage or search route once and remembers the reply. */
+      async function cachedGet(path) {
+        if (!state.cache.has(path)) state.cache.set(path, await api(path));
+        return state.cache.get(path);
+      }
+
+      /** One passage by ID, or null when the database has no passage with that ID. */
+      async function getPassage(id) {
+        try {
+          return await cachedGet(`/api/passage?id=${encodeURIComponent(id)}`);
+        } catch {
+          return null;
+        }
+      }
+
+      /** The passage IDs written out in a text, each one once. */
+      function passageIdsIn(text) {
+        return [...new Set(text.match(PASSAGE_ID) ?? [])];
+      }
+
+      /**
+       * Fetches what the source column shows for a draft, as a list of { title, passages, note }.
+       * One group per gold source, then evidence passages that no gold source covers, then passages
+       * that the notes name. A passage appears once, in the first group that has it.
+       */
+      async function loadSourceGroups(draft) {
+        const groups = [];
+        const shown = new Set();
+        const notShownYet = (passages) =>
+          passages.filter((passage) => {
+            if (passage === null || shown.has(passage._id)) return false;
+            shown.add(passage._id);
+            return true;
+          });
+
+        for (const source of cleanList(draft.gold_sources)) {
+          const passages = await cachedGet(`/api/passages?source=${encodeURIComponent(source)}`);
+          const fresh = notShownYet(passages);
+          let note = "";
+          if (passages.length === 0) note = "No passage matches this gold source.";
+          else if (fresh.length === 0) note = "Its passages are shown above.";
+          groups.push({ title: source, isGoldSource: true, passages: fresh, note });
+        }
+
+        const evidenceIds = cleanList(allEvidence(draft).map((item) => item.passage_id));
+        const outside = await Promise.all(
+          evidenceIds.filter((id) => !shown.has(id)).map(getPassage),
+        );
+        groups.push({
+          title: "Evidence from outside the gold sources",
+          passages: notShownYet(outside),
+        });
+
+        // A note often points at a passage on another page, and a doubt can only be settled by reading it.
+        const named = await Promise.all(
+          passageIdsIn(draft.notes)
+            .filter((id) => !shown.has(id))
+            .map(getPassage),
+        );
+        groups.push({ title: "Passages the note names", passages: notShownYet(named) });
+
+        return groups.filter((group) => group.passages.length > 0 || group.note);
+      }
+
+      /**
+       * The assistant's own search is shown when no page is named as the source. It is also shown for
+       * every decline and clarify question. Those have no evidence, and what the search returns
+       * is the best sign of what the assistant will do.
+       */
+      function showsOwnSearch(draft) {
+        return cleanList(draft.gold_sources).length === 0 || draft.expected_behaviour !== "answer";
+      }
+
+      /** Draws the source column from the draft. */
+      async function renderSources() {
+        const ticket = ++state.sourcesTicket;
+        const draft = state.draft;
+        const evidence = allEvidence(draft);
+        let groups;
+        let failure = "";
+        try {
+          groups = await loadSourceGroups(draft);
+        } catch (error) {
+          failure = error.message;
+        }
+        // A newer call started while this one was waiting for the server. Its result is the one to show.
+        if (ticket !== state.sourcesTicket) return;
+
+        const box = $("sources");
+        if (failure !== "") {
+          box.replaceChildren(el("p", { className: "problem" }, [failure]));
+          return;
+        }
+
+        // `passageCard` and `highlightedText` fill these maps while the sections are built.
+        state.marks = new Map();
+        state.cards = new Map();
+        state.sections = new Map();
+        // The passages to show in full are the ones that evidence or the notes point at.
+        const wanted = new Set([
+          ...evidence.map((item) => item.passage_id.trim()),
+          ...passageIdsIn(draft.notes),
+        ]);
+        const sections = groups.map((group) => sourceGroup(group, evidence, wanted));
+        if (showsOwnSearch(draft)) sections.push(ownSearch(draft.question));
+
+        // Keep the scroll position, so editing a quote does not jump the column back to the top.
+        const scrollTop = $("source").scrollTop;
+        box.replaceChildren(...sections);
+        $("source").scrollTop = scrollTop;
+
+        state.sourcesDrawn = true;
+        markEvidenceRows(evidence);
+        state.marks.get(state.activeEvidence)?.classList.add("active");
+      }
+
+      /**
+       * One gold source: its path, then its passages. The passages that evidence or the notes point at
+       * are shown in full. The others wait behind one button, so the proof is not buried in a long page.
+       */
+      function sourceGroup(group, evidence, wanted) {
+        const showAll = !group.isGoldSource || state.expanded.has(group.title);
+        let open = group.passages.filter((passage) => showAll || wanted.has(passage._id));
+        // Nothing points into this source, which is normal for a decline or clarify question.
+        // A short page is then shown whole. A long one stays closed until it is asked for.
+        if (open.length === 0 && group.passages.length <= FEW_PASSAGES) open = group.passages;
+
+        const rest = group.passages.length - open.length;
+        let more = "";
+        if (rest > 0) {
+          let label = `Show ${rest} more passages from this page`;
+          if (rest === 1) label = "Show 1 more passage from this page";
+          if (open.length === 0) label = `Show all ${rest} passages from this page`;
+          more = button(label, () => expandSource(group.title), { className: "btn more" });
+        }
+
+        const section = el("section", { className: "source-group" }, [
+          el("p", { className: group.isGoldSource ? "source-title mono" : "source-title quiet" }, [
+            group.title,
+          ]),
+          group.note ? el("p", { className: "problem" }, [group.note]) : "",
+          ...open.map((passage) => passageCard(passage, evidence)),
+          more,
+        ]);
+        state.sections.set(group.title, section);
+        return section;
+      }
+
+      /** Shows every passage of a gold source, in the order of the page, and scrolls to the first one. */
+      async function expandSource(title) {
+        state.expanded.add(title);
+        await renderSources();
+        state.sections.get(title)?.scrollIntoView({ block: "start" });
+      }
+
+      /**
+       * One passage as a sheet. `register` is false for a passage opened from a search result.
+       * Such a copy must not take the place of the passage that evidence scrolls to.
+       */
+      function passageCard(passage, evidence, register = true) {
+        const meta = [
+          el("span", { className: "mono" }, [passage._id]),
+          el("span", {}, [`Last updated ${formatDate(passage.updated)}`]),
+        ];
+        // Only a web address is made into a link. Anything else in the field is left out.
+        if (passage.url.startsWith("https://")) {
+          meta.push(
+            el("a", { href: passage.url, target: "_blank", rel: "noopener noreferrer" }, [
+              "Open on GOV.UK",
+            ]),
+          );
+        }
+        const card = el("article", { className: "sheet passage" }, [
+          el("h3", {}, [passage.heading_path]),
+          el("p", { className: "meta" }, meta),
+          highlightedText(passage, evidence, register),
+        ]);
+        if (register) state.cards.set(passage._id, card);
+        return card;
+      }
+
+      /**
+       * The same rules as `normaliseForQuote` in src/verify/quoteCheck.ts, so a quote that passes
+       * the quote check is also found here. It also returns, for each character of the result,
+       * its position in the original text. The highlight needs that to mark the original words.
+       */
+      const WORD_END_PUNCTUATION = ".,;:!?";
+
+      function normaliseWithPositions(text) {
+        let result = "";
+        const positions = [];
+        // Starting as true drops whitespace at the very start.
+        let lastWasSpace = true;
+        for (let i = 0; i < text.length; i++) {
+          let character = text[i];
+          if (/\s/.test(character)) {
+            if (lastWasSpace) continue;
+            character = " ";
+            lastWasSpace = true;
+          } else {
+            if (WORD_END_PUNCTUATION.includes(character)) {
+              // Punctuation at the end of a word is dropped. Punctuation inside a number, as in
+              // "£1,035" or "1.5", is followed by another character and stays.
+              let next = i + 1;
+              while (next < text.length && WORD_END_PUNCTUATION.includes(text[next])) next++;
+              if (next === text.length || /\s/.test(text[next])) continue;
+            }
+            lastWasSpace = false;
+            if (character === "‘" || character === "’") character = "'";
+            if (character === "“" || character === "”") character = '"';
+            if (character === "–" || character === "—") character = "-";
+          }
+          result += character;
+          positions.push(i);
+        }
+        return { result, positions };
+      }
+
+      /** Where a quote sits in a passage text, as { start, end } in the original text, or null. */
+      function findQuote(text, quote) {
+        const passage = normaliseWithPositions(text);
+        const wanted = normaliseWithPositions(quote).result.trim();
+        if (wanted === "") return null;
+        const at = passage.result.indexOf(wanted);
+        if (at === -1) return null;
+        return {
+          start: passage.positions[at],
+          end: passage.positions[at + wanted.length - 1] + 1,
+        };
+      }
+
+      /** The passage text as text nodes, with a <mark> around every evidence quote found in it. */
+      function highlightedText(passage, evidence, register) {
+        const ranges = [];
+        for (const item of evidence) {
+          if (item.passage_id.trim() !== passage._id) continue;
+          const range = findQuote(passage.text, item.quote);
+          if (range) ranges.push({ ...range, evidence: [item] });
+        }
+        ranges.sort((a, b) => a.start - b.start);
+
+        // Two points can quote the same words, or words that overlap. Those share one highlight.
+        const merged = [];
+        for (const range of ranges) {
+          const last = merged[merged.length - 1];
+          if (last && range.start < last.end) {
+            last.end = Math.max(last.end, range.end);
+            last.evidence.push(...range.evidence);
+          } else {
+            merged.push(range);
+          }
+        }
+
+        const box = el("div", { className: "passage-text" });
+        let position = 0;
+        for (const range of merged) {
+          const mark = el("mark", {}, [passage.text.slice(range.start, range.end)]);
+          if (register) for (const item of range.evidence) state.marks.set(item, mark);
+          box.append(passage.text.slice(position, range.start), mark);
+          position = range.end;
+        }
+        box.append(passage.text.slice(position));
+        return box;
+      }
+
+      /** Writes under each evidence whether its quote was found, so a wrong quote stands out before any save. */
+      function markEvidenceRows(evidence) {
+        // Before the source column is drawn, nothing is known about any quote.
+        if (!state.sourcesDrawn) return;
+        for (const item of evidence) {
+          const place = state.evidenceRows.get(item);
+          if (!place) continue;
+          // A row that was just added has two empty fields. That is not a mistake yet.
+          const empty = item.passage_id.trim() === "" && item.quote.trim() === "";
+          let note = "";
+          if (!empty && !state.cards.has(item.passage_id.trim())) {
+            note = "This passage ID is not in the database.";
+          } else if (!empty && !state.marks.has(item)) {
+            note = "This quote is not in the passage.";
+          }
+          place.note.textContent = note;
+          place.row.classList.toggle("missing", note !== "");
+        }
+      }
+
+      /** Makes the highlight of one evidence quote pulse once. With `scroll` it is brought into view first. */
+      function showEvidence(evidence, scroll = true) {
+        state.activeEvidence = evidence;
+        for (const mark of document.querySelectorAll("mark.active")) {
+          mark.classList.remove("active", "pulse");
+        }
+        const mark = state.marks.get(evidence);
+        if (mark) {
+          if (scroll) mark.scrollIntoView({ block: "center" });
+          mark.classList.add("active");
+          // Reading the width makes the browser notice that the class was gone, so the animation runs again.
+          void mark.offsetWidth;
+          mark.classList.add("pulse");
+          return;
+        }
+        // The quote was not found. Show the passage it names, if there is one.
+        const card = state.cards.get(evidence.passage_id.trim());
+        if (card && scroll) card.scrollIntoView({ block: "start" });
+      }
+
+      /**
+       * What the agent's search tool returns for the question as it is worded. A decline is checked against it.
+       * The section is returned at once and its results are filled in when the server has answered,
+       * so a slow search does not hold back the passages above it.
+       */
+      function ownSearch(question) {
+        const results = el("div", { className: "hits" }, [
+          el("p", { className: "quiet" }, ["Searching."]),
+        ]);
+        cachedGet(`/api/search?q=${encodeURIComponent(question.trim())}`)
+          .then(searchResults, (error) => [el("p", { className: "problem" }, [error.message])])
+          .then((nodes) => results.replaceChildren(...nodes));
+        return el("section", { className: "source-group" }, [
+          el("h2", { className: "statement" }, [
+            "What the assistant's own search finds for this question",
+          ]),
+          results,
+        ]);
+      }
+
+      function searchResults(hits) {
+        if (hits.length === 0) {
+          return [el("p", { className: "quiet" }, ["The search finds nothing for this wording."])];
+        }
+        return hits.map(searchHit);
+      }
+
+      /** One search result. Its button swaps the snippet for the whole passage, and back. */
+      function searchHit(hit) {
+        const passageBox = el("div");
+        const toggle = button(
+          "Read the passage",
+          async () => {
+            const open = !row.classList.contains("open");
+            if (open) {
+              // The button is off while the passage is fetched, so a second click cannot close it again.
+              toggle.disabled = true;
+              const passage = await getPassage(hit.passage_id);
+              toggle.disabled = false;
+              passageBox.replaceChildren(
+                passage
+                  ? passageCard(passage, allEvidence(state.draft), false)
+                  : el("p", { className: "problem" }, ["This passage is not in the database."]),
+              );
+            } else {
+              passageBox.replaceChildren();
+            }
+            row.classList.toggle("open", open);
+            toggle.textContent = open ? "Hide the passage" : "Read the passage";
+            toggle.setAttribute("aria-expanded", String(open));
+          },
+          { className: "btn small" },
+        );
+        toggle.setAttribute("aria-expanded", "false");
+        const row = el("div", { className: "hit" }, [
+          el("h3", {}, [hit.heading_path]),
+          el("p", { className: "mono" }, [hit.passage_id]),
+          el("p", { className: "snippet" }, [hit.snippet]),
+          toggle,
+          passageBox,
+        ]);
+        return row;
+      }
+
+      async function runSearch(event) {
+        // Without this the browser would reload the page to submit the form.
+        event.preventDefault();
+        const query = $("search-input").value.trim();
+        if (query === "") {
+          clearSearch();
+          return;
+        }
+        const ticket = ++state.searchTicket;
+        $("search-results").replaceChildren(el("p", { className: "quiet" }, ["Searching."]));
+        let results;
+        try {
+          results = searchResults(await api(`/api/search?q=${encodeURIComponent(query)}`));
+        } catch (error) {
+          results = [el("p", { className: "problem" }, [error.message])];
+        }
+        // The search was cleared, or another question was opened, while this one was waiting for the server.
+        if (ticket !== state.searchTicket) return;
+        $("search-results").replaceChildren(...results);
+        $("search-clear").hidden = false;
+      }
+
+      function clearSearch() {
+        state.searchTicket++;
+        $("search-input").value = "";
+        $("search-results").replaceChildren();
+        $("search-clear").hidden = true;
+      }
+
+      // ---------- Events ----------
+
+      $("search").addEventListener("submit", runSearch);
+      $("search-clear").addEventListener("click", clearSearch);
+      $("hide-verified").addEventListener("input", renderQueue);
+      $("queue-select").addEventListener("input", () => {
+        goTo($("queue-select").value);
+        // The menu shows the open question again when the person chose to stay.
+        $("queue-select").value = state.currentId;
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (state.draft === null) return;
+        // A checkbox takes no text, so the keys stay on while it has the focus.
+        const field = event.target.closest("input:not([type='checkbox']), textarea, select");
+        const editing = state.view === "edit";
+        if (event.key === "Escape") {
+          stopReading();
+          if (field) field.blur();
+          else if (editing) cancelEdit();
+          return;
+        }
+        // A letter typed into a field is text, and a letter with Ctrl or Cmd belongs to the browser.
+        if (field || event.metaKey || event.ctrlKey || event.altKey) return;
+
+        const key = event.key.toLowerCase();
+        // The edit view has its own two buttons and no read-aloud button, so these keys are off there.
+        if (["v", "e", "k", "p"].includes(key) && editing) return;
+        if (!["j", "h", "k", "v", "e", "p", "/"].includes(key)) return;
+        // Without this, the key that moves the focus into a field would also be typed into it.
+        event.preventDefault();
+        if (key === "j") goTo(neighbourId(1));
+        if (key === "h") goTo(neighbourId(-1));
+        if (key === "v") verifyAndGoToNext();
+        if (key === "e") enterEdit();
+        // K sits next to J, so one hand goes to the next question and starts the voice. P does the same.
+        if (key === "k" || key === "p") toggleReading();
+        if (key === "/") $("search-input").focus();
+      });
+
+      // Closing or reloading the tab with unsaved edits asks first.
+      window.addEventListener("beforeunload", (event) => {
+        if (isDirty()) event.preventDefault();
+      });
+
+      // The browser's voice would go on talking after the page is closed or reloaded.
+      window.addEventListener("pagehide", stopReading);
+
+      /** The question that the part of the address after "#" names, if there is one. */
+      function questionInAddress() {
+        return state.questions.find(
+          (question) => `#${encodeURIComponent(question.id)}` === location.hash,
+        );
+      }
+
+      // A link such as "#q011" opens that question, also while the page is already open.
+      window.addEventListener("hashchange", () => {
+        const question = questionInAddress();
+        if (question) goTo(question.id);
+        // The address goes back to the open question when the person chose to stay.
+        if (state.currentId !== null) {
+          history.replaceState(null, "", `#${encodeURIComponent(state.currentId)}`);
+        }
+      });
+
+      // ---------- Start ----------
+
+      async function start() {
+        // A browser loads its list of voices in the background. Asking now has it ready for the first press of the button.
+        window.speechSynthesis?.getVoices();
+        try {
+          await loadQuestions();
+        } catch (error) {
+          // For example a bad line in the questions file. The message names the line.
+          $("progress").textContent = "Could not load";
+          $("question-sheet").replaceChildren(el("p", { className: "problem" }, [error.message]));
+          return;
+        }
+
+        // Open the question named in the address, else the first one in the queue that is still to check.
+        const queue = queueGroups().flatMap((group) => group.questions);
+        const first =
+          questionInAddress() ?? queue.find((q) => !isVerified(q)) ?? state.questions[0];
+        if (!first) {
+          renderStrip();
+          $("question-sheet").replaceChildren(
+            el("p", { className: "quiet" }, ["The questions file is empty."]),
+          );
+          return;
+        }
+        openQuestion(first.id);
+        // `?edit=1` in the address opens the edit view straight away, to test it.
+        if (new URLSearchParams(location.search).has("edit")) enterEdit();
+      }
+
+      start();
+    </script>
+  </body>
+</html>
