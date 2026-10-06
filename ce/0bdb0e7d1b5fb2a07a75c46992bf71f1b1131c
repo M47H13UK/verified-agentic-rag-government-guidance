@@ -1,0 +1,24 @@
+tests/quoteCheck.test.ts
+  s_341627b47f195a::t_d11e19071717c4 1-149
+src/verify/quoteCheck.ts
+  s_341627b47f195a::t_95a4797424247b 10
+  s_341627b47f195a::t_7c4bc89744c3b1 1-9,11-117
+docs/step-06.md
+  s_341627b47f195a::t_6bf92f8163b9ce 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ce0bdb0e7d1b5fb2a07a75c46992bf71f1b1131c",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
