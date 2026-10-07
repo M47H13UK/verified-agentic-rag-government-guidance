@@ -1,0 +1,19 @@
+eval/questions.jsonl
+  s_341627b47f195a::t_cc2b359cd4b1d6 5,12,15,18,22,29-30,33,37-38,46,48,51-52,58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "70be703f010f3c141b44265ca340fdc492865334",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
