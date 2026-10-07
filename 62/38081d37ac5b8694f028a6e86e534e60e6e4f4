@@ -1,0 +1,43 @@
+scripts/gold-check.html
+  s_341627b47f195a::t_549ffea1516eea 445-499,962,1077-1084,1124-1127,1139-1143,1457,1597,1604-1605,2038,2078-2079,2086-2090,2138-2279,2697,2706-2708,2715,2724-2726,2747-2748
+package.json
+  s_341627b47f195a::t_91b05e1735be53 29-30
+scripts/lib/goldAudio.ts
+  s_341627b47f195a::t_499c2df951057d 1-15
+eval/review-log.json
+  s_341627b47f195a::t_257784295c42b9 85-86,204,232-233,267-268,274-275,296
+  s_341627b47f195a::t_a4ab8f24e26b3a 205
+  s_341627b47f195a::t_bc4caf17a8f8e6 212
+  s_341627b47f195a::t_ff992e1986f2d4 36-37
+scripts/gold-check.ts
+  s_341627b47f195a::t_91b05e1735be53 21,111,149-155,229-231,250,252,259-267,269-270,273,275,290-344
+docs/how-it-works.md
+  s_341627b47f195a::t_e84eeded0094b7 354,362,374-375
+eval/questions.jsonl
+  s_341627b47f195a::t_257784295c42b9 12,33,38-39,42
+  s_341627b47f195a::t_ff992e1986f2d4 5
+  s_341627b47f195a::t_a4ab8f24e26b3a 29
+  s_341627b47f195a::t_bc4caf17a8f8e6 30
+tests/goldAudio.test.ts
+  s_341627b47f195a::t_f640dbec533ca1 1-34
+scripts/gold-audio.ts
+  s_341627b47f195a::t_a8f2baa7914ff8 1-173
+.gitignore
+  s_341627b47f195a::t_91b05e1735be53 25-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6238081d37ac5b8694f028a6e86e534e60e6e4f4",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
