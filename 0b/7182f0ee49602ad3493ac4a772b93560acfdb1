@@ -1,0 +1,19 @@
+docs/how-it-works.md
+  s_341627b47f195a::t_a9a4db58a1537a 465
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0b7182f0ee49602ad3493ac4a772b93560acfdb1",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "unknown"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
