@@ -1,0 +1,407 @@
+[
+  {
+    "id": "c01",
+    "question_id": "q043",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c02",
+    "question_id": "q004",
+    "setup_id": "H0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c03",
+    "question_id": "q024",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c04",
+    "question_id": "q046",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c05",
+    "question_id": "q008",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c06",
+    "question_id": "q049",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c07",
+    "question_id": "q033",
+    "setup_id": "OM1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 4,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c08",
+    "question_id": "q035",
+    "setup_id": "H5-1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 3,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c09",
+    "question_id": "q052",
+    "setup_id": "H0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c10",
+    "question_id": "q025",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "partially_supported"
+  },
+  {
+    "id": "c11",
+    "question_id": "q021",
+    "setup_id": "H5-1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c12",
+    "question_id": "q047",
+    "setup_id": "S1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c13",
+    "question_id": "q006",
+    "setup_id": "S1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 4,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c14",
+    "question_id": "q009",
+    "setup_id": "S0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 5,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c15",
+    "question_id": "q010",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c16",
+    "question_id": "q016",
+    "setup_id": "OX0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 4,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c17",
+    "question_id": "q023",
+    "setup_id": "OM1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c18",
+    "question_id": "q061",
+    "setup_id": "H1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c19",
+    "question_id": "q030",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c20",
+    "question_id": "q005",
+    "setup_id": "H1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c21",
+    "question_id": "q035",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c22",
+    "question_id": "q023",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c23",
+    "question_id": "q034",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 0,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c24",
+    "question_id": "q015",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c25",
+    "question_id": "q017",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c26",
+    "question_id": "q053",
+    "setup_id": "OM1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c27",
+    "question_id": "q004",
+    "setup_id": "S1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 1,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c28",
+    "question_id": "q002",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c29",
+    "question_id": "q018",
+    "setup_id": "S0",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "c30",
+    "question_id": "q028",
+    "setup_id": "OM1",
+    "repeat": 1,
+    "kind": "claim",
+    "claim_index": 2,
+    "judge_label": "supported"
+  },
+  {
+    "id": "a01",
+    "question_id": "q013",
+    "setup_id": "S0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a02",
+    "question_id": "q009",
+    "setup_id": "H5-1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "4"
+  },
+  {
+    "id": "a03",
+    "question_id": "q026",
+    "setup_id": "H0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a04",
+    "question_id": "q027",
+    "setup_id": "S0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "3"
+  },
+  {
+    "id": "a05",
+    "question_id": "q002",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a06",
+    "question_id": "q061",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "3"
+  },
+  {
+    "id": "a07",
+    "question_id": "q026",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a08",
+    "question_id": "q034",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a09",
+    "question_id": "q028",
+    "setup_id": "H5-0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a10",
+    "question_id": "q024",
+    "setup_id": "H1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a11",
+    "question_id": "q027",
+    "setup_id": "OX1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "3"
+  },
+  {
+    "id": "a12",
+    "question_id": "q025",
+    "setup_id": "OM1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "3"
+  },
+  {
+    "id": "a13",
+    "question_id": "q008",
+    "setup_id": "H5-1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "0"
+  },
+  {
+    "id": "a14",
+    "question_id": "q043",
+    "setup_id": "OM0",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  },
+  {
+    "id": "a15",
+    "question_id": "q047",
+    "setup_id": "H1",
+    "repeat": 1,
+    "kind": "answer",
+    "claim_index": null,
+    "judge_label": "2"
+  }
+]

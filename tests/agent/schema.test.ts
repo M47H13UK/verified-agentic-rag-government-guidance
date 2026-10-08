@@ -52,7 +52,7 @@ describe("prompt", () => {
 });
 
 describe("usage", () => {
-  it("sums tokens over every model in the result and takes the SDK's cost", () => {
+  it("sums tokens over every model in the result and prices each model at its list price", () => {
     // Shaped like a real result: the main model plus the SDK's small extra call on Haiku.
     const result = {
       type: "result",
@@ -76,13 +76,21 @@ describe("usage", () => {
       },
     } as unknown as SDKResultMessage;
 
-    expect(usageFromResult(result)).toEqual({
+    const usage = usageFromResult(result);
+
+    expect(usage).toMatchObject({
       inputTokens: 4056,
       outputTokens: 481,
       cacheReadTokens: 10,
       cacheCreationTokens: 20,
-      costUsd: 0.006461,
     });
+    // Haiku 4.5 costs $1 for input, $5 for output, $0.10 for a cache read and $2 for a cache write,
+    // per million tokens. The dated ID of the extra call uses the same row.
+    const main = 3133 * 1 + 466 * 5 + 10 * 0.1 + 20 * 2;
+    const extra = 923 * 1 + 15 * 5;
+    expect(usage.costUsd).toBeCloseTo((main + extra) / 1_000_000, 10);
+    // The SDK's own figure is not used.
+    expect(usage.costUsd).not.toBeCloseTo(0.006461, 6);
   });
 
   it("adds two usage records field by field", () => {

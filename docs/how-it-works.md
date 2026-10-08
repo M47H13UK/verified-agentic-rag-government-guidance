@@ -141,7 +141,7 @@ This file explains the project one build step at a time. Each section says what 
 - `query()` does throw after an error result. With the turn cap hit, the stream yields a result with subtype `error_max_turns`, and then the loop throws "Reached maximum number of turns". The result message still carries usage and cost.
 - `apiKeySource` on the init message is `none` when the subscription token is used.
 - Every run makes one extra small call on Haiku, about 900 input tokens, whatever the main model is. It shows up as a second entry in `modelUsage` and is included in `total_cost_usd`. It adds about $0.001 per run at list prices. The project counts it, because it is part of what a run costs.
-- `total_cost_usd` matches the list prices. One Haiku run used 3,133 input and 466 output tokens and reported $0.005463, which is 3,133 at $1 per million plus 466 at $5 per million.
+- `total_cost_usd` matches the list prices. One Haiku run used 3,133 input and 466 output tokens and reported $0.005463, which is 3,133 at $1 per million plus 466 at $5 per million. Step 10 found that this holds only for a model the installed SDK has the right prices for, and moved the price table into the project.
 - Prompt caching is automatic. The second run on a model reads most of its input from the cache, so a run costs less when another run came shortly before it.
 - The stream includes a `rate_limit_event` with the share of the plan's five hour and seven day windows already used. Long eval runs print it.
 - The init message lists bundled skills and agents even with `settingSources: []`. They cannot be used, because `tools: []` removes the `Skill` and `Agent` tools.
@@ -301,7 +301,7 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 
 **What it does.** It fixes the file format of the gold set, checks the file for drafting mistakes by code, and gives a local page where a person checks every question against GOV.UK before any eval run.
 
-**How the questions were written.** `eval/personas.md` describes six invented users. A model drafted 60 questions from the stored passages, 20 at a time, with a quote as evidence for every expected point. A second model then answered each question from scratch, compared its answer with the draft, and fixed or flagged what it found. Two more reviews followed. One was by a model from a different vendor, which saw only the questions and their passages. The other could search the whole corpus. They disagreed on 28 questions, and each of those was settled against the stored pages. A 61st question was added later that day at the owner's request. It was drafted from the stored passages in the same way and had the same two reviews. The doubts that the pages could not settle are in the `notes` field, starting with `CHECK:`. Every question is still marked as not verified. A person checks each one against the live site, and only then does the eval run.
+**How the questions were written.** `eval/personas.md` describes six invented users. A model drafted 60 questions from the stored passages, 20 at a time, with a quote as evidence for every expected point. A second model then answered each question from scratch, compared its answer with the draft, and fixed or flagged what it found. Two more reviews followed. One was by a model from a different vendor, which saw only the questions and their passages. The other could search the whole corpus. They disagreed on 28 questions, and each of those was settled against the stored pages. A 61st question was added later that day at the owner's request. It was drafted from the stored passages in the same way and had the same two reviews. The doubts that the pages could not settle are in the `notes` field, starting with `CHECK:`. At this step every question was marked as not verified. In step 10 the owner read the set on the check page, against the stored pages, and signed off all 61. Nobody compared the answers with the live site.
 
 **The pieces.**
 
@@ -380,7 +380,7 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 
 **Why it is built this way.**
 
-- A person checks every question because every score in the eval is measured against these answers. The questions are drafted by a model from the stored passages. A model can misread a page, and the stored copy can be older than the live page. A wrong gold answer marks a correct answer as wrong, or a wrong answer as correct, and no later step can notice. So the check is done once, by hand, against the live site, before any eval run.
+- A person checks every question because every score in the eval is measured against these answers. The questions are drafted by a model from the stored passages. A model can misread a page, and the stored copy can be older than the live page. A wrong gold answer marks a correct answer as wrong, or a wrong answer as correct, and no later step can notice. So the check is done once, by hand, before any eval run. In this build it was done against the stored pages that the check page shows. A check against the live site would also catch a stored copy that is out of date, and that was not done.
 - The lint runs first because a person's time is the expensive part. Code can tell that a quote is not in its passage or that a page path does not exist. The person then only judges what code cannot, which is whether the question is realistic and whether the points are right and complete.
 - The drafter records evidence for each point. Finding one sentence on a long page takes minutes. Reading a highlighted sentence takes seconds. The evidence quote goes through the same quote check as the agent's answers, so a made-up quote is caught before anyone reads it.
 - Editing the question text, the expected behaviour, the points, the sources or the must-not-say statements of a verified question removes its verification on save. The person checked the old words, so the check no longer applies. Editing the notes or the evidence keeps it, because neither is used for scoring.
@@ -420,7 +420,7 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 - `eval/rubric.md` defines each metric, holds the judge's instructions word for word and states the rule that picks the two headline setups. It was fixed before any results existed.
 - `src/eval/types.ts` and `src/llm/types.ts` hold the shared shapes. `EvalRecord` is one run. `Grade` is the scoring of one run. `StructuredCall` is one model call that returns an object matching a Zod schema.
 - `src/eval/wiring.ts` builds the real parts the eval needs. `answer` is the same `createAnswerFn` the command line uses, `judge` is one call to the judge model, and `getPassages` reads MongoDB. Everything else in `src/eval` takes these as plain functions, so the tests run on fakes.
-- `src/eval/setups.ts` lists the 8 setups, the verifier model and the judge model. `twinOf` pairs H1 with H0, and so on.
+- `src/eval/setups.ts` lists the setups, the verifier model and the judge model. There were 8 at this step and step 10 added two. `twinOf` pairs H1 with H0, and so on.
 - `src/eval/questions.ts` loads `eval/questions.jsonl` and checks every line. A bad line stops the load, and the error names the line number.
 - `src/eval/files.ts` reads and writes JSONL. A line is only ever added at the end of a file.
 - `src/eval/run.ts` is the runner. It keeps a few runs under way at once and writes each one to `results/runs/<setup>-r<repeat>.jsonl` as it finishes.
@@ -463,3 +463,50 @@ npm run eval -- audit-score
 - The grades are stale. After a rerun, run `grade` again before `report`. The report leaves out any run whose grade no longer matches it and says how many it left out.
 - The judge is wrong. It is a model, and it is the same model as four of the setups it grades. `audit-sample` and `audit-score` measure how often it agrees with a person.
 - A gap between two setups is noise. With 61 questions, one question is worth 1.6 points of correctness. Run more repeats and read the lowest and highest repeat in the table before trusting a gap of a few points.
+
+## Step 10. Full runs
+
+**What it does.** It runs the whole eval and commits the results. All 61 questions go through 10 setups, three times each. A judge reads every answer and the report is written. A sample of the judge's decisions is drawn for a person to label, to check the judge. The numbers in the README come from the files this step added to `results/`.
+
+**What was run.** The runs were made in one night, from 23:29 UTC on 7 October to 01:58 UTC on 8 October 2026, with 4 runs under way at once.
+
+| Part        | Setups               | Repeats | Runs     | What it is for                                             |
+| ----------- | -------------------- | ------- | -------- | ---------------------------------------------------------- |
+| Pass 1      | All 10               | 1       | 610      | The map of correctness against cost, and the headline pick |
+| Pass 2      | All 10               | 2 and 3 | 1,220    | A lowest and a highest repeat for every row                |
+| Judge audit | A sample from pass 1 | 1       | 45 items | How often the judge agrees with a person                   |
+
+- A verifier-on setup checks the draft of its verifier-off twin, so the 1,830 runs hold 915 drafts by the agent.
+- `results/pass-1/` is a copy of the report as it stood after pass 1. The headline rule picked OX0 and OM0 from those numbers, before pass 2 started. With three repeats the rule still picks the same two.
+- The plan was to repeat only the two headline setups in pass 2. The runs turned out to be fast, so every setup was repeated. Every row then has a range, and the gap a verifier makes can be read against the spread between repeats.
+- The audit sample was drawn from pass 1 with seed 1, before pass 2 wrote any grade. It has 30 claims and 15 answers.
+- No run failed for a reason outside the agent. 16 runs ended without an answer and score 0. They come from 8 drafts, each counted for both setups of its pair. Seven are Haiku 4.5 drafts that used up their turns. One is a Sonnet 5.5 draft that did not return an answer in the right shape after 5 attempts.
+
+**The pieces this step added.**
+
+- `eval/questions.jsonl` is signed off. The owner read the set on the check page of step 8 and signed off all 61 questions on 8 October 2026. The questions were checked against the stored copy of the guidance, not against the live site.
+- `src/eval/setups.ts` has two more setups, H5-0 and H5-1, for `claude-haiku-5-5`. The model came out while the eval was being run.
+- `src/llm/prices.ts` holds the list prices of the four models and works out what a set of token counts costs. `usageFromResult` in `src/llm/sdk.ts` now prices each model's tokens with it. Before, it took the SDK's own estimate.
+- `scripts/judge-audit.ts`, `scripts/judge-audit.html` and `scripts/lib/auditSheet.ts` are the page for labelling the audit sheet. `npm run judge:check` starts it on `127.0.0.1:4175`. It shows one item at a time. A claim is shown next to the passages it cites, with the quoted words highlighted. An answer is shown next to the expected points as a tick list. The judge's rules from the rubric are printed next to the buttons, so the person and the judge apply the same rules. The page reads and writes `eval/judge-audit.csv` only. It never opens the key file with the judge's labels.
+- `src/eval/report.ts` adds the judge agreement to `summary.json` and `summary.md` once the sheet has labels. `npm run eval -- report` scores the sheet on the way. A different number of repeats between setups is a note under the table and no longer a warning.
+- `src/cli.ts` asks with Opus 5.5 at medium effort when no model is named. Before, it asked with Haiku 4.5.
+- `eval/rubric.md` lists these changes under "Changes", with the date and the reason.
+- `results/runs/` and `results/grades/` hold every run and every grade. `results/summary.json`, `results/summary.md` and `results/frontier.md` are the report.
+
+**Why it is built this way.**
+
+- The price table is in the project because the SDK's table was wrong twice. Its figure for 61 Sonnet 5.5 runs was compared with the token counts. It fitted a cache read price of $0.20 per million tokens, and the list price is $0.10. It has no price for Haiku 5.5 at all and charges an unknown model at the highest rate it knows, so a question that costs $0.002 showed as $0.24. The SDK marks that case with `costBasis: "unknown"` in `modelUsage`. A table in the project can be checked against the pricing page line by line, and it does not change when the SDK is updated.
+- Cache writes are priced at the one hour rate. The raw usage of a run shows that the SDK writes one hour cache entries on a subscription token, and the SDK's own estimate uses that rate too.
+- The runs made before the price fix were thrown away and made again. A stored run keeps one total per kind of token, summed over models, so it could not be priced again exactly. None of those runs had been graded.
+- The headline setups were fixed after pass 1 and a copy of that report was kept. Picking them after seeing every repeat would let the choice follow the noise.
+- The audit sample was drawn before pass 2 so that it comes from one known set of runs. The person labels without seeing the judge's labels, and the page keeps the two files apart.
+- The default of `npm run ask` follows the eval. It is OM0, the cheaper headline setup, with the verifier on. In the runs the verifier cost about 2 cents more per answer and no unsupported claim got past it on that model.
+
+**What could break.**
+
+- A new model is used and has no row in `LIST_PRICES`. The run still works. Its cost is then the SDK's estimate, and a line on standard error says so. A test fails if a model of the eval has no price.
+- A list price changes. The table is dated and has to be edited by hand. Runs already on disk keep the cost worked out when they ran.
+- A prompt for Haiku 5.5 goes over 100,000 tokens. It then costs five times as much per token, and the table only has the lower price. The largest prompt in these runs is far below that.
+- The audit sheet is drawn again with `--force` after it was labelled. The labels are gone. The page refuses a save when the row it loaded is no longer the row on disk.
+- The questions file is edited after the runs. A reworded question stops the report with an error. A changed expected point is not detected, so grade again.
+- The plan's usage limit is reached in the middle of a pass. The batch stops after 5 failures in a row and the same command carries on later.

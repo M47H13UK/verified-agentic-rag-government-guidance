@@ -1,6 +1,7 @@
 import type { SDKMessage, SDKResultMessage } from "@anthropic-ai/claude-agent-sdk";
 import type { Usage } from "../types";
 import { ZERO_USAGE } from "../usage";
+import { costAtListPrice, priceOf } from "./prices";
 
 // Small helpers shared by every call that goes through the Agent SDK.
 
@@ -15,18 +16,46 @@ export function sdkEnv(): Record<string, string | undefined> {
 
 /**
  * Reads tokens and cost from the result message, which is present on success and on error.
- * `modelUsage` is summed over models because the SDK also makes one small call on a second model,
- * and `total_cost_usd` already includes it. The cost is the SDK's estimate at list prices, not a charge.
+ * `modelUsage` has one entry per model, because the SDK also makes one small call on a second model.
+ * Tokens are summed over the entries. Each entry is priced at its own model's list price.
+ * The cost is an estimate at list prices, not a charge.
  */
 export function usageFromResult(result: SDKResultMessage): Usage {
-  const usage: Usage = { ...ZERO_USAGE, costUsd: result.total_cost_usd };
-  for (const model of Object.values(result.modelUsage)) {
-    usage.inputTokens += model.inputTokens;
-    usage.outputTokens += model.outputTokens;
-    usage.cacheReadTokens += model.cacheReadInputTokens;
-    usage.cacheCreationTokens += model.cacheCreationInputTokens;
+  const usage: Usage = { ...ZERO_USAGE };
+  for (const [model, counts] of Object.entries(result.modelUsage)) {
+    const tokens = {
+      inputTokens: counts.inputTokens,
+      outputTokens: counts.outputTokens,
+      cacheReadTokens: counts.cacheReadInputTokens,
+      cacheCreationTokens: counts.cacheCreationInputTokens,
+    };
+    usage.inputTokens += tokens.inputTokens;
+    usage.outputTokens += tokens.outputTokens;
+    usage.cacheReadTokens += tokens.cacheReadTokens;
+    usage.cacheCreationTokens += tokens.cacheCreationTokens;
+
+    const price = priceOf(model);
+    if (price) {
+      usage.costUsd += costAtListPrice(tokens, price);
+    } else {
+      // Every model the eval uses is in the table, and a test checks that. This only happens
+      // when `ask` is run with some other model. The SDK's own figure is then the best there is.
+      warnNoPrice(model);
+      usage.costUsd += counts.costUSD;
+    }
   }
   return usage;
+}
+
+const modelsWithoutPrice = new Set<string>();
+
+/** Says once per model that its cost is the SDK's estimate and not from the price table. */
+function warnNoPrice(model: string): void {
+  if (modelsWithoutPrice.has(model)) return;
+  modelsWithoutPrice.add(model);
+  console.error(
+    `[agent sdk] no list price for ${model} in src/llm/prices.ts. Its cost is the SDK's own estimate.`,
+  );
 }
 
 /** Why a run ended badly, as one line. */

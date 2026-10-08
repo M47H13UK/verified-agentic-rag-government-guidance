@@ -235,6 +235,76 @@ describe("writeReport", () => {
     expect(report.warnings.some((w) => w.includes("ended without an answer is 1"))).toBe(true);
   });
 
+  it("adds the judge audit to the summary and the table once the sheet is scored", async () => {
+    const { outDir } = await runGradeReport(questions);
+    expect(writeReport({ questions, outDir, now }).summary.judge_audit).toBeNull();
+
+    const audit = {
+      labelled: 4,
+      unlabelled: 1,
+      agreed: 3,
+      agreement_rate: 0.75,
+      claims: { labelled: 2, agreed: 2 },
+      answers: { labelled: 2, agreed: 1 },
+      disagreements: [],
+    };
+    const report = writeReport({ questions, outDir, now, audit });
+
+    expect(report.summary.judge_audit).toEqual({
+      labelled: 4,
+      agreed: 3,
+      agreement_rate: 0.75,
+      claims: { labelled: 2, agreed: 2 },
+      answers: { labelled: 2, agreed: 1 },
+    });
+    const table = readFileSync(join(outDir, "summary.md"), "utf8");
+    expect(table).toContain("The judge gave the same label on 3 of them, which is 75.0%.");
+    expect(table).toContain("That is 2 of 2 claims and 1 of 2 answers.");
+    expect(table).not.toContain("reported separately");
+  });
+
+  it("treats an audit sheet with no labels as not done", async () => {
+    const { outDir } = await runGradeReport(questions);
+    const audit = {
+      labelled: 0,
+      unlabelled: 5,
+      agreed: 0,
+      agreement_rate: null,
+      claims: { labelled: 0, agreed: 0 },
+      answers: { labelled: 0, agreed: 0 },
+      disagreements: [],
+    };
+
+    const report = writeReport({ questions, outDir, now, audit });
+
+    expect(report.summary.judge_audit).toBeNull();
+  });
+
+  it("adds a note, not a warning, when only some setups ran a second repeat", async () => {
+    const { outDir } = await runGradeReport(questions);
+    // Pass 2 repeats one setup only.
+    await runEval({ questions, setups: [H0], repeat: 2, answer, outDir });
+    await gradeFile({
+      setupId: "H0",
+      repeat: 2,
+      questions,
+      outDir,
+      judge,
+      getPassages,
+      quoteCheck,
+    });
+
+    const report = writeReport({ questions, outDir, now });
+
+    expect(report.summary.setups.map((setup) => setup.repeats)).toEqual([2, 1]);
+    expect(report.warnings).toEqual([]);
+    const table = readFileSync(join(outDir, "summary.md"), "utf8");
+    expect(table).toContain("The setups did not all run the same number of repeats");
+    expect(table).toContain(
+      "| H0 | `claude-haiku-4-5` | default | off | 3 | 2 | 100.0% (100.0% to 100.0%) |",
+    );
+  });
+
   it("throws a clear error when there is nothing to report", () => {
     expect(() => writeReport({ questions, outDir: tempDir(), now })).toThrow(/no graded runs/);
   });

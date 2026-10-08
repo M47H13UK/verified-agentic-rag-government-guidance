@@ -6,10 +6,18 @@ import { gradesPath, latestByQuestion, listRepeats, readJsonl, runsPath } from "
 import { HEADLINE_RULE, paretoFrontier, pickHeadlineSetups } from "./frontier";
 import { isUsableGrade } from "./grade";
 import { mean, sum, summariseSetup } from "./metrics";
+import type { AuditScore } from "./judgeAudit";
 import { isVerified } from "./questions";
 import { assertSameWording } from "./run";
 import { JUDGE_MODEL, SETUPS, VERIFIER_MODEL } from "./setups";
-import type { EvalRecord, EvalSummary, GoldQuestion, Grade, SetupSummary } from "./types";
+import type {
+  EvalRecord,
+  EvalSummary,
+  GoldQuestion,
+  Grade,
+  JudgeAuditSummary,
+  SetupSummary,
+} from "./types";
 
 export type ReportOptions = {
   /** The whole gold set, not only the questions that were run. */
@@ -18,6 +26,8 @@ export type ReportOptions = {
   outDir: string;
   /** Passed in so a test can fix the date. Defaults to the current time. */
   now?: Date;
+  /** The scored judge audit, when the sheet exists. Left out, the summary says it is still to do. */
+  audit?: AuditScore;
 };
 
 export type Report = {
@@ -141,6 +151,7 @@ export function buildSummary(options: ReportOptions): Report {
     },
     per_question: perQuestion,
     total_cost_usd: totalCost,
+    judge_audit: auditSummary(options.audit),
   };
 
   // ---------- Warnings ----------
@@ -166,14 +177,28 @@ export function buildSummary(options: ReportOptions): Report {
         "A run that failed for a reason outside the agent, such as a rate limit, is retried when the eval is run again. A run where the agent itself gave no answer is final.",
     );
   }
-  if (new Set(setups.map((setup) => `${setup.questions} ${setup.repeats}`)).size > 1) {
+  // A different number of repeats is not a warning. Extra repeats can be run for some setups
+  // only, and the table says so under it.
+  if (new Set(setups.map((setup) => setup.questions)).size > 1) {
     warnings.push(
-      "Warning. The setups did not all cover the same number of questions and repeats, " +
+      "Warning. The setups did not all cover the same number of questions, " +
         "so their rows cannot be compared directly.",
     );
   }
 
   return { summary, warnings };
+}
+
+/** The part of the audit score that goes in the summary. Null when nothing is labelled yet. */
+function auditSummary(audit: AuditScore | undefined): JudgeAuditSummary | null {
+  if (!audit || audit.agreement_rate === null) return null;
+  return {
+    labelled: audit.labelled,
+    agreed: audit.agreed,
+    agreement_rate: audit.agreement_rate,
+    claims: audit.claims,
+    answers: audit.answers,
+  };
 }
 
 // ---------- Formatting ----------
@@ -263,12 +288,35 @@ export function renderSummaryMd(summary: EvalSummary, warnings: string[]): strin
     ...rows,
     "",
     "With more than one repeat, correctness and unsupported claims show the mean, then the lowest and the highest repeat in brackets. Every metric is defined in `eval/rubric.md`.",
+    ...repeatsNote(summary),
     "",
     `The runs and the judge cost ${dollars(summary.total_cost_usd, 2)} in total at list prices. A draft shared by a verifier-off setup and its verifier-on twin is counted in both, so the amount spent is lower.`,
     "",
-    "How often the judge agrees with a person is reported separately. Label `eval/judge-audit.csv`, then run `npm run eval -- audit-score`.",
+    judgeAuditLine(summary.judge_audit),
     "",
   ].join("\n");
+}
+
+/** A paragraph for the case where some setups ran more repeats than others. Empty when all ran the same. */
+function repeatsNote(summary: EvalSummary): string[] {
+  if (new Set(summary.setups.map((setup) => setup.repeats)).size <= 1) return [];
+  return [
+    "",
+    "The setups did not all run the same number of repeats, so only some rows show a range. The Repeats column says how many each row is based on.",
+  ];
+}
+
+/** One paragraph on how often the judge agreed with a person, or on how to measure it. */
+function judgeAuditLine(audit: JudgeAuditSummary | null): string {
+  if (!audit) {
+    return "How often the judge agrees with a person is reported separately. Label `eval/judge-audit.csv`, then run `npm run eval -- audit-score`.";
+  }
+  return (
+    `A person labelled ${audit.labelled} of the judge's decisions without seeing them. ` +
+    `The judge gave the same label on ${audit.agreed} of them, which is ${percent(audit.agreement_rate)}. ` +
+    `That is ${audit.claims.agreed} of ${audit.claims.labelled} claims and ${audit.answers.agreed} of ${audit.answers.labelled} answers. ` +
+    "The sample is in `eval/judge-audit.csv` and the judge's labels are in `eval/judge-audit-key.json`."
+  );
 }
 
 /** Builds `frontier.md`. Every setup's cost and correctness, the frontier, and the headline pair. */

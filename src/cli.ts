@@ -15,12 +15,15 @@ import type { Effort, Setup } from "./types";
 
 loadEnv();
 
+const DEFAULT_MODEL = "claude-opus-5-5";
+const DEFAULT_EFFORT = "medium";
+
 const { values: flags, positionals } = parseArgs({
   allowPositionals: true,
   // Lets `--no-verify` switch the verifier off.
   allowNegative: true,
   options: {
-    model: { type: "string", default: "claude-haiku-4-5" },
+    model: { type: "string" },
     effort: { type: "string" },
     verify: { type: "boolean", default: true },
   },
@@ -86,10 +89,15 @@ async function ask(question: string): Promise<void> {
     return;
   }
   const db = await getDb();
+  // With no --model the question is asked the way setup OM1 of the eval asks it, which is
+  // Opus 5.5 at medium effort with the verifier on. It is OM0, the cheaper of the eval's two
+  // headline setups, plus the verifier. A model named on the command line gets no effort unless
+  // --effort is given too.
+  const effort = flags.effort ?? (flags.model ? undefined : DEFAULT_EFFORT);
   const setup: Setup = {
     id: "cli",
-    model: flags.model,
-    ...(flags.effort ? { effort: flags.effort as Effort } : {}),
+    model: flags.model ?? DEFAULT_MODEL,
+    ...(effort ? { effort: effort as Effort } : {}),
     verifier: flags.verify,
   };
 

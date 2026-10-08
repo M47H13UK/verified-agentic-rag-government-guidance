@@ -1,0 +1,1431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Judge audit</title>
+    <!-- An empty icon, so the browser does not ask the server for one. -->
+    <link rel="icon" href="data:," />
+    <script>
+      // `?theme=dark` or `?theme=light` in the address forces a theme, to test one without
+      // changing the system setting. It runs before the page is drawn, so the other theme never flashes.
+      {
+        const theme = new URLSearchParams(location.search).get("theme");
+        if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+      }
+    </script>
+    <style>
+      /* ---------- Tokens, the same as scripts/gold-check.html ---------- */
+
+      :root {
+        color-scheme: light dark;
+        /* Each colour is light-dark(light theme, dark theme). The browser picks one from the colour scheme in use. */
+        --paper: light-dark(#f2f4f7, #0e151d);
+        --sheet: light-dark(#ffffff, #151e29);
+        --ink: light-dark(#16212e, #e6ecf3);
+        --ink-soft: light-dark(#5b6878, #93a1b3);
+        --rule: light-dark(#d5dbe3, #263241);
+        --highlighter: #ffe35a;
+        --red-pen: light-dark(#c4162a, #ff7a85);
+        --tick: light-dark(#1e7b4f, #55c48f);
+        --link: light-dark(#1a56b8, #7fb0ff);
+        /* A highlight is solid yellow on a light sheet. On a dark sheet that would glare, so it is a tint with a yellow line under it. */
+        --highlight-fill: light-dark(var(--highlighter), rgba(255, 227, 90, 0.22));
+        --highlight-line: light-dark(transparent, var(--highlighter));
+        /* The check mark on a labelled cell. White is too faint on the light green of the dark theme. */
+        --on-tick: light-dark(#ffffff, #0e151d);
+
+        --sans: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+        --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+        --mono: ui-monospace, "SF Mono", Menlo, monospace;
+        /* About 70 characters of the 18px reading text. */
+        --measure: 576px;
+      }
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+      }
+      :root[data-theme="light"] {
+        color-scheme: light;
+      }
+
+      /* ---------- Base ---------- */
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 15px/1.45 var(--sans);
+      }
+      h1,
+      h2,
+      p,
+      ol,
+      ul {
+        margin: 0;
+        font-size: inherit;
+        font-weight: 400;
+      }
+      ol,
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      button,
+      input {
+        font: inherit;
+        color: inherit;
+      }
+      a {
+        color: var(--link);
+      }
+      :focus-visible {
+        outline: 2px solid var(--link);
+        outline-offset: 2px;
+      }
+      /* An element with a display rule of its own would otherwise ignore the hidden attribute. */
+      [hidden] {
+        display: none !important;
+      }
+      .mono {
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+      .quiet {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .problem {
+        color: var(--red-pen);
+      }
+      .icon {
+        flex: none;
+        width: 14px;
+        height: 14px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sheet {
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        background: var(--sheet);
+      }
+
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .btn {
+        padding: 6px 14px;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        background: var(--sheet);
+        white-space: nowrap;
+      }
+      .btn:hover:not(:disabled) {
+        border-color: var(--ink-soft);
+      }
+      /* The main button of an answer, and the label a claim already has. */
+      .btn.primary,
+      .btn[aria-pressed="true"] {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 600;
+      }
+      .btn.small {
+        padding: 3px 10px;
+        font-size: 13px;
+        color: var(--ink);
+      }
+      /* The key that does the same as the button or the tick box. */
+      kbd {
+        margin-left: 8px;
+        padding: 0 5px;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        font: 400 13px var(--sans);
+        opacity: 0.65;
+      }
+
+      /* A highlight. Only the words a claim quotes get one. */
+      mark {
+        padding: 1px 0;
+        border-bottom: 2px solid var(--highlight-line);
+        background: var(--highlight-fill);
+        color: var(--ink);
+        /* A quote that runs over several lines keeps its padding and line on each of them. */
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+
+      /* ---------- The top strip ---------- */
+
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 24px;
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--rule);
+      }
+      h1 {
+        font-weight: 600;
+      }
+      /* The mark sheet. The cells make 1, 2, 3 or 4 even rows, and the window width decides which. */
+      /* The page works out how many cells each of those takes per row, from the number of items. */
+      #mark-sheet {
+        --per-row: var(--per-row-2, 30);
+        display: grid;
+        grid-template-columns: repeat(var(--per-row), 18px);
+        gap: 3px;
+      }
+      @media (min-width: 1900px) {
+        #mark-sheet {
+          --per-row: var(--per-row-1, 60);
+        }
+      }
+      @media (max-width: 700px) {
+        #mark-sheet {
+          --per-row: var(--per-row-3, 20);
+        }
+      }
+      @media (max-width: 460px) {
+        #mark-sheet {
+          --per-row: var(--per-row-4, 15);
+        }
+      }
+      .cell {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid var(--rule);
+        border-radius: 3px;
+        background: var(--sheet);
+      }
+      .cell.labelled {
+        border-color: var(--tick);
+        background: var(--tick);
+      }
+      /* The check mark is the corner of a small box, turned 45 degrees. */
+      .cell.labelled::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 1.5px;
+        width: 4px;
+        height: 8px;
+        border: solid var(--on-tick);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      /* The ring on the open item is the border plus one more pixel, 2px in all. */
+      .cell.current {
+        border-color: var(--ink);
+        box-shadow: 0 0 0 1px var(--ink);
+      }
+      #progress {
+        white-space: nowrap;
+      }
+      .keys {
+        margin-left: auto;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+
+      /* ---------- Two columns ---------- */
+
+      /* The page itself never scrolls. Each column scrolls on its own, so the claim stays next to its passage. */
+      /* The left column is what gets a label. The right column is what to check it against. */
+      /* For a claim the rules and the buttons are under the claim, so the passage has the whole right column. */
+      main {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto auto;
+        grid-template-areas:
+          "item evidence"
+          "rules evidence"
+          "actions evidence";
+      }
+      #item {
+        grid-area: item;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      #claim-rules {
+        grid-area: rules;
+        padding: 12px 20px 0;
+      }
+      #evidence {
+        grid-area: evidence;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      #actions {
+        grid-area: actions;
+        padding: 12px 20px;
+        border-top: 1px solid var(--rule);
+        background: var(--paper);
+      }
+      /* The line between the two columns. */
+      #item,
+      #claim-rules,
+      #actions {
+        border-right: 1px solid var(--rule);
+      }
+      @media (min-width: 1000px) {
+        /* The rules for a claim and the buttons under them are one block, with one line above it. */
+        #claim-rules {
+          border-top: 1px solid var(--rule);
+        }
+        main.claim #actions {
+          border-top: 0;
+        }
+        /* For an answer the button is under the tick list that it counts. */
+        main.answer {
+          grid-template-rows: minmax(0, 1fr) auto;
+          grid-template-areas:
+            "item evidence"
+            "item actions";
+        }
+        main.answer #actions {
+          border-right: 0;
+        }
+        /* There the button lines up with the tick list above it. */
+        main.answer .actions-inner {
+          max-width: calc(var(--measure) + 50px);
+          margin: 0;
+        }
+      }
+      /* With no sheet to label there is one message and nothing next to it. */
+      main.empty {
+        display: block;
+      }
+      main.empty #item {
+        border-right: 0;
+      }
+
+      /* ---------- Left, the item to label ---------- */
+
+      #item-sheet {
+        max-width: calc(var(--measure) + 66px);
+        margin: 0 auto;
+        padding: 28px 32px 32px;
+      }
+      /* The sheet takes the focus when an item opens. It is not a control, so it shows no ring. */
+      #item-sheet:focus {
+        outline: none;
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 18px;
+        font-size: 13px;
+        color: var(--ink-soft);
+        overflow-wrap: anywhere;
+      }
+      .caption {
+        margin: 20px 0 2px;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      /* The text of a question, a claim or an answer keeps its line breaks. */
+      .asked,
+      .claim-text,
+      .reading,
+      .answer-claims li {
+        white-space: pre-line;
+        overflow-wrap: break-word;
+      }
+      .claim-text {
+        font: 400 26px/1.35 var(--serif);
+      }
+      .reading,
+      .answer-claims li,
+      .point-text,
+      .must-not li {
+        font: 400 18px/1.55 var(--serif);
+      }
+      .answer-claims {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      /* The bullet hangs to the left, so the lines of a claim share one left edge. */
+      .answer-claims li {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+      }
+      .answer-claims li::before {
+        content: "•";
+        color: var(--ink-soft);
+      }
+      /* ---------- The rules for a label ---------- */
+
+      /* They are for looking up, so the type is small and quiet. */
+      .rules {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      /* The rules for a claim line up with the sheet above them and the buttons under them. */
+      #claim-rules > * {
+        max-width: calc(var(--measure) + 66px);
+        margin-right: auto;
+        margin-left: auto;
+      }
+      /* An answer has its rules in the tick list, so this block is empty then. */
+      #claim-rules:empty {
+        display: none;
+      }
+      /* One label per row, with its name on the left. */
+      .rules dl {
+        display: grid;
+        gap: 4px;
+        margin-top: 6px;
+        margin-bottom: 0;
+      }
+      .rules dl > div {
+        display: grid;
+        grid-template-columns: 9em minmax(0, 1fr);
+        gap: 0 12px;
+      }
+      .rules dt {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .rules dd {
+        margin: 0;
+      }
+      /* One rule per line. */
+      ul.rules {
+        display: grid;
+        gap: 2px;
+      }
+      ul.rules li {
+        display: grid;
+        grid-template-columns: 14px minmax(0, 1fr);
+      }
+      ul.rules li::before {
+        content: "•";
+      }
+      .statement + .rules {
+        margin: -6px 0 14px;
+      }
+      /* Under the last tick box, in line with its words. */
+      .zero + .rules {
+        margin: 8px 0 0 24px;
+      }
+
+      /* ---------- Right, what to check it against ---------- */
+
+      #evidence > * {
+        max-width: calc(var(--measure) + 50px);
+      }
+      #evidence-list {
+        display: grid;
+        gap: 16px;
+      }
+      .passage,
+      .checklist {
+        padding: 20px 24px 24px;
+      }
+      .passage .meta {
+        margin-bottom: 14px;
+      }
+      .passage-text {
+        max-width: var(--measure);
+        font: 400 18px/1.55 var(--serif);
+        /* A passage keeps one list item per line, so line breaks are shown as they are stored. */
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      /* Quoted words that could not be shown inside the passage. */
+      .loose-quote {
+        margin-bottom: 14px;
+        padding-left: 12px;
+        border-left: 3px solid var(--red-pen);
+      }
+      .loose-quote .problem {
+        font-size: 13px;
+      }
+      .loose-quote .passage-text {
+        font-size: 15px;
+      }
+
+      .statement {
+        margin-bottom: 12px;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .ticks + .statement,
+      .quiet + .statement {
+        margin-top: 32px;
+      }
+      .ticks {
+        display: grid;
+        gap: 6px;
+      }
+      /* A whole row is the label of its tick box, so a click anywhere on it ticks the box. */
+      .tick {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr) auto;
+        align-items: start;
+        margin: 0 -8px;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        overflow-wrap: break-word;
+      }
+      .tick:hover {
+        background: var(--paper);
+      }
+      .tick input {
+        width: 16px;
+        height: 16px;
+        margin: 6px 0 0;
+        accent-color: var(--ink);
+      }
+      .tick kbd {
+        margin-top: 4px;
+      }
+      .must-not {
+        display: grid;
+        gap: 10px;
+      }
+      .must-not li {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+        overflow-wrap: break-word;
+      }
+      .must-not .icon {
+        margin-top: 7px;
+        color: var(--red-pen);
+      }
+      /* The box that makes the label 0. A hairline sets it apart from the two lists. */
+      .zero {
+        margin: 20px 0 0;
+        padding: 16px 0 0;
+        border-top: 1px solid var(--rule);
+        border-radius: 0;
+      }
+      .zero:hover {
+        background: none;
+      }
+      .zero input {
+        margin-top: 2px;
+      }
+      .zero kbd {
+        margin-top: 0;
+      }
+      .licence {
+        margin-top: 28px;
+      }
+
+      /* ---------- The action bar ---------- */
+
+      /* The buttons line up with the sheet above them. */
+      .actions-inner {
+        max-width: calc(var(--measure) + 66px);
+        margin: 0 auto;
+      }
+
+      #action-buttons,
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+      /* The line under the buttons is always there, so the bar keeps its height from one item to the next. */
+      .bar {
+        gap: 2px 12px;
+        min-height: 27px;
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      #status {
+        margin-left: auto;
+      }
+      #status.error {
+        color: var(--red-pen);
+        font-weight: 600;
+      }
+
+      /* Slimmer buttons while the columns are narrow, so the three labels of a claim stay on one row. */
+      @media (max-width: 1299px) {
+        #action-buttons .btn {
+          padding: 6px 10px;
+        }
+        #action-buttons kbd {
+          margin-left: 6px;
+        }
+      }
+
+      /* ---------- Below 1000px, one column ---------- */
+
+      /* The page scrolls as a whole. What to check comes under the item, */
+      /* and the action bar stays at the bottom of the window. */
+      @media (max-width: 999px) {
+        html,
+        body {
+          height: auto;
+        }
+        body {
+          display: block;
+        }
+        main {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+          grid-template-areas: "item" "rules" "evidence" "actions";
+        }
+        #item,
+        #evidence {
+          overflow: visible;
+          padding: 16px;
+        }
+        #item {
+          padding-bottom: 0;
+        }
+        #item,
+        #claim-rules,
+        #actions {
+          border-right: 0;
+        }
+        #claim-rules {
+          padding: 12px 16px 0;
+        }
+        #item-sheet {
+          padding: 20px;
+        }
+        .claim-text {
+          font-size: 22px;
+        }
+        /* What to check lines up with the item above it. */
+        #evidence > * {
+          max-width: calc(var(--measure) + 66px);
+          margin-right: auto;
+          margin-left: auto;
+        }
+        .passage,
+        .checklist {
+          padding: 16px 20px 20px;
+        }
+        #actions {
+          position: sticky;
+          bottom: 0;
+          padding: 10px 16px;
+        }
+      }
+
+      /* On a phone the three labels of a claim fit on one row without their key hints. */
+      /* The line of keys in the top strip still names the keys. */
+      @media (max-width: 520px) {
+        #action-buttons kbd {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Judge audit</h1>
+      <div id="mark-sheet" role="group" aria-label="All items in sheet order"></div>
+      <p id="progress">Loading</p>
+      <p id="keys" class="keys"></p>
+    </header>
+
+    <main class="empty">
+      <section id="item" aria-label="Item to label">
+        <article id="item-sheet" class="sheet" tabindex="-1"></article>
+      </section>
+
+      <div id="claim-rules" class="rules"></div>
+
+      <aside id="evidence" aria-label="What to check it against" hidden>
+        <div id="evidence-list"></div>
+        <p class="licence quiet">
+          The passages are a stored copy of GOV.UK pages. Contains public sector information
+          licensed under the Open Government Licence v3.0. This tool is unofficial and not
+          affiliated with GOV.UK or the Home Office.
+        </p>
+      </aside>
+
+      <div id="actions" hidden>
+        <div class="actions-inner">
+          <div id="action-buttons"></div>
+          <div class="bar">
+            <p id="saved"></p>
+            <button id="clear" type="button" class="btn small" hidden>Clear label</button>
+            <p id="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // The labelling page for the judge audit. Plain JavaScript, no library and no build step.
+      // It only talks to its own server, scripts/judge-audit.ts.
+      //
+      // How it fits together: `state.items` is what the sheet holds, one item per row. One item
+      // is open at a time. Choosing a label sends it to the server, which writes it into the
+      // sheet, and the page moves on to the next item without a label. The ticks on an answer
+      // item are only an aid for counting. They stay in this browser, and their count is the label.
+
+      // The person labelling must apply the same rules as the judge. So the rules shown on the page
+      // are the ones the judge was given, from "What the judge is told" in eval/rubric.md.
+      // They are cut down to what a label needs, and their meaning is not changed.
+
+      /** The three labels of a claim. `value` is what goes into the sheet. */
+      const CLAIM_LABELS = [
+        {
+          value: "supported",
+          name: "Supported",
+          key: "1",
+          meaning: "The cited passages state everything the claim says.",
+        },
+        {
+          value: "partially_supported",
+          name: "Partly supported",
+          key: "2",
+          meaning:
+            "The cited passages state part of the claim, and the claim adds a detail, a condition or a number that they do not state.",
+        },
+        {
+          value: "not_supported",
+          name: "Not supported",
+          key: "3",
+          meaning:
+            "The cited passages do not state the claim, or they contradict it, or the claim cites no passage, or a cited passage is missing.",
+        },
+      ];
+      const CLAIM_RULE =
+        "Use only the passage text shown. Do not use what you know about visa rules.";
+
+      /** When an expected point counts as stated by an answer. */
+      const POINT_RULES = [
+        "A point is present when the answer states the same fact, in any wording.",
+        "A number, an amount of money, a date or a length of time must match the point exactly.",
+        "A point that is only hinted at, or only half stated, is not present.",
+      ];
+
+      /** When the last tick box applies. It makes the label 0. */
+      const ZERO_RULES = [
+        "A must-not-say statement counts when the answer states it or clearly implies it.",
+        "A contradiction is a statement that conflicts with an expected point, for example a different amount or the opposite rule. Leaving a point out is not a contradiction.",
+      ];
+
+      /** The line of keys in the top strip, by kind of item. */
+      const KEY_HINTS = {
+        claim: "J next, H previous, 1 supported, 2 partly supported, 3 not supported",
+        answer: "J next, H previous, 1 to 9 tick a point, X must not say, Enter save",
+      };
+
+      /** True when the two columns are side by side and the right one scrolls on its own. */
+      const WIDE = matchMedia("(min-width: 1000px)");
+
+      /** The drawn cross, as an SVG path on a 16 by 16 grid. */
+      const CROSS_PATH = "M4 4l8 8M12 4l-8 8";
+
+      /** The start of the name under which the browser keeps the ticks of an answer item. */
+      const TICKS_KEY = "judge-audit-ticks-";
+
+      // ---------- State ----------
+
+      const state = {
+        /** The path of the sheet. The server sends it. */
+        file: "",
+        /** The rows of the sheet, in file order. */
+        items: [],
+        /** The ID of the open item. */
+        currentId: null,
+        /** True once a tick of the open answer item has changed. Only then does Enter save. */
+        ticksTouched: false,
+        /** True while a label is on its way to the server. */
+        saving: false,
+      };
+
+      // ---------- Small helpers ----------
+
+      const $ = (id) => document.getElementById(id);
+
+      /** Calls the page's own API and returns the JSON reply. Throws the server's error message. */
+      async function api(path, options) {
+        let response;
+        try {
+          response = await fetch(path, options);
+        } catch {
+          throw new Error(
+            "The page could not reach its server. Check that npm run judge:check is still running.",
+          );
+        }
+        const body = await response.json();
+        if (!response.ok) {
+          const error = new Error(
+            body.error ?? `The request failed with status ${response.status}.`,
+          );
+          error.status = response.status;
+          throw error;
+        }
+        return body;
+      }
+
+      /**
+       * Makes one DOM element. Children can be elements or strings.
+       * A string becomes a text node, so text from the sheet or from GOV.UK is never read as HTML.
+       */
+      function el(tag, props = {}, children = []) {
+        const node = document.createElement(tag);
+        Object.assign(node, props);
+        node.append(...children);
+        return node;
+      }
+
+      /** A button. `content` is its label, or a list of children. */
+      function button(content, onClick, props = {}) {
+        const node = el("button", { type: "button", className: "btn", ...props }, [content].flat());
+        node.addEventListener("click", onClick);
+        return node;
+      }
+
+      /** A button that shows the key that does the same. */
+      function keyButton(label, key, onClick, props = {}) {
+        return button([label, el("kbd", {}, [key])], onClick, props);
+      }
+
+      /** A small drawn mark. It is decoration. The words next to it say the same to a screen reader. */
+      function icon(path) {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "icon");
+        svg.setAttribute("viewBox", "0 0 16 16");
+        svg.setAttribute("aria-hidden", "true");
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("d", path);
+        svg.append(line);
+        return svg;
+      }
+
+      /** The line at the end of the action bar. It is announced to screen readers. */
+      function setStatus(text, isError = false) {
+        $("status").textContent = text;
+        $("status").className = isError ? "error" : "";
+      }
+
+      function currentItem() {
+        return state.items.find((item) => item.id === state.currentId) ?? null;
+      }
+
+      function isLabelled(item) {
+        return item.human_label !== "";
+      }
+
+      /** How a saved label reads on the page. A label typed into the file by hand is shown as it is. */
+      function labelName(item) {
+        if (item.kind === "answer") return `${item.human_label} of ${item.expected_points.length}`;
+        const known = CLAIM_LABELS.find((label) => label.value === item.human_label);
+        return known ? known.name : item.human_label;
+      }
+
+      // ---------- Moving between items ----------
+
+      /** The ID of the item after (1) or before (-1) the open one in the sheet, or null at the end. */
+      function neighbourId(offset) {
+        const index = state.items.findIndex((item) => item.id === state.currentId);
+        return state.items[index + offset]?.id ?? null;
+      }
+
+      /**
+       * The ID of the next item without a label. The search starts after the open item
+       * and goes round to the start of the sheet. Null when every other item has a label.
+       */
+      function nextUnlabelledId() {
+        const index = state.items.findIndex((item) => item.id === state.currentId);
+        const others = [...state.items.slice(index + 1), ...state.items.slice(0, index)];
+        return others.find((item) => !isLabelled(item))?.id ?? null;
+      }
+
+      function goTo(id) {
+        if (id === null || id === state.currentId || state.saving) return;
+        openItem(id);
+      }
+
+      function openItem(id) {
+        state.currentId = id;
+        state.ticksTouched = false;
+        setStatus("");
+        // The address keeps the open item, so a reload comes back to it.
+        history.replaceState(null, "", `#${encodeURIComponent(id)}`);
+        render();
+        $("item").scrollTop = 0;
+        $("evidence").scrollTop = 0;
+        // In a narrow window the page itself scrolls.
+        scrollTo(0, 0);
+        // Side by side, the quoted words are brought into view next to the claim.
+        // In one column that would scroll the claim away, so the page stays at the top.
+        if (WIDE.matches) $("evidence").querySelector("mark")?.scrollIntoView({ block: "center" });
+        // The focus leaves the button that was pressed. A stray Enter or Space cannot label the new item.
+        $("item-sheet").focus({ preventScroll: true });
+      }
+
+      // ---------- Drawing ----------
+
+      /** Draws the whole page for the open item. */
+      function render() {
+        const item = currentItem();
+        const isClaim = item.kind === "claim";
+        // The kind decides which column the action bar is under.
+        document.querySelector("main").className = item.kind;
+        renderStrip();
+        $("keys").textContent = KEY_HINTS[item.kind];
+        $("item-sheet").replaceChildren(...(isClaim ? claimSheet(item) : answerSheet(item)));
+        $("claim-rules").replaceChildren(...(isClaim ? claimRules() : []));
+        $("evidence-list").replaceChildren(...(isClaim ? passageCards(item) : [checklist(item)]));
+        renderActions();
+      }
+
+      /** Draws the mark sheet, one cell per item in sheet order, and the count next to it. */
+      function renderStrip() {
+        const labelled = state.items.filter(isLabelled).length;
+        $("progress").textContent = `${labelled} of ${state.items.length} labelled`;
+        for (const rows of [1, 2, 3, 4]) {
+          const perRow = Math.ceil(state.items.length / rows);
+          $("mark-sheet").style.setProperty(`--per-row-${rows}`, String(perRow));
+        }
+        $("mark-sheet").replaceChildren(...state.items.map(markSheetCell));
+      }
+
+      function markSheetCell(item) {
+        // The state is in the label as words, so it does not depend on colour alone.
+        const saved = isLabelled(item)
+          ? `labelled ${labelName(item).toLowerCase()}`
+          : "not labelled";
+        const label = `${item.id}, ${item.kind}, ${saved}`;
+        const cell = button("", () => goTo(item.id), {
+          className: "cell",
+          title: label,
+          ariaLabel: label,
+        });
+        cell.classList.toggle("labelled", isLabelled(item));
+        if (item.id === state.currentId) {
+          cell.classList.add("current");
+          cell.setAttribute("aria-current", "true");
+        }
+        return cell;
+      }
+
+      /** The first lines of the left sheet. They are the same for both kinds of item. */
+      function sheetHead(item, kindName) {
+        return [
+          el("p", { className: "meta" }, [el("span", { className: "mono" }, [item.id]), kindName]),
+          el("p", { className: "caption" }, ["Question"]),
+          el("p", { className: "asked" }, [item.question]),
+        ];
+      }
+
+      /** Draws the buttons of the action bar and the label the item has in the sheet. */
+      function renderActions() {
+        const item = currentItem();
+        const buttons =
+          item.kind === "claim"
+            ? CLAIM_LABELS.map((label) =>
+                keyButton(label.name, label.key, () => saveLabel(label.value), {
+                  // The label the claim already has stays pressed in.
+                  ariaPressed: String(item.human_label === label.value),
+                }),
+              )
+            : [answerButton(item)];
+        $("action-buttons").replaceChildren(...buttons);
+        $("saved").textContent = isLabelled(item)
+          ? `Saved label: ${labelName(item)}`
+          : "Not labelled yet";
+        $("clear").hidden = !isLabelled(item);
+      }
+
+      // ---------- A claim item ----------
+
+      function claimSheet(item) {
+        return [
+          ...sheetHead(item, "Claim"),
+          el("p", { className: "caption" }, ["Claim"]),
+          el("h2", { className: "claim-text" }, [item.claim]),
+        ];
+      }
+
+      /** What the three labels mean, one label per row. It sits right above the three buttons. */
+      function claimRules() {
+        return [
+          el("p", {}, [CLAIM_RULE]),
+          el(
+            "dl",
+            {},
+            CLAIM_LABELS.map((label) =>
+              el("div", {}, [el("dt", {}, [label.name]), el("dd", {}, [label.meaning])]),
+            ),
+          ),
+        ];
+      }
+
+      /** One card per passage the claim cites. A passage cited twice is shown once, with both quotes marked. */
+      function passageCards(item) {
+        if (item.citations.length === 0) {
+          return [el("p", { className: "sheet passage" }, ["The claim cites no passage."])];
+        }
+        const passages = new Map();
+        for (const citation of item.citations) {
+          const passage = passages.get(citation.passage_id) ?? { ...citation, quotes: [] };
+          passage.quotes.push(citation.quote);
+          passages.set(citation.passage_id, passage);
+        }
+        return [...passages.values()].map(passageCard);
+      }
+
+      function passageCard(passage) {
+        const meta = [el("span", { className: "mono" }, [passage.passage_id])];
+        // Only a web address is made into a link. Anything else in the cell is left out.
+        if (passage.url?.startsWith("https://")) {
+          meta.push(
+            el("a", { href: passage.url, target: "_blank", rel: "noopener noreferrer" }, [
+              "Open on GOV.UK",
+            ]),
+          );
+        }
+        const card = el("article", { className: "sheet passage" }, [
+          el("p", { className: "meta" }, meta),
+        ]);
+
+        if (passage.text === null) {
+          card.append(
+            looseQuotes(
+              "This passage is missing. The claim quotes these words from it.",
+              passage.quotes,
+            ),
+          );
+          return card;
+        }
+        const ranges = [];
+        const notFound = [];
+        for (const quote of passage.quotes) {
+          const range = findQuote(passage.text, quote);
+          if (range) ranges.push(range);
+          else notFound.push(quote);
+        }
+        if (notFound.length > 0) {
+          card.append(
+            looseQuotes("The claim quotes these words. They are not in the passage.", notFound),
+          );
+        }
+        card.append(highlightedText(passage.text, ranges));
+        return card;
+      }
+
+      /** Quoted words with no place in a passage text to mark, under a line that says why. */
+      function looseQuotes(reason, quotes) {
+        return el("div", { className: "loose-quote" }, [
+          el("p", { className: "problem" }, [reason]),
+          ...quotes.map((quote) => el("p", { className: "passage-text" }, [quote])),
+        ]);
+      }
+
+      /**
+       * The same rules as `normaliseForQuote` in src/verify/quoteCheck.ts, so a quote that passes
+       * the quote check is also found here. It also returns, for each character of the result,
+       * its position in the original text. The highlight needs that to mark the original words.
+       * This function and `findQuote` are copies of the ones in scripts/gold-check.html.
+       */
+      const WORD_END_PUNCTUATION = ".,;:!?";
+
+      function normaliseWithPositions(text) {
+        let result = "";
+        const positions = [];
+        // Starting as true drops whitespace at the very start.
+        let lastWasSpace = true;
+        for (let i = 0; i < text.length; i++) {
+          let character = text[i];
+          if (/\s/.test(character)) {
+            if (lastWasSpace) continue;
+            character = " ";
+            lastWasSpace = true;
+          } else {
+            if (WORD_END_PUNCTUATION.includes(character)) {
+              // Punctuation at the end of a word is dropped. Punctuation inside a number, as in
+              // "£1,035" or "1.5", is followed by another character and stays.
+              let next = i + 1;
+              while (next < text.length && WORD_END_PUNCTUATION.includes(text[next])) next++;
+              if (next === text.length || /\s/.test(text[next])) continue;
+            }
+            lastWasSpace = false;
+            if (character === "‘" || character === "’") character = "'";
+            if (character === "“" || character === "”") character = '"';
+            if (character === "–" || character === "—") character = "-";
+          }
+          result += character;
+          positions.push(i);
+        }
+        return { result, positions };
+      }
+
+      /** Where a quote sits in a passage text, as { start, end } in the original text, or null. */
+      function findQuote(text, quote) {
+        const passage = normaliseWithPositions(text);
+        const wanted = normaliseWithPositions(quote).result.trim();
+        if (wanted === "") return null;
+        const at = passage.result.indexOf(wanted);
+        if (at === -1) return null;
+        return {
+          start: passage.positions[at],
+          end: passage.positions[at + wanted.length - 1] + 1,
+        };
+      }
+
+      /** The passage text as text nodes, with a <mark> around every range. */
+      function highlightedText(text, ranges) {
+        ranges.sort((a, b) => a.start - b.start);
+        const box = el("div", { className: "passage-text" });
+        let position = 0;
+        for (const range of ranges) {
+          // Two quotes can overlap. The second one then only adds the words after the first.
+          const start = Math.max(range.start, position);
+          if (range.end <= start) continue;
+          box.append(text.slice(position, start), el("mark", {}, [text.slice(start, range.end)]));
+          position = range.end;
+        }
+        box.append(text.slice(position));
+        return box;
+      }
+
+      // ---------- An answer item ----------
+
+      function answerSheet(item) {
+        return [
+          ...sheetHead(item, "Answer"),
+          el("p", { className: "caption" }, ["Answer"]),
+          el("p", { className: "reading" }, [item.summary]),
+          el(
+            "ul",
+            { className: "answer-claims" },
+            item.claims.map((text) => el("li", {}, [el("span", {}, [text])])),
+          ),
+        ];
+      }
+
+      /** The expected points as tick boxes, the must-not-say list, and the box that makes the label 0. */
+      function checklist(item) {
+        const ticks = storedTicks(item);
+        const points = item.expected_points.map((text, index) =>
+          // Only the first nine points have a key.
+          el("li", {}, [
+            tickRow("point-text", ticks.stated[index], text, index < 9 ? String(index + 1) : ""),
+          ]),
+        );
+        const none = () => el("p", { className: "quiet" }, ["None."]);
+        const rules = (sentences) =>
+          el(
+            "ul",
+            { className: "rules" },
+            sentences.map((sentence) => el("li", {}, [el("span", {}, [sentence])])),
+          );
+
+        return el("article", { className: "sheet checklist" }, [
+          el("h2", { className: "statement" }, ["Tick each point the answer states"]),
+          rules(POINT_RULES),
+          points.length > 0 ? el("ol", { className: "ticks" }, points) : none(),
+          el("h2", { className: "statement" }, ["Must not say"]),
+          item.must_not_say.length > 0
+            ? el(
+                "ul",
+                { className: "must-not" },
+                item.must_not_say.map((text) =>
+                  el("li", {}, [icon(CROSS_PATH), el("span", {}, [text])]),
+                ),
+              )
+            : none(),
+          tickRow(
+            "zero",
+            ticks.zero,
+            "The answer states a must-not-say statement or contradicts an expected point",
+            "X",
+          ),
+          rules(ZERO_RULES),
+        ]);
+      }
+
+      /** One tick box with its text and the key that ticks it. `key` is empty when it has none. */
+      function tickRow(className, checked, text, key) {
+        const box = el("input", { type: "checkbox", checked });
+        box.addEventListener("input", ticksChanged);
+        return el("label", { className: `tick ${className}` }, [
+          box,
+          el("span", {}, [text]),
+          key ? el("kbd", {}, [key]) : "",
+        ]);
+      }
+
+      /** The ticks as they are on the page now. */
+      function readTicks() {
+        return {
+          stated: [...document.querySelectorAll(".ticks input")].map((box) => box.checked),
+          zero: document.querySelector(".zero input").checked,
+        };
+      }
+
+      /** The label the ticks stand for. It is the number of points ticked, or 0 with the last box ticked. */
+      function countTicks(ticks) {
+        return ticks.zero ? 0 : ticks.stated.filter(Boolean).length;
+      }
+
+      /**
+       * True for an answer whose label must be left as it is. A label is only saved again after a
+       * tick has changed. Going through the labelled items with Enter must never overwrite one,
+       * least of all with 0 when this browser has no ticks stored for it.
+       */
+      function keepsLabel(item) {
+        return isLabelled(item) && !state.ticksTouched;
+      }
+
+      /** Where "Next" goes. The next item without a label, or the next one in the sheet when all have one. */
+      function nextStopId() {
+        return nextUnlabelledId() ?? neighbourId(1);
+      }
+
+      /** The main button of an answer item. It says what Enter will do. */
+      function answerButton(item) {
+        if (keepsLabel(item)) {
+          return keyButton("Next", "Enter", saveOrPass, {
+            className: "btn primary",
+            disabled: nextStopId() === null,
+          });
+        }
+        const count = countTicks(readTicks());
+        const label = `Save ${count} of ${item.expected_points.length} and next`;
+        return keyButton(label, "Enter", saveOrPass, { className: "btn primary" });
+      }
+
+      /** What Enter and the main button do on an answer item. */
+      function saveOrPass() {
+        if (keepsLabel(currentItem())) goTo(nextStopId());
+        else saveLabel(String(countTicks(readTicks())));
+      }
+
+      /** Runs when a box is ticked or unticked. From then on the button saves, with the count of the ticks. */
+      function ticksChanged() {
+        state.ticksTouched = true;
+        storeTicks(currentItem(), readTicks());
+        renderActions();
+      }
+
+      // The sheet holds the count of the ticks and nothing else, so the ticks themselves are kept
+      // in this browser. A reload or a look at another item does not lose them.
+
+      /**
+       * What the ticks of an item were made for. A new sample uses the same IDs for other answers,
+       * and ticks made for another answer must not show up on this one.
+       */
+      function tickedFor(item) {
+        return JSON.stringify([item.summary, item.claims, item.expected_points]);
+      }
+
+      function storeTicks(item, ticks) {
+        try {
+          const stored = JSON.stringify({ madeFor: tickedFor(item), ...ticks });
+          localStorage.setItem(TICKS_KEY + item.id, stored);
+        } catch {
+          // A browser can refuse to store anything. The ticks then last until the item is left.
+        }
+      }
+
+      /** The ticks kept for an item, or no ticks at all. */
+      function storedTicks(item) {
+        const none = { stated: item.expected_points.map(() => false), zero: false };
+        try {
+          const stored = JSON.parse(localStorage.getItem(TICKS_KEY + item.id));
+          if (stored?.madeFor !== tickedFor(item)) return none;
+          return {
+            stated: none.stated.map((_, index) => stored.stated[index] === true),
+            zero: stored.zero === true,
+          };
+        } catch {
+          return none;
+        }
+      }
+
+      // ---------- Saving ----------
+
+      /** Sends a label for the open item to the server. An empty label clears the one in the sheet. */
+      async function saveLabel(label) {
+        const item = currentItem();
+        // A second save waits for the first to finish.
+        if (item === null || state.saving) return;
+        state.saving = true;
+        setStatus("Saving.");
+        try {
+          const saved = await api(`/api/items/${encodeURIComponent(item.id)}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            // The server compares `row_hash` with the sheet, and refuses the save if the row is not the one shown here.
+            body: JSON.stringify({ human_label: label, row_hash: item.row_hash }),
+          });
+          item.human_label = saved.human_label;
+          // The ticks and the label now agree again.
+          state.ticksTouched = false;
+        } catch (error) {
+          if (error.status === 412) {
+            // The sheet changed under the page, for example because a new sample was drawn.
+            // Show what it holds now, so no label goes to a row that was never on screen.
+            await loadItems();
+            showSheet(currentItem());
+          }
+          // Nothing was saved. The reason is shown next to the buttons.
+          setStatus(error.message, true);
+          return;
+        } finally {
+          state.saving = false;
+        }
+
+        if (!isLabelled(item)) {
+          render();
+          setStatus(`Cleared the label of ${item.id}.`);
+          return;
+        }
+        const message = `Saved ${item.id} as ${labelName(item).toLowerCase()}.`;
+        const nextId = nextUnlabelledId();
+        if (nextId === null) {
+          render();
+          setStatus(`${message} Every item has a label. Run npm run eval -- audit-score next.`);
+        } else {
+          openItem(nextId);
+          setStatus(message);
+        }
+      }
+
+      // ---------- Events ----------
+
+      $("clear").addEventListener("click", () => saveLabel(""));
+
+      document.addEventListener("keydown", (event) => {
+        const item = currentItem();
+        if (item === null) return;
+        // A key with Ctrl or Cmd belongs to the browser. A key held down must not label one item after another.
+        if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+
+        const key = event.key.toLowerCase();
+        const used =
+          moveKey(key) || (item.kind === "claim" ? claimKey(key) : answerKey(key, event.target));
+        // The key did something here, so the browser does nothing more with it.
+        if (used) event.preventDefault();
+      });
+
+      // Each of the three functions below returns true when the key was one of its own.
+
+      /** J and H go through the sheet. */
+      function moveKey(key) {
+        if (key === "j") goTo(neighbourId(1));
+        else if (key === "h") goTo(neighbourId(-1));
+        else return false;
+        return true;
+      }
+
+      /** 1, 2 and 3 label a claim. */
+      function claimKey(key) {
+        const label = CLAIM_LABELS.find((candidate) => candidate.key === key);
+        if (label) saveLabel(label.value);
+        return label !== undefined;
+      }
+
+      /** 1 to 9 and X tick a box of an answer, and Enter saves the count. `target` is where the focus is. */
+      function answerKey(key, target) {
+        if (/^[1-9]$/.test(key)) {
+          // A click on the box ticks it and runs `ticksChanged`, the same as the mouse does.
+          document.querySelectorAll(".ticks input")[Number(key) - 1]?.click();
+        } else if (key === "x") {
+          document.querySelector(".zero input").click();
+        } else if (key === "enter" && target.closest("button, a") === null) {
+          // Enter on a button or a link presses that. Anywhere else it does what the main button does.
+          saveOrPass();
+        } else {
+          return false;
+        }
+        return true;
+      }
+
+      /** The item that the part of the address after "#" names, if there is one. */
+      function itemInAddress() {
+        return state.items.find((item) => `#${encodeURIComponent(item.id)}` === location.hash);
+      }
+
+      // A link such as "#c07" opens that item, also while the page is already open.
+      window.addEventListener("hashchange", () => {
+        const item = itemInAddress();
+        if (item) goTo(item.id);
+      });
+
+      // ---------- Start ----------
+
+      /** Reads the sheet from the server. */
+      async function loadItems() {
+        const reply = await api("/api/items");
+        state.file = reply.file;
+        state.items = reply.items;
+      }
+
+      /** Draws the page for the sheet as loaded. Opens `wanted` when there is one, else the first item that still needs a label. */
+      function showSheet(wanted) {
+        const empty = state.items.length === 0;
+        $("evidence").hidden = empty;
+        $("actions").hidden = empty;
+        if (empty) {
+          state.currentId = null;
+          document.querySelector("main").className = "empty";
+          $("mark-sheet").replaceChildren();
+          $("keys").textContent = "";
+          $("claim-rules").replaceChildren();
+          $("progress").textContent = "Nothing to label";
+          $("item-sheet").replaceChildren(
+            el("p", {}, [
+              `There is no sheet to label at ${state.file}. Run `,
+              el("code", { className: "mono" }, ["npm run eval -- audit-sample"]),
+              " first, then reload this page.",
+            ]),
+          );
+          return;
+        }
+        const first = wanted ?? state.items.find((item) => !isLabelled(item)) ?? state.items[0];
+        openItem(first.id);
+      }
+
+      async function start() {
+        try {
+          await loadItems();
+        } catch (error) {
+          // For example a row that is not in the format audit-sample writes. The message names the row.
+          $("progress").textContent = "Could not load";
+          $("item-sheet").replaceChildren(el("p", { className: "problem" }, [error.message]));
+          return;
+        }
+        // The item named in the address is opened first, so a reload comes back to it.
+        showSheet(itemInAddress());
+      }
+
+      start();
+    </script>
+  </body>
+</html>

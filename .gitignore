@@ -23,5 +23,8 @@ results/mini/
 # temporary file written while the gold set is saved
 eval/questions.jsonl.tmp
 
+# temporary file written while a label is saved to the judge audit sheet
+eval/judge-audit.csv.tmp
+
 # spoken clips of the gold questions, made by `npm run gold:audio`
 data/audio/

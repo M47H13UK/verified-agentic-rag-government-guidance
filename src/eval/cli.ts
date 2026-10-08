@@ -29,7 +29,7 @@ Commands
   audit-score    Compare the filled-in sheet with the judge.
 
 Options
-  --setups H0,H1        Setups to use. Default all 8.
+  --setups H0,H1        Setups to use. Default all 10.
   --limit 5             Use only the first 5 questions.
   --repeat 1            Which repeat this is. Default 1.
   --concurrency 4       How many calls run at once. Default 4.
@@ -155,7 +155,12 @@ async function main(): Promise<void> {
 
     case "report": {
       // The report describes the whole gold set, so it ignores --limit.
-      const report = writeReport({ questions: loadQuestions(values.questions), outDir });
+      // The judge audit is added once its sheet and its key both exist.
+      const audit =
+        existsSync(AUDIT_CSV_PATH) && existsSync(AUDIT_KEY_PATH)
+          ? scoreAudit(AUDIT_CSV_PATH, AUDIT_KEY_PATH)
+          : undefined;
+      const report = writeReport({ questions: loadQuestions(values.questions), outDir, audit });
       for (const warning of report.warnings) console.warn(warning);
       console.log(`Wrote summary.json, summary.md and frontier.md to ${outDir}.`);
       break;

@@ -107,7 +107,7 @@ export type Usage = {
   outputTokens: number;
   cacheReadTokens: number;
   cacheCreationTokens: number;
-  /** The SDK's estimate at list prices. It is not a charge. */
+  /** Token counts times the list prices in `src/llm/prices.ts`. It is not a charge. */
   costUsd: number;
 };
 

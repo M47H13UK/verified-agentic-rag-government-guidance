@@ -9,12 +9,15 @@ export { VERIFIER_MODEL };
 export const JUDGE_MODEL = "claude-opus-5-5";
 
 /**
- * The 8 setups the eval compares. Four ways of answering, each with the verifier off (0) and on (1).
+ * The 10 setups the eval compares. Five ways of answering, each with the verifier off (0) and on (1).
  * The order here is the order of the rows in the results table.
+ * H5 is Haiku 5.5. It was added on 8 October 2026, soon after it came out and before any run was graded.
  */
 export const SETUPS: Setup[] = [
   { id: "H0", model: "claude-haiku-4-5", verifier: false },
   { id: "H1", model: "claude-haiku-4-5", verifier: true },
+  { id: "H5-0", model: "claude-haiku-5-5", verifier: false },
+  { id: "H5-1", model: "claude-haiku-5-5", verifier: true },
   { id: "S0", model: "claude-sonnet-5-5", verifier: false },
   { id: "S1", model: "claude-sonnet-5-5", verifier: true },
   { id: "OM0", model: "claude-opus-5-5", effort: "medium", verifier: false },
@@ -23,7 +26,7 @@ export const SETUPS: Setup[] = [
   { id: "OX1", model: "claude-opus-5-5", effort: "xhigh", verifier: true },
 ];
 
-/** Returns the setups with these IDs, in table order. With no IDs it returns all 8. */
+/** Returns the setups with these IDs, in table order. With no IDs it returns all 10. */
 export function getSetups(ids?: string[]): Setup[] {
   if (!ids || ids.length === 0) return SETUPS;
 

@@ -112,4 +112,8 @@ The agreement rate is reported next to the results, not folded into them.
 
 ## Changes
 
-None.
+**8 October 2026.** Three changes, all made before any run was graded. The first batch of pass 1 had produced 182 runs for H0, H1 and S0 by then. Only their status and their cost had been looked at, to check that the harness worked. They were discarded and run again.
+
+- Two setups were added, H5-0 and H5-1, for `claude-haiku-5-5`. The model came out after the rubric was fixed. No metric, scoring rule or judge instruction changed. The headline rule now picks from 10 setups.
+- Cost per answer is worked out from the token counts and the list prices in `src/llm/prices.ts`. Before, it was the SDK's own estimate. The installed SDK charged cache reads of Sonnet 5.5 at twice the list price and had no price for Haiku 5.5. The definition in the table above is the same.
+- The summary shows the judge agreement once the audit sheet is labelled. A different number of repeats between setups is now a note under the table and not a warning, because pass 2 was planned to repeat only the two headline setups. The runs were quick, so pass 2 repeated all 10 setups and every row has three repeats.

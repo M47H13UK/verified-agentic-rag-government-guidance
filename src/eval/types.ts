@@ -121,4 +121,17 @@ export type EvalSummary = {
   }[];
   /** Answering, verifier and judge cost of every run in the summary, at list prices. */
   total_cost_usd: number;
+  /** How often the judge agreed with a person on a labelled sample. Null until the sheet has labels. */
+  judge_audit: JudgeAuditSummary | null;
+};
+
+export type JudgeAuditSummary = {
+  /** Items the person labelled. */
+  labelled: number;
+  /** Labelled items where the person and the judge gave the same label. */
+  agreed: number;
+  /** Agreed divided by labelled, 0 to 1. */
+  agreement_rate: number;
+  claims: { labelled: number; agreed: number };
+  answers: { labelled: number; agreed: number };
 };

@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 import { getSetups, SETUPS, twinOf } from "../../src/eval/setups";
 
 describe("setups", () => {
-  it("lists the 8 setups in table order", () => {
+  it("lists the 10 setups in table order", () => {
     expect(SETUPS.map((setup) => setup.id)).toEqual([
       "H0",
       "H1",
+      "H5-0",
+      "H5-1",
       "S0",
       "S1",
       "OM0",
@@ -17,11 +19,11 @@ describe("setups", () => {
 
   it("returns the asked setups in table order, and all of them when none are asked for", () => {
     expect(getSetups(["S1", "H0"]).map((setup) => setup.id)).toEqual(["H0", "S1"]);
-    expect(getSetups()).toHaveLength(8);
+    expect(getSetups()).toHaveLength(10);
   });
 
   it("rejects an unknown setup ID and lists the valid ones", () => {
-    expect(() => getSetups(["H0", "ZZ"])).toThrow(/Unknown setup ZZ.*H0, H1, S0/);
+    expect(() => getSetups(["H0", "ZZ"])).toThrow(/Unknown setup ZZ.*H0, H1, H5-0/);
   });
 
   it("pairs every setup with the one that differs only by the verifier", () => {
@@ -29,6 +31,8 @@ describe("setups", () => {
     expect(pairs).toEqual([
       "H0 H1",
       "H1 H0",
+      "H5-0 H5-1",
+      "H5-1 H5-0",
       "S0 S1",
       "S1 S0",
       "OM0 OM1",

@@ -1,0 +1,5780 @@
+{
+  "generated_at": "2026-10-08T00:21:41.077Z",
+  "gold_set": {
+    "questions": 61,
+    "verified": 61,
+    "by_category": {
+      "single_page": 18,
+      "numbers": 10,
+      "false_premise": 5,
+      "multi_page": 11,
+      "not_covered": 8,
+      "ambiguous": 3,
+      "personal_judgement": 6
+    }
+  },
+  "judge_model": "claude-opus-5-5",
+  "verifier_model": "claude-sonnet-5-5",
+  "setups": [
+    {
+      "setup": {
+        "id": "H0",
+        "model": "claude-haiku-4-5",
+        "verifier": false
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.6926229508196721,
+      "correctness_min": 0.6926229508196721,
+      "correctness_max": 0.6926229508196721,
+      "unsupported_claim_rate": 0.07407407407407407,
+      "unsupported_claim_rate_min": 0.07407407407407407,
+      "unsupported_claim_rate_max": 0.07407407407407407,
+      "behaviour_accuracy": 0.819672131147541,
+      "retrieval_hit_rate": 0.8653846153846154,
+      "cost_per_answer_usd": 0.03576259016393441,
+      "latency_p50_s": 25.244,
+      "latency_p95_s": 45.712,
+      "claims_shown": 108,
+      "errors": 2,
+      "dropped_by_quote_check": 0,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 0
+    },
+    {
+      "setup": {
+        "id": "H1",
+        "model": "claude-haiku-4-5",
+        "verifier": true
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.6912568306010929,
+      "correctness_min": 0.6912568306010929,
+      "correctness_max": 0.6912568306010929,
+      "unsupported_claim_rate": 0.009523809523809525,
+      "unsupported_claim_rate_min": 0.009523809523809525,
+      "unsupported_claim_rate_max": 0.009523809523809525,
+      "behaviour_accuracy": 0.819672131147541,
+      "retrieval_hit_rate": 0.8653846153846154,
+      "cost_per_answer_usd": 0.05208918524590162,
+      "latency_p50_s": 31.531,
+      "latency_p95_s": 87.477,
+      "claims_shown": 105,
+      "errors": 2,
+      "dropped_by_quote_check": 6,
+      "dropped_by_verifier": 1,
+      "repairs_ran": 6
+    },
+    {
+      "setup": {
+        "id": "H5-0",
+        "model": "claude-haiku-5-5",
+        "verifier": false
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.778688524590164,
+      "correctness_min": 0.778688524590164,
+      "correctness_max": 0.778688524590164,
+      "unsupported_claim_rate": 0.013100436681222707,
+      "unsupported_claim_rate_min": 0.013100436681222707,
+      "unsupported_claim_rate_max": 0.013100436681222707,
+      "behaviour_accuracy": 0.9016393442622951,
+      "retrieval_hit_rate": 0.9230769230769231,
+      "cost_per_answer_usd": 0.006338456885245903,
+      "latency_p50_s": 19.015,
+      "latency_p95_s": 35.115,
+      "claims_shown": 229,
+      "errors": 0,
+      "dropped_by_quote_check": 0,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 0
+    },
+    {
+      "setup": {
+        "id": "H5-1",
+        "model": "claude-haiku-5-5",
+        "verifier": true
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.7732240437158471,
+      "correctness_min": 0.7732240437158471,
+      "correctness_max": 0.7732240437158471,
+      "unsupported_claim_rate": 0.004366812227074236,
+      "unsupported_claim_rate_min": 0.004366812227074236,
+      "unsupported_claim_rate_max": 0.004366812227074236,
+      "behaviour_accuracy": 0.9016393442622951,
+      "retrieval_hit_rate": 0.9230769230769231,
+      "cost_per_answer_usd": 0.027651304098360658,
+      "latency_p50_s": 24.861,
+      "latency_p95_s": 45.481,
+      "claims_shown": 229,
+      "errors": 0,
+      "dropped_by_quote_check": 2,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 2
+    },
+    {
+      "setup": {
+        "id": "S0",
+        "model": "claude-sonnet-5-5",
+        "verifier": false
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.8224043715846994,
+      "correctness_min": 0.8224043715846994,
+      "correctness_max": 0.8224043715846994,
+      "unsupported_claim_rate": 0.01694915254237288,
+      "unsupported_claim_rate_min": 0.01694915254237288,
+      "unsupported_claim_rate_max": 0.01694915254237288,
+      "behaviour_accuracy": 0.9672131147540983,
+      "retrieval_hit_rate": 0.8076923076923077,
+      "cost_per_answer_usd": 0.04354074426229508,
+      "latency_p50_s": 14.586,
+      "latency_p95_s": 33.077,
+      "claims_shown": 177,
+      "errors": 1,
+      "dropped_by_quote_check": 0,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 0
+    },
+    {
+      "setup": {
+        "id": "S1",
+        "model": "claude-sonnet-5-5",
+        "verifier": true
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.8114754098360656,
+      "correctness_min": 0.8114754098360656,
+      "correctness_max": 0.8114754098360656,
+      "unsupported_claim_rate": 0,
+      "unsupported_claim_rate_min": 0,
+      "unsupported_claim_rate_max": 0,
+      "behaviour_accuracy": 0.9672131147540983,
+      "retrieval_hit_rate": 0.8076923076923077,
+      "cost_per_answer_usd": 0.06193837540983607,
+      "latency_p50_s": 19.71,
+      "latency_p95_s": 41.026,
+      "claims_shown": 176,
+      "errors": 1,
+      "dropped_by_quote_check": 3,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 3
+    },
+    {
+      "setup": {
+        "id": "OM0",
+        "model": "claude-opus-5-5",
+        "effort": "medium",
+        "verifier": false
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.9098360655737705,
+      "correctness_min": 0.9098360655737705,
+      "correctness_max": 0.9098360655737705,
+      "unsupported_claim_rate": 0.008368200836820083,
+      "unsupported_claim_rate_min": 0.008368200836820083,
+      "unsupported_claim_rate_max": 0.008368200836820083,
+      "behaviour_accuracy": 0.9836065573770492,
+      "retrieval_hit_rate": 0.8461538461538461,
+      "cost_per_answer_usd": 0.1017926918032787,
+      "latency_p50_s": 15.202,
+      "latency_p95_s": 31.304,
+      "claims_shown": 239,
+      "errors": 0,
+      "dropped_by_quote_check": 0,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 0
+    },
+    {
+      "setup": {
+        "id": "OM1",
+        "model": "claude-opus-5-5",
+        "effort": "medium",
+        "verifier": true
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.9139344262295082,
+      "correctness_min": 0.9139344262295082,
+      "correctness_max": 0.9139344262295082,
+      "unsupported_claim_rate": 0,
+      "unsupported_claim_rate_min": 0,
+      "unsupported_claim_rate_max": 0,
+      "behaviour_accuracy": 0.9836065573770492,
+      "retrieval_hit_rate": 0.8461538461538461,
+      "cost_per_answer_usd": 0.12492987540983608,
+      "latency_p50_s": 20.344,
+      "latency_p95_s": 41.068,
+      "claims_shown": 239,
+      "errors": 0,
+      "dropped_by_quote_check": 2,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 2
+    },
+    {
+      "setup": {
+        "id": "OX0",
+        "model": "claude-opus-5-5",
+        "effort": "xhigh",
+        "verifier": false
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.9270491803278688,
+      "correctness_min": 0.9270491803278688,
+      "correctness_max": 0.9270491803278688,
+      "unsupported_claim_rate": 0.011857707509881422,
+      "unsupported_claim_rate_min": 0.011857707509881422,
+      "unsupported_claim_rate_max": 0.011857707509881422,
+      "behaviour_accuracy": 0.9836065573770492,
+      "retrieval_hit_rate": 0.9230769230769231,
+      "cost_per_answer_usd": 0.1494507278688524,
+      "latency_p50_s": 25.728,
+      "latency_p95_s": 49.605,
+      "claims_shown": 253,
+      "errors": 0,
+      "dropped_by_quote_check": 0,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 0
+    },
+    {
+      "setup": {
+        "id": "OX1",
+        "model": "claude-opus-5-5",
+        "effort": "xhigh",
+        "verifier": true
+      },
+      "repeats": 1,
+      "questions": 61,
+      "correctness": 0.9270491803278688,
+      "correctness_min": 0.9270491803278688,
+      "correctness_max": 0.9270491803278688,
+      "unsupported_claim_rate": 0,
+      "unsupported_claim_rate_min": 0,
+      "unsupported_claim_rate_max": 0,
+      "behaviour_accuracy": 0.9836065573770492,
+      "retrieval_hit_rate": 0.9230769230769231,
+      "cost_per_answer_usd": 0.176682468852459,
+      "latency_p50_s": 31.809,
+      "latency_p95_s": 67.142,
+      "claims_shown": 252,
+      "errors": 0,
+      "dropped_by_quote_check": 3,
+      "dropped_by_verifier": 0,
+      "repairs_ran": 3
+    }
+  ],
+  "frontier": {
+    "pareto": [
+      "H5-0",
+      "S0",
+      "OM0",
+      "OM1",
+      "OX0"
+    ],
+    "most_accurate": "OX0",
+    "cheapest_accurate": "OM0",
+    "cost_ratio": 1.4681872069723445
+  },
+  "per_question": [
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 2,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "H0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "H0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "H0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "H0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "H1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "H1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "H1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "H1",
+      "correctness": 0.25,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "H5-0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "H5-0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "H5-0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "H5-0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "H5-0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "H5-1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "H5-1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "H5-1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "H5-1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "H5-1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "S0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "S0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "S0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "S1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 6
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "S1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "S1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "S1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "OM0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "OM0",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "OM0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "OM0",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "OM1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "OM1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "OM1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "OM1",
+      "correctness": 0.5,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "OX0",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 0.8,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 1,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "OX0",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "OX0",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q001",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q002",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q003",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q004",
+      "category": "false_premise",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q005",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q006",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q007",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q008",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q009",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q010",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q011",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q012",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q013",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q014",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q015",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q016",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q017",
+      "category": "false_premise",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q018",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q019",
+      "category": "ambiguous",
+      "setup_id": "OX1",
+      "correctness": 0,
+      "behaviour_correct": false,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q020",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q021",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q022",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q023",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q024",
+      "category": "false_premise",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q025",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q026",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q027",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q028",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 0.3333333333333333,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q029",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q030",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q031",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q032",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q033",
+      "category": "false_premise",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q034",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 0.6666666666666666,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q035",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q036",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q037",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 0.8,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q038",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q039",
+      "category": "ambiguous",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q040",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 1
+    },
+    {
+      "question_id": "q041",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q042",
+      "category": "ambiguous",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q043",
+      "category": "numbers",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q044",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 0,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 3
+    },
+    {
+      "question_id": "q045",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q046",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q047",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q048",
+      "category": "single_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q049",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q050",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q051",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q052",
+      "category": "false_premise",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q053",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q054",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 4
+    },
+    {
+      "question_id": "q055",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q056",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q057",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q058",
+      "category": "personal_judgement",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    },
+    {
+      "question_id": "q059",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 0
+    },
+    {
+      "question_id": "q060",
+      "category": "not_covered",
+      "setup_id": "OX1",
+      "correctness": 1,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 2
+    },
+    {
+      "question_id": "q061",
+      "category": "multi_page",
+      "setup_id": "OX1",
+      "correctness": 0.75,
+      "behaviour_correct": true,
+      "unsupported_claims": 0,
+      "total_claims": 5
+    }
+  ],
+  "total_cost_usd": 60.52572662,
+  "judge_audit": null
+}

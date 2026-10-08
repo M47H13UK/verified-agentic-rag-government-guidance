@@ -1,0 +1,775 @@
+﻿"id","kind","question","to_label","evidence","instructions","human_label","licence"
+"c01","claim","My bachelor's degree, at a UK university that is listed as a student sponsor with a track record of compliance, includes a placement year in industry. Is that allowed on a Student visa, and is there a limit on how much of the course the placement can take up?","Where the course is at degree-level or above and the student is sponsored and taught by a higher education provider with a track record of compliance, the work placement must not be more than 50% of the total length of the course.","Quoted ""the work placement must not be more than 50% of the total length of the course."" from passage /government/publications/student-sponsor-guidance/sponsorship-duties-accessible#body#82
+https://www.gov.uk/government/publications/student-sponsor-guidance/sponsorship-duties-accessible
+6.5 The course of study for Students or Child Students aged 16 years old or above may include a work placement, provided it is an integral and assessed part of the course.
+If a student is changing course to add a work placement to their original course of study, they will be exempt from meeting the academic progression requirements, enabling them to apply for an additional period of permission to stay from within the UK. Further information on work placements and when students should apply is provided in the sub-section of this document titled ‘Students adding a study abroad programme or work placement to their course’, under the heading ‘Assigning a CAS to a student who wants to extend their stay’. Students are permitted to undertake MBA and other academic business programmes and work placements as part of their course, including secondments to businesses.
+6.6 Work placements must not be more than 33 per cent of the total length of the course in the UK.
+6.7 Exceptions to the 33 per cent rule are:
+a. Where the course is at degree-level or above and the student is:
+sponsored and taught by a HEP with a track record of compliance;
+studying at an overseas HEI in the UK and is studying a UK course which forms part of a study abroad programme; or
+enrolled at an HEI located overseas and is studying a UK course which forms part of a study abroad programme
+In these circumstances, the work placement must not be more than 50% of the total length of the course.
+b. Where there is a UK statutory requirement for the course to contain a specific period of work placement which exceeds this limit.
+c. Where the student is sponsored under the Child Student route and is aged 16 or above, in which case the work placement must not be more than 50% of the total length of the course.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c02","claim","I finish my bachelor's in June 2027 and will apply for the Graduate visa that summer. Since the Graduate visa gives everyone 2 years, I can plan on working in the UK until summer 2029, right?","If you apply for the Graduate visa on or after 1 January 2027, it lasts for 18 months, not 2 years.","Quoted ""A Graduate visa lasts for: 2 years if you apply on or before 31 December 2026 18 months if you apply on or after 1 January 2027"" from passage /graduate-visa#overview#2
+https://www.gov.uk/graduate-visa
+A Graduate visa lasts for:
+2 years if you apply on or before 31 December 2026
+18 months if you apply on or after 1 January 2027
+If you have a PhD or other doctoral qualification, it will last for 3 years.
+Your visa will start from the day your application is approved.
+If you want to stay longer in the UK
+You cannot extend your Graduate visa. However, you may be able to switch to a different visa, for example a Skilled Worker visa.
+Check you can apply for another type of visa to stay in the UK.
+How to apply
+You must apply online for a Graduate visa.
+Your partner and children can also apply to stay in the UK if they are eligible.
+When to apply
+You must apply before your Student visa or Tier 4 (General) student visa expires.
+You can apply after your education provider (such as your university or college) has told the Home Office that you’ve successfully completed the course you took with your Student or Tier 4 (General) student visa. You do not have to wait until you’ve graduated or have been given a certificate.
+As part of your application, you’ll need to prove your identity and provide your documents.
+Your application may take longer if you need an appointment to do this. You’ll find out if you need one when you start your application.
+Getting a decision
+Once you’ve applied online, proved your identity and provided your documents, you’ll usually get a decision on your visa within 8 weeks.
+You can stay in the UK while you wait for a decision.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c03","claim","I've spent 2 years in the UK on my Graduate visa. My employer wants to sponsor me at the lower recent-graduate salary rate, so I'll get the full 5 years on a Skilled Worker visa at that rate, right?","With 2 years already spent on a Graduate visa, the 4-year total limit would leave about 2 more years at the reduced rate, not 5.","Quoted ""Your total stay in the UK cannot be more than 4 years if you apply for one of these reasons. This includes any time you’ve already spent in the UK on a Graduate visa."" from passage /skilled-worker-visa#when-you-can-be-paid-less#2
+https://www.gov.uk/skilled-worker-visa/when-you-can-be-paid-less
+The immigration salary list is a list of skilled jobs which have lower salary requirements.
+If your job is on the immigration salary list you also pay a lower fee to apply for your visa.
+You must be paid at least £33,400 per year if you are being sponsored for a job on the immigration salary list.
+You must still be paid at least the standard going rate for your job. Check the standard going rate for your job in the going rates table.
+View the immigration salary list to see if your job is included and how much you’ll need to be paid.
+Make sure you check whether your job is listed in the part of the UK you’ll be working in – UK-wide, or only in England, Scotland, Wales or Northern Ireland.
+You’re under 26, studying or a recent graduate, or in professional training
+You can be paid 70% of your job’s standard going rate if your salary will be at least £33,400 per year and one of the following applies:
+you’re under 26 on the date you apply
+you’re currently in the UK on a Student visa studying at bachelor’s degree level or above (or you have been in the last 2 years, and a Student or visit visa was your most recent visa)
+you’re currently in the UK on a Graduate visa (or you have been in the last 2 years, and a Graduate or visit visa was your most recent visa)
+you’ll be working towards a recognised qualification in a UK regulated profession
+you’ll be working towards full registration or chartered status in the job you’re being sponsored for
+If this applies to you, check how much you’ll need to be paid to qualify for this visa.
+Your total stay in the UK cannot be more than 4 years if you apply for one of these reasons. This includes any time you’ve already spent in the UK on a Graduate visa.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c04","claim","My Student visa expires on 30 August 2027 but my master's at the same university doesn't start until 20 September 2027. Can I still extend from inside the UK, and between which dates do I have to apply?","The guidance says you can apply to extend from inside the UK if you are already in the UK on a Student visa.","Quoted ""Apply to extend if you're already in the UK on Student visa (or a Tier 4 (General) visa)"" from passage /study-uk-student-visa#body#2
+https://www.gov.uk/study-uk-student-visa
+Apply from outside the UK £558
+You'll need to prove your identity as part of your application.
+You'll usually get a decision within 3 weeks.
+Find out if you can pay more to get a faster decision
+Apply from inside the UK
+Apply to extend if you're already in the UK on Student visa (or a Tier 4 (General) visa) £558
+Apply to switch to this visa if you're already in the UK £558
+You'll need to prove your identity as part of your application.
+You'll usually get a decision within 8 weeks.
+You may be able to pay more to get a faster decision you’ll be told if you can when you apply
+Get access to your eVisa
+If your application is successful, you'll get an eVisa. This is an online record of your immigration status.
+Get access to your eVisa by setting up a UKVI account.
+You’ll need to link your travel document to your UKVI account. This should be the travel document you use to come to the UK.
+You may have to prove your immigration status when you travel to the UK
+Check what you can bring into the UK with you
+Check what you can bring in your hand luggage
+Check what to do if you're bringing cash with you
+Check what goods you can bring with you
+Check what food, animals or plants you can bring into the UK
+Check what you need to show at the UK border
+Check what you need to show at the UK border
+After you arrive in the UK
+You might be able to extend your visa to stay longer in the UK.
+Check if you can extend your visa
+If you break the conditions of your visa you may not be able to come to the UK again.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c05","claim","After I've submitted my Graduate visa application next summer, can I fly home for a couple of weeks while I wait for the decision?","If you travel outside these places before you get a decision, your application will be withdrawn.","Quoted ""Your application will be withdrawn if you do."" from passage /graduate-visa#apply#1
+https://www.gov.uk/graduate-visa/apply
+You must apply online for a Graduate visa.
+Check which documents you’ll need to apply.
+Your partner or children will need to apply separately.
+Proving your identity and providing supporting documents
+As part of your application, you’ll need to prove your identity. How you do this depends on where you’re from and the type of passport or resident permit you have.
+You’ll either:
+use the ‘UK Immigration: ID Check’ app to scan your identity document - you’ll also create or sign into your UK Visas and Immigration (UKVI) account
+have your fingerprints and photo (biometric information) taken at a UK Visa and Citizenship Application Services (UKVCAS) service point
+You’ll be told what you need to do when you apply.
+If you do need to go to a UKVCAS service point, they may need to keep your passport and documents while they process your application.
+You must not travel outside of the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision. Your application will be withdrawn if you do.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c06","claim","I'm going to extend my Student visa from inside the UK for a one-year master's. What will I pay for the application itself, and how much is the healthcare surcharge for a student?","The surcharge depends on the length of the visa, which can be longer than your course.","Quoted ""The exact amount you pay depends on the length of your visa.
+A visa may last longer than your course of study or period of employment."" from passage /healthcare-immigration-application#how-much-pay#1
+https://www.gov.uk/healthcare-immigration-application/how-much-pay
+The exact amount you pay depends on the length of your visa.
+A visa may last longer than your course of study or period of employment.
+Cost for a year
+You’ll have to pay:
+£776 per year for students, their dependants, and those on a Youth Mobility Scheme visa, for example £1,552 for a 2-year visa
+£776 per year for visa and immigration applicants who are under the age of 18 at time of application
+£1,035 per year for all other visa and immigration applications, for example £3,105 for a 3-year visa
+Cost for part of a year
+The amount you have to pay depends on the length of the visa you’re given and where you apply from.
+6 months or less
+You do not need to pay the surcharge if you’re applying from outside the UK for 6 months or less.
+If you’re applying from inside the UK, you’ll have to pay half the yearly cost. For example:
+£388 for students, their dependants or under-18 applications
+£517.50 for any other application
+More than 6 months but less than one year
+Wherever you apply from, you’ll have to pay the cost of a full year.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c07","claim","I start a one-year full-time taught master's degree in January 2027, and I've read that master's students can bring their partner as a dependant. What does my husband need to do to apply?","To count for this, the scholarship or sponsorship must be government funded and come from a national government department.","Quoted ""the award must be a government funded scholarship or sponsorship from a national government department."" from passage /government/publications/student-route-caseworker-guidance/student-and-child-student-accessible#body#98
+https://www.gov.uk/government/publications/student-route-caseworker-guidance/student-and-child-student-accessible
+Where Appendix Student refers to ’government’ this should be understood to be consistent with the requirement of Appendix Finance in the context of acceptable providers of official financial sponsorship, namely that it must be His Majesty’s Government or the applicant’s national government.
+In order to be eligible to bring dependants through holding a government scholarship or sponsorship the award must be a government funded scholarship or sponsorship from a national government department. In practice this means that it must be the government who is providing the funds that are relied on, setting the eligibility criteria which must be met and assessing whether the recipient has met those criteria. Where the sponsorship is from a separate body, or where some of those actions are completed by a body other than the government, it would not meet the criteria.
+His Majesty’s Government runs several scholarship schemes including:
+Marshall Scholarship
+Chevening Scholars
+Commonwealth Shared Scholarship Scheme
+Fulbright Scholarships
+International Association for Exchange of Students for Technical Experience (IAESTE)
+Please note, this list is not exhaustive, and other HM Government sponsored programmes may exist.
+Where the applicant is relying on a scholarship issued by the government of another country it is for the applicant to demonstrate, usually via a letter of confirmation from the official financial sponsor, that the award is granted from a national government.
+Scholarships and sponsorships may on occasion be awarded using different terminology. This should not prevent the applicant from meeting the requirement, as long as the evidence provided refers to a financial award issued by a national government for the purpose of completing a course of study which meets the requirements of the student route.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c08","claim","I'm on a Graduate visa and got married in July 2026, but my wife lives abroad and was never my dependant while I was a student. Can she join me on my Graduate visa, or could she come if I switch to a Skilled Worker visa, and when would she have to apply?","A partner outside the UK applying as a dependant on a Skilled Worker visa must apply before they travel to the UK.","Quoted ""They must apply before they travel to the UK."" from passage /skilled-worker-visa#your-partner-and-children#6
+https://www.gov.uk/skilled-worker-visa/your-partner-and-children
+Your partner and children must either:
+apply online as your partner outside the UK
+apply online as your child outside the UK
+Each family member will need to complete a separate application and pay the visa fee. They must apply before they travel to the UK.
+They’ll need your application number - you’ll get this when you apply. This number is called a Global Web Form (GWF) or a Unique Application Number (UAN). You’ll find it on emails and letters from the Home Office about your application.
+They can also enter a ‘family linking code’ if you got one when you applied. This will connect your applications.
+Proving their identity
+As part of an application, your partner and children will need to prove their identity.
+They’ll either:
+use the ‘UK Immigration: ID Check’ app to scan their identity document - they’ll also create or sign into their UK Visas and Immigration (UKVI) account
+have their fingerprints and photo (biometric information) taken at a visa application centre
+They’ll be told what they need to do when they apply.
+If they need an appointment:
+they’ll need to take their passport with them to the visa application centre (they’ll be able to collect it on the day)
+they may have to travel to get to their nearest centre (this could be in another country)
+Getting a decision
+Once they’ve applied online, proved their identity and provided their documents, they’ll usually get a decision within 3 weeks.
+They may be able to pay to get a faster decision - they’ll be told if they can when they apply.
+If their application is successful, their decision email will tell them what they’ll get to prove their immigration status and what they need to do next.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c09","claim","I know my Student visa lets me do freelance work as long as I stay under 20 hours a week in term time, so I'm about to register as self-employed for web design jobs. Would it be simpler to set up my own limited company and work for it as a director instead?","A Student cannot be self-employed unless specific conditions in Appendix Student ST 26.8 apply.","Quoted ""A Student must not be self-employed or engage in business activity unless the conditions in Appendix Student ST 26.8 apply."" from passage /government/publications/student-route-caseworker-guidance/student-and-child-student-accessible#body#95
+https://www.gov.uk/government/publications/student-route-caseworker-guidance/student-and-child-student-accessible
+A Student must not be self-employed or engage in business activity unless the conditions in Appendix Student ST 26.8 apply. A Child Student is not permitted to be self-employed or engage in business activity.
+A Student must not fill a full-time, permanent vacancy unless the conditions in Appendix Student ST 26.6 apply. A Child Student is not permitted to fill a permanent vacancy.
+A Student or Child Student must not be employed as a professional sportsperson (including coach), whether paid or not and where one or more of the indicators of the definition provided under paragraph 6 of the Immigration Rules applies.
+A Student or Child Student must not be employed as an entertainer.
+Volunteering
+Students and Child Students can volunteer while they are studying. Voluntary work is distinct from volunteering.
+A Student can do voluntary work if they are permitted to work, but this work and any paid work must not exceed the total number of hours they are permitted to work during term time. For example, if a student is permitted to work 20 hours a week during term-time and has paid work of 15 hours a week, they cannot do more than 5 hours voluntary work. If they are not permitted to work, they cannot do voluntary work.
+Child Students aged 16 and over can undertake voluntary work.
+Factors to take into account when considering whether a particular activity constitutes voluntary work or volunteering are:
+voluntary workers will usually have contractual obligations to perform the work (for example to attend at particular times and carry out specific tasks) with the employer being contractually required to provide the work – the contract does not have to be written - the worker is usually remunerated in kind
+volunteers do not have a contract - they must not be a substitute for an employee, and they must not be doing unpaid work – for example, receiving payment in kind (although they are sometimes reimbursed for reasonable travel and subsistence expenses)
+volunteers usually help a charity or voluntary or public sector organisation","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c10","claim","I've lived in the UK for 4 years and I'm switching from a Graduate visa to a Skilled Worker visa on a 3-year certificate of sponsorship, for a job that isn't on the immigration salary list. How much are the application fee and the healthcare surcharge, and do I need to show savings?","The healthcare surcharge is usually £1,035 per year, paid for each year of your stay; for a 3-year stay this would be £3,105 in total (my arithmetic from the per-year rate).","Quoted ""pay the healthcare surcharge - this is usually £1,035 per year"" from passage /skilled-worker-visa#how-much-it-costs#1
+https://www.gov.uk/skilled-worker-visa/how-much-it-costs
+When you apply for a Skilled Worker visa, you’ll need to have enough money to:
+pay the application fee - the standard fee ranges from £819 to £1,865 depending on your circumstances
+pay the healthcare surcharge - this is usually £1,035 per year
+support yourself when you arrive in the UK - you’ll usually need to have at least £1,270 available (unless you’re exempt)
+You’ll pay a lower application fee if your job is on the immigration salary list.
+You’ll be told how much you need to pay when you apply.
+Example
+You’re applying to come to the UK from Argentina for 2 years on a Skilled Worker visa.
+Your job is not on the immigration salary list so your visa will cost £819, plus £1,035 for each year of your stay for the healthcare surcharge. This means you’ll pay a total of £2,889 when you apply for your visa.
+You’ll also need to prove you have £1,270 available to support yourself in the UK if your employer cannot cover these costs.
+
+Quoted ""the healthcare surcharge for each year of their stay"" from passage /skilled-worker-visa#switch-to-this-visa#3
+https://www.gov.uk/skilled-worker-visa/switch-to-this-visa
+Each person applying will need to pay:
+the visa application fee
+the healthcare surcharge for each year of their stay
+You’ll also need to have your fingerprints and photo (biometric information) taken - there’s no fee for this.
+If you’ve been in the UK for less than 1 year, you’ll also need to prove you have enough money to support yourself.
+Proving your identity and providing supporting documents
+As part of your application you’ll need to prove your identity.
+How you do this depends on where you’re from and the type of passport you have.
+You’ll either:
+use the ‘UK Immigration: ID Check’ app to scan your identity document - you’ll also create or sign into your UK Visas and Immigration (UKVI) account
+have your fingerprints and photo (biometric information) taken at a UK Visa and Citizenship Application Services (UKVCAS) service point
+You’ll be told what you need to do when you apply.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c11","claim","I'm on a Graduate visa and a UK employer has offered me a job. How do I check whether the job itself is eligible for a Skilled Worker visa?","You need the job's 4-digit occupation code to check eligibility, and if you already have a job offer you can ask your employer for it.","Quoted ""If you already have a job offer, ask your employer for your occupation code."" from passage /skilled-worker-visa#your-job#2
+https://www.gov.uk/skilled-worker-visa/your-job
+Before you can find out if your job is eligible, you need to know its 4-digit occupation code.
+If you already have a job offer, ask your employer for your occupation code.
+Look up your job’s occupation code
+If you do not know your code, you can search for your job in the CASCOT occupation coding tool.
+Not every job title is included. If you cannot find your exact job title, try searching for similar jobs.
+Make sure the job description matches what you’ll be doing. Some similar jobs have different codes, for example in construction. Bricklayers, roofers and carpenters are eligible for a Skilled Worker visa, but construction labourers are not.
+Check if an occupation code is eligible for this visa
+When you know your occupation code, view the table of eligible jobs to see if it’s included.
+The table is very large. It’s sorted in order of occupation code, with the smallest numbers at the top. You may be able to use your web browser to search for your code on the page.
+If your occupation code is listed as a ‘higher skilled’ job, you can apply for this visa.
+If your occupation code is listed as ‘medium skilled’, you can apply for this visa if your job is:
+on the immigration salary list
+on the temporary shortage list
+prison officer (code 3314) and you’re extending or switching to this visa
+You can also apply if you’re extending your visa and you got your first certificate of sponsorship before 22 July 2025.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c12","claim","I've been in the UK for 9 months and need to show living-cost money to extend my Student visa. Can I count the wages I've saved from my part-time job, and can my bank overdraft make up the rest?","Overdrafts cannot be used to prove you have enough money, so an overdraft cannot make up the rest.","Quoted ""You cannot use:
+overdrafts"" from passage /guidance/financial-evidence-for-student-and-child-student-route-applicants#body#3
+https://www.gov.uk/guidance/financial-evidence-for-student-and-child-student-route-applicants
+You can prove you have enough money using:
+a student loan from a government, government sponsored loan company, or a regulated student loans scheme
+an official financial sponsorship – for example, from a national government or university
+your own money
+your parent’s money – they must provide a letter confirming they agree to you using it this way
+your partner’s money, if your partner is in the UK or applying at the same time
+You cannot use:
+overdrafts
+cryptocurrency
+stocks and shares
+pensions
+bank accounts that are not regulated by the financial regulatory body in the country in which the bank operates
+bank accounts that do not use electronic record keeping
+Student loan
+You need to show a student loan letter which:
+is dated no more than 6 months before you apply
+confirms the loan is a student loan, provided by either the government, a government sponsored student loan company, or an academic or educational loans scheme
+confirms there are no conditions on the release of the loan, other than a successful application to study
+confirms the amount of the loan
+confirms the loan is for you
+confirms the money will be available to you, or paid directly to the sponsor, before you begin your course","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c13","claim","Once I'm on a Graduate visa, can I take any job I like, including freelancing for myself, or are there kinds of work that are not allowed?","If your application succeeds, you'll get a full list of what you can and cannot do.","Quoted ""If your application is successful, you’ll get a full list of what you can and cannot do with a Graduate visa."" from passage /graduate-visa#overview#3
+https://www.gov.uk/graduate-visa
+When you apply for a Graduate visa, you’ll need to:
+pay the £937 application fee
+pay the healthcare surcharge - this is usually £1,035 for each year you’ll be in the UK
+Check how much it will cost.
+If you work in public sector healthcare
+If you’re a doctor or nurse, or you work in health or adult social care, check if you’re eligible to apply for the Health and Care Worker visa instead. It’s cheaper to apply for and you do not need to pay the annual immigration health surcharge.
+If you get a job in public sector healthcare after you have paid the healthcare surcharge, you may be able to get a refund.
+What you can and cannot do
+With a Graduate visa you can:
+work in most jobs
+look for work
+be self-employed
+continue living in the UK with your partner and children, if they’re eligible
+travel abroad and return to the UK
+do voluntary work
+Any voluntary work you do must be unpaid and for one of the following:
+a registered charity
+a voluntary organisation
+an associated fundraising body (an organisation that raises money for a charity or voluntary organisation)
+a statutory body (a government-appointed body, for example Historic England)
+You cannot:
+apply for most benefits (public funds), or the State Pension
+work as a professional sportsperson
+If your application is successful, you’ll get a full list of what you can and cannot do with a Graduate visa.
+Studying with a Graduate visa
+You can only study with a Graduate visa if your chosen course is not eligible for a Student visa. If your course is eligible for a Student visa, you can extend your Student visa instead.
+You may need an Academic Technology Approval Scheme (ATAS) certificate if you’re studying or researching sensitive topics.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c14","claim","How long does a Graduate visa decision usually take, and can I pay to get it faster? I'll be applying from inside the UK and may need to start a job quickly.","Faster decisions are not guaranteed: it can take longer if the Home Office needs more information, and you will not usually get your money back in that case. The number of people who can apply for a faster decision is also limited.","Quoted ""If the decision takes longer, you will not usually get your money back."" from passage /faster-decision-visa-settlement#applying-inside-the-uk#1
+https://www.gov.uk/faster-decision-visa-settlement
+You may be able to pay for a faster decision on a visa, settlement (‘indefinite leave to remain’) or citizenship application.
+Using the ‘priority service’ means you’ll usually get a decision within:
+5 working days for most visa and settlement applications
+30 working days for Family visa applications from outside the UK and citizenship applications
+Using the ‘super priority service’ for visa and settlement applications means you’ll usually get a decision by the end of the next working day. You cannot use the ‘super priority service’ for citizenship applications.
+Your processing time ends when you get a letter or email telling you that a decision has been made.
+It can take longer to get a decision - for example, if the Home Office needs to ask you for more information or check your details with other government departments. You’ll be told if this is the case.
+If the decision takes longer, you will not usually get your money back. Find out about getting a refund of your priority service fee.
+If you’re in the UK:
+you must have permission to be here to apply for the priority or super priority service
+you can only pay for a faster decision on certain visas
+
+Quoted ""There’s a limit on how many people can apply for a faster decision."" from passage /faster-decision-visa-settlement#eligible-visas-when-applying-inside-the-uk#1
+https://www.gov.uk/faster-decision-visa-settlement/eligible-visas-when-applying-inside-the-uk
+You can apply for a faster decision on certain:
+visa applications
+applications to extend your stay in the UK
+applications to settle in the UK
+These tables list the eligible applications and whether you can pay to get a faster decision:
+within 5 working days
+by the end of the next working day
+They also list the visa applications eligible for getting a faster decision depending on whether you’re applying:
+as the main applicant
+as a dependent partner or child
+There’s a limit on how many people can apply for a faster decision. If you’re not offered the option to apply for a faster decision, you can still complete a standard application.
+Whether you can get a faster decision depends on what you’re applying for and how you prove your identity.
+You’ll prove your identity by either:
+attending an appointment at a UK Visa and Citizen Application Services (UKVCAS) centre
+using the ‘UK Immigration: ID Check’ app to scan your identity document
+You’ll find out if you can get a faster decision and what you need to do when you apply.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c15","claim","If my Graduate visa is approved, will I get a card or some other document? And when a new employer asks for proof that I'm allowed to work, what do I give them, and do they need to see the visa itself?","When a visa application succeeds, you get an eVisa, which is a digital record of your immigration status and its conditions, such as whether you can work.","Quoted ""You’ll get an eVisa when you successfully apply for a visa or other type of permission to be in the UK."" from passage /evisa#what-an-evisa-is#1
+https://www.gov.uk/evisa
+An eVisa is a digital record of:
+your identity and immigration status - for example the type of visa you have or if you have indefinite leave to remain (settlement) in the UK
+the conditions of your status - for example if you’re allowed to work or study in the UK
+You’ll get an eVisa when you successfully apply for a visa or other type of permission to be in the UK.
+eVisas have replaced physical immigration documents.
+If you have a biometric residence card (BRC) you may still be able to use it in some situations.
+If you have a visa vignette (sticker), it will remain valid until it expires.
+How to use your eVisa
+You can view your eVisa and get a share code to prove your immigration status, for example when you get a new job or rent a home.
+You can travel with your eVisa after you add your passport or travel document details.
+Access your eVisa
+You need a UK Visas and Immigration (UKVI) account to access your eVisa.
+You can set up a UKVI account if you do not already have one.
+You do not need to pay to set up a UKVI account or access your eVisa.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c16","claim","My college has lost its sponsor licence and I've been told my Student visa will be cancelled, even though it had more than a year left. How long do I get to find somewhere else to study before I would have to leave?","If you find a new sponsor, you need a new Confirmation of Acceptance for Studies (CAS), a new visa application, and you must pay the visa application fees and healthcare surcharge.","Quoted ""get a new Confirmation of Acceptance for Studies (CAS) reference number"" from passage /student-sponsor-loses-licence#body#2
+https://www.gov.uk/student-sponsor-loses-licence
+If your sponsor loses its licence while you’re studying in the UK, you may:
+be able to continue studying for a limited amount of time with your current education provider
+have your visa cancelled
+If your sponsor is still operating when it loses its licence, it may support you to find a new sponsor so that you can complete your course.
+Your visa will be cancelled immediately if you’re involved in the reasons for the loss of the licence.
+If you can continue studying with your current education provider
+Your sponsor must let you know if you can continue studying for a limited time. This is known as ‘teach-out’.
+You may be able to finish:
+part of your studies
+your course, if it’s nearing its end date
+Your sponsor will let you know how long you can continue studying for. At the end of that time either:
+your visa will be cancelled, if your course has not been completed
+your visa end date will not change, if you have less than 60 days left on it
+If your visa is cancelled
+If your visa is cancelled, you will have to find a new sponsor and apply for a new visa if you want to stay in the UK.
+You’ll have 60 days (or however long you have left on the visa if it’s less than 60 days) from the date the visa is cancelled.
+You’ll have to leave the UK if you do not find a new sponsor and apply for a new visa in that time.
+If you find a new sponsor you’ll need to:
+get a new Confirmation of Acceptance for Studies (CAS) reference number
+apply for a new visa to study in the UK
+pay the visa application fees and healthcare surcharge
+You can find out more information on how to apply for a:
+Student visa
+Child Student visa
+If you want to stay in the UK but do not want to study, check which visas you can apply for.
+
+Quoted ""pay the visa application fees and healthcare surcharge"" from passage /student-sponsor-loses-licence#body#2
+https://www.gov.uk/student-sponsor-loses-licence
+If your sponsor loses its licence while you’re studying in the UK, you may:
+be able to continue studying for a limited amount of time with your current education provider
+have your visa cancelled
+If your sponsor is still operating when it loses its licence, it may support you to find a new sponsor so that you can complete your course.
+Your visa will be cancelled immediately if you’re involved in the reasons for the loss of the licence.
+If you can continue studying with your current education provider
+Your sponsor must let you know if you can continue studying for a limited time. This is known as ‘teach-out’.
+You may be able to finish:
+part of your studies
+your course, if it’s nearing its end date
+Your sponsor will let you know how long you can continue studying for. At the end of that time either:
+your visa will be cancelled, if your course has not been completed
+your visa end date will not change, if you have less than 60 days left on it
+If your visa is cancelled
+If your visa is cancelled, you will have to find a new sponsor and apply for a new visa if you want to stay in the UK.
+You’ll have 60 days (or however long you have left on the visa if it’s less than 60 days) from the date the visa is cancelled.
+You’ll have to leave the UK if you do not find a new sponsor and apply for a new visa in that time.
+If you find a new sponsor you’ll need to:
+get a new Confirmation of Acceptance for Studies (CAS) reference number
+apply for a new visa to study in the UK
+pay the visa application fees and healthcare surcharge
+You can find out more information on how to apply for a:
+Student visa
+Child Student visa
+If you want to stay in the UK but do not want to study, check which visas you can apply for.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c17","claim","I'm on a Graduate visa and my job offer, which isn't in healthcare or education, pays less than the usual Skilled Worker minimum. What's the lowest salary I can be paid as a recent graduate and still qualify?","For comparison, the standard option with no discount needs a salary of at least £41,700 and the full going rate.","Quoted ""Salary must meet or exceed both: - £41,700 (general threshold) - the full going rate for the occupation code"" from passage /government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible#body#41
+https://www.gov.uk/government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible
+SK6.9. The table below shows the salary thresholds for Options A to E. You must also read the information below on the eligibility criteria for these options.
+Option | Description | Requirements
+A | Salary only (no discounts) | Salary must meet or exceed both: - £41,700 (general threshold) - the full going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+B | Relevant PhD (10% discount on general threshold and going rate) | Salary must meet or exceed both: - £37,500 (general threshold) - 90% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+C | Relevant PhD in a STEM subject (20% discount on general threshold and going rate) | Salary must meet or exceed both: - £33,400 (general threshold) - 80% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+D | Job in Appendix Immigration Salary List (20% discount on general threshold only) | Salary must meet or exceed both: - £33,400 (general threshold) - the full going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+E | New entrant (20% discount on general threshold and 30% discount on going rate) | Salary must meet or exceed both: - £33,400 (general threshold) - 70% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c18","claim","I'm on a Student visa for a four-year integrated master's, but I'm going to finish early, after three years, with the bachelor's degree, and my company will then sponsor me for a Skilled Worker visa. What happens to my Student visa, will my university handle the change from four years to three or is that something I have to do myself, and is there anything I need to do before I can switch?","You can switch to a Skilled Worker visa if you are on a Student visa and have completed the course you were sponsored to study.","Quoted ""If you're currently in the UK on a Student visa, you must also meet one of the following requirements: you have completed the course you were sponsored to study"" from passage /skilled-worker-visa#switch-to-this-visa#1
+https://www.gov.uk/skilled-worker-visa/switch-to-this-visa
+You might be able to apply to change (‘switch’) to a Skilled Worker visa if you’re already in the UK on a different type of visa.
+You must not travel outside of the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision. Your application will be withdrawn if you do.
+Eligibility
+You must meet the following requirements:
+your job meets the eligibility requirements
+you can speak, read, write and understand English
+If you’re currently in the UK on a Student visa, you must also meet one of the following requirements:
+you have completed the course you were sponsored to study
+your job start date is after your course has finished
+you’re studying for a PhD full time, and have been for at least 24 months
+Eligibility if you’re switching to this visa to become a prison officer
+You can switch to this visa to become a prison officer (code 3314).
+You must get a certificate of sponsorship on or before 31 December 2026. Your employer can sponsor you for up to 3 years.
+If you apply for a prison officer role now, you will not get a certificate of sponsorship before 31 December 2026.
+Your salary must be at least the higher of:
+£31,300 (the current minimum salary per year)
+the ‘lower going rate’ for prison officers","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c19","claim","The company that's offered me a job doesn't have a sponsor licence yet, and they've suggested I pay for my own certificate of sponsorship for the Skilled Worker visa. Can they still sponsor me, how long does a licence take, and is it right that I pay?","To sponsor a Skilled Worker, an employer must hold a valid sponsor licence for the Skilled Worker route.","Quoted ""hold a valid sponsor licence for the Skilled Worker route"" from passage /government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible#body#5
+https://www.gov.uk/government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible
+SK1.7. You will need to sponsor any overseas national you wish to employ if they are not a ‘settled worker’ or do not otherwise have immigration permission to work for you in the UK. This includes most EU, EEA and Swiss nationals who arrived in the UK after 31 December 2020.
+SK1.8. You do not have to sponsor certain categories of worker, including:
+Irish citizens
+people who have been granted status under the EU Settlement Scheme
+people with indefinite leave to enter or remain in the UK (also known as ‘settlement’)
+SK1.9. This is not a complete list. For further information on who does, and does not, need sponsorship, see section S1 of Part 2: Sponsor a worker.
+What are the sponsorship requirements for the Skilled Worker route?
+SK1.10. If you wish to sponsor a Skilled Worker, you must:
+hold a valid sponsor licence for the Skilled Worker route
+understand the general requirements for sponsoring a worker – see Part 2: Sponsor a worker
+satisfy yourself the worker can meet the immigration requirements for this route
+only sponsor workers in genuine employment which meets the skill-level and salary requirements of this route
+only sponsor workers for eligible roles, as defined in the glossary
+if you wish to sponsor a nurse or midwife before they have achieved full registration with the Nursing and Midwifery Council, understand the registration process and your additional sponsor duties
+assign a valid Certificate of Sponsorship (CoS) to the worker you wish to sponsor and pay any relevant CoS fee and Immigration Skills Charge
+ensure you understand the difference between a ‘Defined CoS’ and an ‘Undefined’ CoS
+keep records for each worker you sponsor, including information on how you recruited the worker – see Appendix D to the sponsor guidance
+have eligible Key Personnel in place to manage your licence and assign or apply for CoS – see section L4 of Part 1: Apply for a licence for guidance on Key Personnel
+understand and comply with all of your sponsor duties – see Part 3: Sponsor duties and compliance","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c20","claim","I'll be applying for the 18 month Graduate visa in July 2027. What is the application fee, and how much is the healthcare surcharge for each year?","For an 18-month Graduate visa, the healthcare surcharge will cost £1,152.50.","Quoted ""If you're eligible for a Graduate visa for: 18 months - it will cost £1,152.50"" from passage /graduate-visa#how-much-it-costs#1
+https://www.gov.uk/graduate-visa/how-much-it-costs
+When you apply for a Graduate visa, you’ll need to:
+pay the £937 application fee
+pay the healthcare surcharge - this is usually £1,035 for each year you’ll be in the UK
+You’ll be told how much you need to pay when you apply.
+Healthcare surcharge
+If you’re eligible for a Graduate visa for:
+18 months - it will cost £1,152.50
+2 years - it will cost £2,070
+3 years - it will cost £3,105
+If you work in public sector healthcare
+If you get a job in public sector healthcare after you have paid the healthcare surcharge, you may be able to get a refund.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c21","claim","I'm on a Graduate visa and got married in July 2026, but my wife lives abroad and was never my dependant while I was a student. Can she join me on my Graduate visa, or could she come if I switch to a Skilled Worker visa, and when would she have to apply?","Your partner can only apply as a dependant on your Graduate visa if she was a dependant on your Student visa or Tier 4 (General) student visa.","Quoted ""Your partner needs to have been a dependant on your Student visa or Tier 4 (General) student visa to apply."" from passage /graduate-visa#your-partner-and-children#1
+https://www.gov.uk/graduate-visa/your-partner-and-children
+If your partner and children joined you in the UK as ‘dependants’ on your current Student visa or Tier 4 (General) student visa, they can apply to stay as dependants on your Graduate visa.
+Your child can also apply if they were born in the UK during your current Student visa, Tier 4 (General) student visa or Graduate visa.
+If their application is successful, their visa will end on the same date as yours.
+A dependant is any of the following:
+your husband, wife, civil partner or unmarried partner
+your child under 18 - including if they were born in the UK during your stay
+your child over 18 if they currently have permission (‘leave to enter’ or ‘leave to remain’) to be in the UK as your dependant
+Your partner
+Your partner needs to have been a dependant on your Student visa or Tier 4 (General) student visa to apply. You’ll also need to show that they’re still your partner.
+You must be able to prove one of the following:
+you’re in a civil partnership or marriage that’s recognised in the UK
+you’ve been living together in a relationship for at least 2 years when you apply
+you’ve been in a relationship for at least 2 years when you apply but you cannot live together, for example because you’re working or studying in different places, or it’s not accepted in your culture
+If you’re not living together, you’ll need to prove that you have an ongoing commitment to each other, for example by providing evidence that you:
+communicate regularly with each other
+support each other financially
+care for any children you have together
+spend time together as a couple, for example on holiday or at events","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c22","claim","I'm on a Graduate visa and my job offer, which isn't in healthcare or education, pays less than the usual Skilled Worker minimum. What's the lowest salary I can be paid as a recent graduate and still qualify?","For comparison, the standard option with no discount needs a salary of at least £41,700 and the full going rate.","Quoted ""Salary must meet or exceed both: - £41,700 (general threshold) - the full going rate for the occupation code"" from passage /government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible#body#41
+https://www.gov.uk/government/publications/sponsor-a-skilled-worker/workers-and-temporary-workers-sponsor-a-skilled-worker-accessible
+SK6.9. The table below shows the salary thresholds for Options A to E. You must also read the information below on the eligibility criteria for these options.
+Option | Description | Requirements
+A | Salary only (no discounts) | Salary must meet or exceed both: - £41,700 (general threshold) - the full going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+B | Relevant PhD (10% discount on general threshold and going rate) | Salary must meet or exceed both: - £37,500 (general threshold) - 90% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+C | Relevant PhD in a STEM subject (20% discount on general threshold and going rate) | Salary must meet or exceed both: - £33,400 (general threshold) - 80% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+D | Job in Appendix Immigration Salary List (20% discount on general threshold only) | Salary must meet or exceed both: - £33,400 (general threshold) - the full going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations
+E | New entrant (20% discount on general threshold and 30% discount on going rate) | Salary must meet or exceed both: - £33,400 (general threshold) - 70% of the going rate for the occupation code as stated in Table 1 or Table 1a of Appendix Skilled Occupations","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c23","claim","My daughter was born in the UK in March 2026, during my current Student visa, and has never had a visa of her own. Can she apply as my dependant when I apply for the Graduate visa, what proof do I need, and how long would her visa last?","A child born in the UK during your current Student visa can apply as a dependant on your Graduate visa.","Quoted ""Your child can also apply if they were born in the UK during your current Student visa, Tier 4 (General) student visa or Graduate visa."" from passage /graduate-visa#your-partner-and-children#1
+https://www.gov.uk/graduate-visa/your-partner-and-children
+If your partner and children joined you in the UK as ‘dependants’ on your current Student visa or Tier 4 (General) student visa, they can apply to stay as dependants on your Graduate visa.
+Your child can also apply if they were born in the UK during your current Student visa, Tier 4 (General) student visa or Graduate visa.
+If their application is successful, their visa will end on the same date as yours.
+A dependant is any of the following:
+your husband, wife, civil partner or unmarried partner
+your child under 18 - including if they were born in the UK during your stay
+your child over 18 if they currently have permission (‘leave to enter’ or ‘leave to remain’) to be in the UK as your dependant
+Your partner
+Your partner needs to have been a dependant on your Student visa or Tier 4 (General) student visa to apply. You’ll also need to show that they’re still your partner.
+You must be able to prove one of the following:
+you’re in a civil partnership or marriage that’s recognised in the UK
+you’ve been living together in a relationship for at least 2 years when you apply
+you’ve been in a relationship for at least 2 years when you apply but you cannot live together, for example because you’re working or studying in different places, or it’s not accepted in your culture
+If you’re not living together, you’ll need to prove that you have an ongoing commitment to each other, for example by providing evidence that you:
+communicate regularly with each other
+support each other financially
+care for any children you have together
+spend time together as a couple, for example on holiday or at events","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c24","claim","I've just signed in and my eVisa is showing the wrong immigration status. How do I get it corrected, and how long does that take?","Someone else can report the error for you, such as a legal representative, an employer, or a member of staff at a university.","Quoted ""You can ask someone else to use this service to report the error for you, for example:"" from passage /evisa#report-error-evisa#2
+https://www.gov.uk/evisa/report-error-evisa
+There’s a different way to:
+update your UKVI account details - for example to change your name, address, email address, passport details or photo
+recover your UKVI account if you’re having problems signing in
+prove you have pre-settled status under the EU Settlement Scheme, if your eVisa shows your other immigration status
+contact UKVI to report an error on both your eVisa and your form for accompanying an eVisa
+Ask someone else to report an error
+You can ask someone else to use this service to report the error for you, for example:
+a legal representative
+an employer
+a friend or colleague
+a member of staff at a university or charity
+How long it takes to fix
+UKVI aims to fix most issues within 5 working days.
+If the issue is complex, it can take up to 15 working days.
+You’ll get an email if it is likely to take longer than 15 days to fix or if you need to give more information.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c25","claim","My BRP card expired on 31 December 2024 although my Student visa runs until 2027. How do I apply for a new BRP so I can keep proving my immigration status?","If you have an expired BRP but still have permission to stay in the UK, you need to create a UKVI account to get access to your eVisa.","Quoted ""If you have an expired BRP and still have permission to stay in the UK, you need to create a UK Visas and Immigration (UKVI) account to get access to your eVisa."" from passage /biometric-residence-permits#body#1
+https://www.gov.uk/biometric-residence-permits
+Biometric residence permits (BRPs) are cards that were used to prove immigration status. You might have a BRP if you were granted permission to live or work in the UK on or before 31 October 2024.
+All BRPs have now expired and have been replaced by eVisas. An eVisa is a digital record of your identity and immigration status.
+If you have an expired BRP and still have permission to stay in the UK, you need to create a UK Visas and Immigration (UKVI) account to get access to your eVisa.
+You might be able to use your expired BRP for 24 months after the expiry date printed on the card, or until 31 December 2026 - whichever comes first.
+You can only use it to:
+sign in to view your eVisa and get a share code
+create a UKVI account to get access to your eVisa
+apply to extend your permission to stay in the UK
+You can use your eVisa to prove your immigration status for any other reason.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c26","claim","I applied to extend my Student visa on 21 September 2026, and during the 28 days before that my balance was about £300 below the required amount for three days until my parents topped it up. Will my application be approved?","You don't need to show money to support yourself if you've been in the UK with a valid visa for at least 12 months on the date you apply.","Quoted ""unless you’ve been in the UK with a valid visa for at least 12 months on the date of your application."" from passage /student-visa#money#1
+https://www.gov.uk/student-visa/money
+You must have enough money to pay for your course and support yourself in the UK.
+How much money you need depends on your circumstances and what you’re applying for.
+Course fee
+You need enough money to pay for your course for 1 academic year (up to 9 months). The amount you need to pay will be on your Confirmation of Acceptance for Studies (CAS).
+If you’ve been in the UK with a valid visa for at least 12 months, you do not need to prove you have this money for your visa application.
+Money to support yourself (‘financial requirement’)
+You’ll need to show you have enough money to support yourself - unless you’ve been in the UK with a valid visa for at least 12 months on the date of your application.
+How much money you need depends on where you will be studying. You’ll need either:
+£1,529 per month (for up to 9 months) for courses in London
+£1,171 per month (for up to 9 months) for courses outside London
+If you’re boarding at a residential independent school, you’ll need to pay boarding fees instead. The amount you need to pay will be on your CAS.
+London means the City of London and the 32 London boroughs.
+You’ll need to prove you have extra money for each family member you bring with you.
+You must have this money for at least 28 days in a row. The end date of the 28-day period must be within 31 days of the date you apply for your visa.
+Example
+If you submit your application on 1 January, you’d have to show that the funds were in your bank account for at least the 28-day period ending on 1 December.
+If you have a student loan or financial sponsorship, you’ll need to provide evidence of this from your loan or sponsorship company.
+Read the guidance on finances for student applications for more information about the money you need and how to prove it.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c27","claim","I finish my bachelor's in June 2027 and will apply for the Graduate visa that summer. Since the Graduate visa gives everyone 2 years, I can plan on working in the UK until summer 2029, right?","Only people with a PhD or other doctoral qualification get 3 years. A bachelor's degree doesn't qualify for this.","Quoted ""If you have a PhD or other doctoral qualification, it will last for 3 years."" from passage /graduate-visa#overview#2
+https://www.gov.uk/graduate-visa
+A Graduate visa lasts for:
+2 years if you apply on or before 31 December 2026
+18 months if you apply on or after 1 January 2027
+If you have a PhD or other doctoral qualification, it will last for 3 years.
+Your visa will start from the day your application is approved.
+If you want to stay longer in the UK
+You cannot extend your Graduate visa. However, you may be able to switch to a different visa, for example a Skilled Worker visa.
+Check you can apply for another type of visa to stay in the UK.
+How to apply
+You must apply online for a Graduate visa.
+Your partner and children can also apply to stay in the UK if they are eligible.
+When to apply
+You must apply before your Student visa or Tier 4 (General) student visa expires.
+You can apply after your education provider (such as your university or college) has told the Home Office that you’ve successfully completed the course you took with your Student or Tier 4 (General) student visa. You do not have to wait until you’ve graduated or have been given a certificate.
+As part of your application, you’ll need to prove your identity and provide your documents.
+Your application may take longer if you need an appointment to do this. You’ll find out if you need one when you start your application.
+Getting a decision
+Once you’ve applied online, proved your identity and provided your documents, you’ll usually get a decision on your visa within 8 weeks.
+You can stay in the UK while you wait for a decision.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c28","claim","I'm in the final year of a bachelor's degree at a UK university on a Student visa. Does a bachelor's degree count for the Graduate visa, and does it matter which university I'm at?","Your education provider must have told the Home Office that you have successfully completed your course.","Quoted ""your education provider (such as your university or college) has told the Home Office you’ve successfully completed your course"" from passage /graduate-visa#overview#1
+https://www.gov.uk/graduate-visa
+A Graduate visa gives you permission to stay in the UK for at least 18 months after successfully completing an eligible course in the UK.
+You must be in the UK when you apply.
+Eligibility
+You can apply for a Graduate visa if all of the following are true:
+you’re in the UK
+your current visa is a Student visa or Tier 4 (General) student visa
+you studied a UK bachelor’s degree, postgraduate degree or other eligible course for a minimum period of time with your Student visa or Tier 4 (General) student visa
+your education provider (such as your university or college) has told the Home Office you’ve successfully completed your course
+You can ask your education provider if you’re not sure whether they’ve told the Home Office you’ve successfully completed your course.
+Check if your course is eligible and how long you need to have studied in the UK.
+If you’re not eligible for a Graduate visa, you may be eligible for another type of visa to stay in the UK.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c29","claim","I'm abroad visiting family in India and had to get a new Indian passport because my old one was stolen, but my eVisa is still linked to the old passport. What do I need to do to get back into the UK, and is there a fee if I can't sort it out online myself?","If you can't update your UKVI account yourself, you can ask UKVI to do it for you. You may have to give your fingerprints and photo at a visa application centre.","Quoted ""If you cannot update your UKVI account, you can ask UKVI to update your account for you. You may need to submit your fingerprints and photo (biometric information) at a visa application centre."" from passage /guidance/living-in-the-uk-applying-from-overseas#body#7
+https://www.gov.uk/guidance/living-in-the-uk-applying-from-overseas
+You can also use the View and Prove service to share your status with people or organisations, such as employers or universities.
+This is an online service which allows people with eVisas to:
+get a ‘share code’ to prove their status to others, for example employers
+update personal details in your UKVI account, for example their passport number or email address
+check what rights you have in the UK, for example the right to work, rent or claim benefits
+Share your immigration status.
+Updating your details
+It’s important that you keep your details up to date.
+If you have online access to your immigration status information, you can update your personal information in your UKVI account, such as your contact details.
+You must tell us about any changes to your personal details, such as your name and nationality, or changes to your contact details. You should also tell us if any of the information displayed on your online immigration status profile is incorrect.
+You will be able to check and update your personal details and link your current passport in your UKVI account. Always give yourself plenty of time to check both your personal details are up to date and your eVisa information is correct before travelling. Not doing so may mean that you are delayed or denied boarding by carriers.
+You can also use the view and prove service to update your sign in details and passport or travel document details so that you can continue to access your immigration status information online.
+Update your details.
+If you are outside the UK
+If you cannot update your UKVI account, you can ask UKVI to update your account for you. You may need to submit your fingerprints and photo (biometric information) at a visa application centre.
+If you need help using the service
+If you need help accessing your eVisa, you can contact UK Visas and Immigration (UKVI).
+Help accessing your UKVI account
+Get back into your account if you’re having problems singing in.
+Contact UKVI for help with:
+accessing your account
+updating your personal details
+sharing your status on your behalf, if you are unable to do so yourself
+How we protect your data
+You can find information on how we protect your personal data by reading our privacy notices:
+Borders, immigration and citizenship
+Making an application
+Viewing and proving your immigration status in the UK","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"c30","claim","I paid the healthcare surcharge for 2 years when I got my Graduate visa in January 2026. If I switch to a Skilled Worker visa in January 2027 and pay the surcharge again, do I get anything back for the year I've paid for twice?","When you switch from a Graduate visa to a Skilled Worker visa, the overlap runs from the date the Skilled Worker visa is granted until your Graduate visa would have expired.","Quoted ""the overlapping period would be calculated from the date the Skilled Worker visa was granted until the expiry of the Graduate visa."" from passage /government/publications/immigration-health-surcharge-caseworker-guidance/immigration-health-surcharge-caseworker-guidance-accessible#body#42
+https://www.gov.uk/government/publications/immigration-health-surcharge-caseworker-guidance/immigration-health-surcharge-caseworker-guidance-accessible
+An applicant will be entitled to a partial refund of the IHS paid where they apply for a further period of temporary immigration permission from within the UK, where the existing period of immigration permission has in excess of 6 months remaining at the point the further visa application is granted.
+To be eligible for a refund of an overlapping period of immigration permission, an applicant must:
+have paid the IHS twice covering the same period of immigration permission
+have applied to extend their immigration permission from within the UK
+have more than 6 months remaining on their existing period of immigration permission from the date the further temporary immigration permission is granted
+All partial IHS refunds for overlapping periods should be processed by the current caseworker against the IHS reference number associated with the initial period of immigration permission which the applicant is switching from. For example: if an applicant is switching from a Student visa onto a Skilled Worker visa in-country, the IHS refund should be processed by the Skilled Worker decision maker against the IHS reference number for the Student visa. Where the applicant has several previous IHS reference numbers, you must ensure that the IHS is refunded against the IHS reference number associated with the visa which the applicant has switched from.
+For example: if an applicant was granted a Graduate route visa valid between 01 January 2024 and 01 January 2026 and was subsequently granted a Skilled Worker visa on 01 December 2024 valid until 01 December 2027, the overlapping period would be calculated from the date the Skilled Worker visa was granted until the expiry of the Graduate visa.","Read the claim and the passages it cites. Write supported, partially_supported or not_supported.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a01","answer","I've lost my old BRP card. It expired at the end of 2024 and I use my eVisa now, so do I still need to tell anyone?","Yes, you still need to report it, even though it has expired and you use an eVisa. The passages I found don't say how to report it, so check the GOV.UK BRP page for that.
+- You must report a lost or stolen BRP even if it has expired.
+- Not reporting it can lead to a fine of up to £1,000 and being made to leave the UK.
+- Someone else, such as a legal representative, charity, family member, employer, college or university, can report it for you.
+- If you find the card after reporting it, you cannot use it and must destroy it.","Expected points
+[0] You must report a lost or stolen BRP even though it has expired.
+[1] You can be fined up to £1,000 and made to leave the UK if you do not report a lost or stolen BRP.
+
+Must not say
+[0] You do not need to report a lost BRP once it has expired.
+[1] You should apply for a replacement BRP.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a02","answer","How long does a Graduate visa decision usually take, and can I pay to get it faster? I'll be applying from inside the UK and may need to start a job quickly.","The standard processing time for a Graduate visa applied for inside the UK is listed as 8 weeks, and you can pay for a faster decision if you are eligible. The guidance does not say when you can start work, so I could not confirm that; the faster-decision pages I relied on were last updated 2024-10-31, so check current fees on GOV.UK.
+- The listed processing time for a Graduate visa applied for from inside the UK is 8 weeks.
+- You can pay £500 on top of the application fee for the priority service, which usually gives a decision within 5 working days for most visa and settlement applications.
+- The eligibility table lists the Graduate visa as eligible for the 5-working-day priority option with either identity check route, but as eligible for the next-working-day option only with a UKVCAS appointment, not with the ID check app.
+- The super priority service costs £1,000 on top of the application fee and, if you prove your identity in person, usually gives a decision by the end of the next working day after your appointment on a weekday.
+- A faster decision is not guaranteed: it can take longer if the Home Office needs more information, and you will not usually get your priority fee back if the decision takes longer.","Expected points
+[0] You will usually get a decision on a Graduate visa within 8 weeks of applying online, proving your identity and providing your documents.
+[1] The Graduate visa is listed as eligible for a faster decision within 5 working days when you apply from inside the UK.
+[2] The priority service costs £500 in addition to the application fee.
+[3] With the priority service you will usually get a decision within 5 working days.
+
+Must not say
+[0] A Graduate visa decision usually takes 3 weeks.
+[1] You cannot pay for a faster decision on a Graduate visa.
+[2] The £500 priority service gives a decision by the end of the next working day.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a03","answer","I got my bachelor's degree from a UK university and I'm switching from a Graduate visa to a Skilled Worker visa. Do I have to take an English test, and what level of English do I need?","You can prove your English knowledge using your UK degree. When switching from a Graduate visa to a Skilled Worker visa, you need to meet level B2 English, though if you've already proved your English in a previous successful visa application, you may not need to prove it again.
+- You can prove your knowledge of English if you have a degree from a UK institution, provided it was taught in English and awarded by a UK institution.
+- If you're applying to switch from a different visa to a Skilled Worker visa, you need to meet level B2 English.
+- If you have already proved your knowledge of English in a previous successful visa application, you may not have to prove it again.","Expected points
+[0] You can prove your knowledge of English with a degree-level qualification that was taught in English and awarded by a UK institution.
+[1] If you're applying to switch from a different visa, you need level B2 English.
+
+Must not say
+[0] You must pass a Secure English Language Test even if you have a UK degree.
+[1] Level B1 English is enough when you switch from a Graduate visa.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a04","answer","If I switch to a Skilled Worker visa and later get a better offer from a different company, can I just start the new job, or do I have to sort out my visa first?","No, you can't just start. If the new job is with a different employer, you need to apply to update your Skilled Worker visa, and you should not start the new job until you have confirmation of your new permission.
+- You need to apply to update your Skilled Worker visa if you change to a job with a different employer.
+- The new job must meet the eligibility requirements, and you need a new certificate of sponsorship to prove this.
+- You can apply up to 3 months before the new job starts.
+- You can keep working in your current job while the application is considered, or to work out your notice, as long as you apply before your current visa expires.
+- You should not start the new job until you have confirmation of your new permission.","Expected points
+[0] You need to apply to update your Skilled Worker visa if you change to a job with a different employer.
+[1] Your new job must meet the eligibility requirements and you'll need a new certificate of sponsorship.
+[2] You should not start the new job until you've got confirmation of your new permission.
+
+Must not say
+[0] You can start the new job as soon as you have applied to update your visa.
+[1] You only need to tell the Home Office about your new employer, without making a new application.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a05","answer","I'm in the final year of a bachelor's degree at a UK university on a Student visa. Does a bachelor's degree count for the Graduate visa, and does it matter which university I'm at?","A UK bachelor's degree is one of the courses that can qualify you for a Graduate visa, but only if your education provider is a licensed sponsor with a 'track record of compliance', so the university does matter. You also need to have studied the course in the UK for the minimum period and to have successfully completed it.
+- To be eligible for a Graduate visa, you need to have studied a UK bachelor's degree, postgraduate degree or other eligible course with your Student visa.
+- A UK bachelor's degree is one of the courses you usually must have completed to apply for a Graduate visa.
+- The education provider for your course must be a licensed sponsor with a 'track record of compliance'.
+- You can check whether your education provider has a track record of compliance, which will show 'Student Sponsor - Track Record' in the 'Status' column.
+- If your course is longer than 12 months, you need to have studied it in the UK for at least 12 months.
+- Your education provider must have told the Home Office that you have successfully completed your course, so you should check with them if you are unsure.","Expected points
+[0] A UK bachelor's degree is one of the qualifications you usually must have to apply for a Graduate visa.
+[1] The education provider for your course must be a licensed sponsor with a track record of compliance.
+
+Must not say
+[0] A degree from any UK education provider qualifies, whatever its sponsor status.
+[1] You can get a Graduate visa without successfully completing your course.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a06","answer","I'm on a Student visa for a four-year integrated master's, but I'm going to finish early, after three years, with the bachelor's degree, and my company will then sponsor me for a Skilled Worker visa. What happens to my Student visa, will my university handle the change from four years to three or is that something I have to do myself, and is there anything I need to do before I can switch?","Your university must report to the Home Office within 10 working days if it stops sponsoring you because you finish sooner than expected, and Home Office guidance treats leaving an integrated master's with the lower qualification as completing the course. To switch, you must meet a condition such as having completed your sponsored course on the date you apply, your employer must check this before assigning a CoS, and you must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision. I could not confirm whether you must report the change yourself or what happens to the time left on your Student visa.
+- If your university stops sponsoring you because you complete the course sooner than expected, it must tell the Home Office within 10 working days of knowing about it.
+- Home Office caseworker guidance (updated 3 August 2026) says that leaving an integrated master's with the lower level qualification counts as successfully completing the course the CAS was assigned for.
+- To switch from a Student visa to a Skilled Worker visa from inside the UK, you must meet one of the listed conditions on the date you apply, for example having completed the course you were sponsored to study.
+- Before assigning you a certificate of sponsorship (CoS), your employer must check that you meet one of these conditions. If you do not, you cannot switch.
+- After you apply to switch, you must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision, or your application will be withdrawn.","Expected points
+[0] Your university, as your Student sponsor, must report to the Home Office that you are finishing early with the lower-level qualification (the bachelor's degree).
+[1] The Home Office will normally cancel (cut short) your Student permission, so that it ends in line with the new, earlier end date of your studies and not on its original date.
+[2] To switch from a Student visa to a Skilled Worker visa, you must have completed the course you were sponsored to study, or your job start date must be after your course has finished.
+[3] Leaving an integrated master's programme with the lower-level qualification (the bachelor's degree) still counts as completing your course for the switch to a Skilled Worker visa.
+
+Must not say
+[0] You have to apply for a new Student visa yourself to change it from four years to three.
+[1] Your Student visa keeps its original end date, so you can stay in the UK on it for what would have been the fourth year.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a07","answer","I got my bachelor's degree from a UK university and I'm switching from a Graduate visa to a Skilled Worker visa. Do I have to take an English test, and what level of English do I need?","You probably do not need an English test if your bachelor's degree was awarded by a UK institution and taught in English, but the passages do not say how that applies to a switch from a Graduate visa specifically. If you do need a test, the level is B2 on the CEFR scale.
+- A Skilled Worker visa applicant can prove English with a degree-level qualification that was taught in English and awarded by a UK institution, even if it was studied outside the UK.
+- If you do not have a qualification that proves your English, you must pass a Secure English Language Test (SELT) with an approved provider.
+- Where a test is needed, you must prove you can read, write, speak and understand English to at least level B2 on the CEFR scale.
+- For someone applying to switch from a different visa, the required level is B2.
+- If you already proved your knowledge of English in a previous successful visa application, you may not have to prove it again.","Expected points
+[0] You can prove your knowledge of English with a degree-level qualification that was taught in English and awarded by a UK institution.
+[1] If you're applying to switch from a different visa, you need level B2 English.
+
+Must not say
+[0] You must pass a Secure English Language Test even if you have a UK degree.
+[1] Level B1 English is enough when you switch from a Graduate visa.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a08","answer","My daughter was born in the UK in March 2026, during my current Student visa, and has never had a visa of her own. Can she apply as my dependant when I apply for the Graduate visa, what proof do I need, and how long would her visa last?","The guidance says a child born in the UK while you were on your current Student visa does not need to have been your dependant on that visa, but she must still meet the other requirements. Her permission would normally run in line with your Graduate visa, which lasts 2 years if you apply on or before 31 December 2026; how the other parent's status would affect this could not be confirmed from the passages.
+- A child under 18 usually needs to have been a dependant on the Student visa to apply, but this is not required if she was born while you were in the UK on your current Student visa and she was born in the UK.
+- Your daughter must live with you, unless she is living away from home in full-time education, and must not be married or in a civil partnership.
+- You need to provide proof that she is your child, for example a UK birth certificate or a special guardianship order from a court.
+- You also need to provide evidence of her address, such as a bank statement, credit card bills, a driving licence, an NHS registration document, or an official letter from a university or college.
+- A Graduate visa lasts 2 years if you apply on or before 31 December 2026, and a dependant child's permission would normally be granted in line with the expiry of the Graduate's permission, unless one parent in the UK has permission that expires earlier.","Expected points
+[0] Your child can apply as a dependant on your Graduate visa if they were born in the UK during your current Student visa.
+[1] You'll need to provide a full UK birth certificate for each child, showing the names of both parents.
+[2] If the application is successful, your child's visa will end on the same date as yours.
+
+Must not say
+[0] She cannot apply because she was never a dependant on your Student visa.
+[1] A child born in the UK does not need a visa because she is automatically a British citizen.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a09","answer","I paid the healthcare surcharge for 2 years when I got my Graduate visa in January 2026. If I switch to a Skilled Worker visa in January 2027 and pay the surcharge again, do I get anything back for the year I've paid for twice?","You may get a partial refund for the overlap, but only if you have paid the surcharge twice for the same period while switching in the UK. The amount is rounded down to whole 6-month blocks, and the guidance does not let me work out your exact figure from your dates.
+- The guidance says you'll get a partial IHS refund if you're applying to extend or switch your visa in the UK and have paid the IHS twice for the same period.
+- If the doubly paid period is 6 months or more, the refund is partial and rounded down to the nearest 6 months.
+- The guidance's example is that for a 15 month period paid twice, you will get a refund for 12 months of IHS.
+- If you have paid twice for the same period of less than 6 months, you will not get a refund.","Expected points
+[0] You get a partial refund of the healthcare surcharge if you're applying to switch your visa in the UK and have paid the surcharge twice for the same period.
+[1] If the period you paid for twice is 6 months or more, the partial refund is rounded down to the nearest 6 months.
+[2] You do not have to do anything to get the refund, which is paid to the account or card you paid with.
+
+Must not say
+[0] You get no refund of the healthcare surcharge when you switch visas.
+[1] You have to apply for the refund yourself.
+[2] You get a full refund of everything you paid for the Graduate visa.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a10","answer","I've spent 2 years in the UK on my Graduate visa. My employer wants to sponsor me at the lower recent-graduate salary rate, so I'll get the full 5 years on a Skilled Worker visa at that rate, right?","Your total stay in the UK cannot be more than 4 years if you apply for a Skilled Worker visa under the recent graduate salary rate, including any time already spent on a Graduate visa.
+- Your total stay in the UK cannot be more than 4 years if you apply for a Skilled Worker visa under the recent graduate salary rate, including any time already spent on a Graduate visa.","Expected points
+[0] If you apply using the lower rate for recent graduates, your total stay in the UK cannot be more than 4 years.
+[1] The 4-year limit includes any time you've already spent in the UK on a Graduate visa.
+
+Must not say
+[0] You can get 5 years on a Skilled Worker visa at the recent graduate rate after 2 years on a Graduate visa.
+[1] Time spent on a Graduate visa does not count towards the 4-year limit.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a11","answer","If I switch to a Skilled Worker visa and later get a better offer from a different company, can I just start the new job, or do I have to sort out my visa first?","No, you can't just start the new job. If you move to a different employer on a Skilled Worker visa, you have to apply to update your visa, and the new job needs its own new certificate of sponsorship. You shouldn't start the new job until your new permission is confirmed. While you wait for a decision, you can keep working in your current job, but you must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man.
+- You have to apply to update your Skilled Worker visa if you change jobs and the new job is with a different employer.
+- Your new job must meet the eligibility requirements, and you need a new certificate of sponsorship to show that it does.
+- You shouldn't start the new job until your new permission has been confirmed.
+- While your application is being considered, you can keep working in your current job, including working out your notice period, as long as you apply before your current visa expires.
+- Until you get a decision, you must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man. If you do, your application will be withdrawn.","Expected points
+[0] You need to apply to update your Skilled Worker visa if you change to a job with a different employer.
+[1] Your new job must meet the eligibility requirements and you'll need a new certificate of sponsorship.
+[2] You should not start the new job until you've got confirmation of your new permission.
+
+Must not say
+[0] You can start the new job as soon as you have applied to update your visa.
+[1] You only need to tell the Home Office about your new employer, without making a new application.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a12","answer","I've lived in the UK for 4 years and I'm switching from a Graduate visa to a Skilled Worker visa on a 3-year certificate of sponsorship, for a job that isn't on the immigration salary list. How much are the application fee and the healthcare surcharge, and do I need to show savings?","Because you are switching from inside the UK for up to 3 years in a job not on the immigration salary list, the standard application fee is £943, and the healthcare surcharge is usually £1,035 per year. You usually don't need to show the £1,270 savings if you've been in the UK with a valid visa for at least 12 months. These figures come from a page last updated on 31 October 2024 and may have changed, so check the current amounts on GOV.UK.
+- If you apply from inside the UK to switch visa and will be in the UK for up to 3 years, the standard application fee is £943 per person.
+- The lower fee only applies to jobs on the immigration salary list, so you would pay the standard fee.
+- The healthcare surcharge is usually £1,035 per year.
+- Applicants usually need at least £1,270 in their bank account to show they can support themselves.
+- You usually don't need to show proof of these funds if you've been in the UK with a valid visa for at least 12 months.","Expected points
+[0] The application fee from inside the UK is £943 per person if you'll be in the UK for up to 3 years.
+[1] The healthcare surcharge is usually £1,035 per year.
+[2] You do not need to show proof of money to support yourself if you've been in the UK with a valid visa for at least 12 months.
+
+Must not say
+[0] The application fee is £819.
+[1] The healthcare surcharge is £776 per year.
+[2] You must show £1,270 in savings even though you have been in the UK for 4 years.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a13","answer","After I've submitted my Graduate visa application next summer, can I fly home for a couple of weeks while I wait for the decision?","You can stay in the UK while you wait for a Graduate visa decision, which usually comes within 8 weeks. The guidance I could access does not say whether a two-week trip abroad during that wait is allowed or how it would affect your application, so that could not be confirmed.
+- You can stay in the UK while you wait for a Graduate visa decision.
+- A Graduate visa decision is usually made within 8 weeks of you applying online, proving your identity and providing your documents.
+- Your Graduate visa starts from the day your application is approved, not from when you submit it.
+- Once you have a Graduate visa, the guidance lists that you can travel abroad and return to the UK.","Expected points
+[0] You must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision.
+[1] Your application will be withdrawn if you do travel outside those places before the decision.
+
+Must not say
+[0] You can travel outside the UK, Ireland, the Channel Islands and the Isle of Man while your Graduate visa application is being decided.
+[1] Travelling abroad only delays the decision on your application.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a14","answer","My bachelor's degree, at a UK university that is listed as a student sponsor with a track record of compliance, includes a placement year in industry. Is that allowed on a Student visa, and is there a limit on how much of the course the placement can take up?","Yes. A Student visa course can include a work placement if the placement is an integral and assessed part of the course. The usual limit is 33 per cent of the total length of the course in the UK, but for a degree-level course sponsored and taught by a higher education provider with a track record of compliance, the limit is 50% of the total length of the course.
+- A Student's course of study may include a work placement if the placement is an integral and assessed part of the course.
+- The general rule is that work placements must not be more than 33 per cent of the total length of the course in the UK.
+- For a course at degree level or above, sponsored and taught by a higher education provider with a track record of compliance, the work placement must not be more than 50% of the total length of the course.
+- The placement does not have to be credit bearing or assessed as pass or fail.
+- Your sponsoring university stays responsible for you during the placement.","Expected points
+[0] A Student's course may include a work placement, provided it is an integral and assessed part of the course.
+[1] For a course at degree level or above where the student is sponsored and taught by a higher education provider with a track record of compliance, the work placement must not be more than 50% of the total length of the course.
+
+Must not say
+[0] The limit is 33 per cent of the course for a degree-level course sponsored and taught by a higher education provider with a track record of compliance.
+[1] There is no limit on how much of a course can be a work placement.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
+"a15","answer","I've been in the UK for 9 months and need to show living-cost money to extend my Student visa. Can I count the wages I've saved from my part-time job, and can my bank overdraft make up the rest?","You can use your own money to meet the financial requirement, which includes wages you have earned and saved. You cannot use bank overdrafts to meet the financial requirement. You do not need to provide financial evidence if you have been in the UK with a valid visa for at least 12 months.
+- You can use your own money to meet the financial requirement, which includes wages you have earned and saved.
+- You cannot use bank overdrafts to meet the financial requirement.
+- You do not need to provide financial evidence if you have been in the UK with a valid visa for at least 12 months.","Expected points
+[0] You can use your own money to prove you have enough money.
+[1] The money must have been acquired legally, so it cannot be money from working illegally in the UK.
+[2] You cannot use overdrafts to prove you have enough money.
+
+Must not say
+[0] An overdraft can count towards the money you need to show.
+[1] Money earned by working illegally in the UK can be used as evidence of funds.","Write how many of the expected points the answer states, as a number. Write 0 if it states a must-not-say statement or contradicts an expected point.","","Contains public sector information licensed under the Open Government Licence v3.0."
