@@ -1,0 +1,36 @@
+tests/eval/detail.test.ts
+  s_341627b47f195a::t_8b5eccae3aad35 1-113,116-150
+  s_341627b47f195a::t_34adcbd7a810f9 114-115
+results/detail.md
+  s_341627b47f195a::t_173a3b8b5eb3ca 7,9-16,65
+  s_341627b47f195a::t_b374b2697456ad 1-6,8,17-64,66-115
+src/eval/cli.ts
+  s_341627b47f195a::t_b374b2697456ad 6,28,164-166,168
+src/eval/detail.ts
+  s_341627b47f195a::t_b374b2697456ad 319
+  s_341627b47f195a::t_aab062ccd95579 74,81,91
+  s_341627b47f195a::t_8b5eccae3aad35 192,244
+  s_341627b47f195a::t_9216ee761668af 1-73,75-80,82-90,92-191,193-243,245-318,320-335
+README.md
+  s_341627b47f195a::t_bd6a11840369bf 239
+  s_341627b47f195a::t_7da6b6c1b850fa 3,7,9-232,236,238,240,243,245-253,255,257
+docs/how-it-works.md
+  s_341627b47f195a::t_04540cdd870e89 584-611,613
+  s_341627b47f195a::t_6ed9ad63980ca7 612
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b16e2aab8b30a74f8a5c9cca81a7cb71d4c79c9b",
+  "prompts": {},
+  "sessions": {
+    "s_341627b47f195a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6f2b7e6-d112-4a2e-938d-cd42f3132458",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
