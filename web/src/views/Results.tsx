@@ -56,9 +56,10 @@ export function Results() {
         <h2 id="chart-heading">Correctness against cost per answer</h2>
         {frontier.most_accurate && frontier.cheapest_accurate && frontier.cost_ratio !== null && (
           <p>
-            The most accurate setup is <strong>{frontier.most_accurate}</strong>. The cheapest
-            accurate setup is <strong>{frontier.cheapest_accurate}</strong>. The most accurate one
-            costs <strong>{frontier.cost_ratio.toFixed(1)} times</strong> as much per answer.
+            The headline rule, written down before the runs, names{" "}
+            <strong>{frontier.most_accurate}</strong> and{" "}
+            <strong>{frontier.cheapest_accurate}</strong>. {frontier.most_accurate} costs{" "}
+            <strong>{frontier.cost_ratio.toFixed(1)} times</strong> as much per answer.
           </p>
         )}
         <CostChart setups={summary.setups} frontier={frontier.pareto} />

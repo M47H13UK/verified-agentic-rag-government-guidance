@@ -117,3 +117,6 @@ The agreement rate is reported next to the results, not folded into them.
 - Two setups were added, H5-0 and H5-1, for `claude-haiku-5-5`. The model came out after the rubric was fixed. No metric, scoring rule or judge instruction changed. The headline rule now picks from 10 setups.
 - Cost per answer is worked out from the token counts and the list prices in `src/llm/prices.ts`. Before, it was the SDK's own estimate. The installed SDK charged cache reads of Sonnet 5.5 at twice the list price and had no price for Haiku 5.5. The definition in the table above is the same.
 - The summary shows the judge agreement once the audit sheet is labelled. A different number of repeats between setups is now a note under the table and not a warning, because pass 2 was planned to repeat only the two headline setups. The runs were quick, so pass 2 repeated all 10 setups and every row has three repeats.
+  **11 October 2026.** One change, made after all runs were graded. It changes no score.
+
+- The judge check was planned as labels from a person. On 11 October 2026 two model reviewers labelled the sample instead, without seeing the judge's labels. Their labels are in `eval/judge-audit-reviews.json` and the result is in `results/detail.md`. The sheet is still open for a person, and a person's labels are scored apart from the reviewers'.

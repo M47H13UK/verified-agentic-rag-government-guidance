@@ -1,0 +1,577 @@
+{
+  "note": "Second opinions on the sample in judge-audit.csv, from two model reviewers. Neither saw the labels of the judge in judge-audit-key.json. No person has labelled the sample. Scored by `npm run eval -- audit-score` and shown in results/detail.md.",
+  "made_on": "2026-10-11",
+  "method": {
+    "what_they_saw": "Each reviewer got the 45 items as the labelling page shows them (question, claim and the full text of its cited passages, or answer, expected points and must-not-say statements) and the rules below. They are the rules the page shows a person. Each reviewer worked alone in a folder that held only those two files.",
+    "rules": "# Labelling rules\n\nYou label 45 items from an evaluation of a question-answering assistant about UK visas.\nEach item is in `items.json`. There are two kinds. Label every item on its own.\n\n## Kind \"claim\"\n\nOne sentence (`claim`) from the assistant's answer to `question`, and the passages it cited\n(`cited_passages`). Read the claim and the passages it cites.\n\nUse only the passage text shown. Do not use what you know about visa rules.\n\nGive one of three labels.\n\n- `supported`. The cited passages state everything the claim says.\n- `partially_supported`. The cited passages state part of the claim, and the claim adds a\n  detail, a condition or a number that they do not state.\n- `not_supported`. The cited passages do not state the claim, or they contradict it, or the\n  claim cites no passage, or a cited passage is missing.\n\n## Kind \"answer\"\n\nA whole answer (`answer.summary` plus `answer.claims`) to `question`, the `expected_points` a\ncorrect answer should contain, and the `must_not_say` statements.\n\nDecide for each expected point whether the answer states it.\n\n- A point is present when the answer states the same fact, in any wording.\n- A number, an amount of money, a date or a length of time must match the point exactly.\n- A point that is only hinted at, or only half stated, is not present.\n\nThe label is the number of expected points the answer states, written as a number.\n\nThe label is `0` if the answer states a must-not-say statement or contradicts an expected point.\n\n- A must-not-say statement counts when the answer states it or clearly implies it.\n- A contradiction is a statement that conflicts with an expected point, for example a different\n  amount or the opposite rule. Leaving a point out is not a contradiction.\n\n## Output\n\nOne JSON object, `{\"labels\": [...]}`, with one entry per item, in the order of `items.json`.\nEach entry has these fields.\n\n- `id`. The item's id.\n- `kind`. `claim` or `answer`.\n- `label`. For a claim, `supported`, `partially_supported` or `not_supported`. For an answer,\n  the number as a string, for example `\"2\"`.\n- `points_stated`. For an answer, one true or false per expected point, in order. For a claim, `[]`.\n- `zero_rule`. For an answer, true when the label is 0 because of a must-not-say statement or a\n  contradiction. For a claim, false.\n- `reason`. One or two plain sentences that say what decided the label.\n"
+  },
+  "reviewers": [
+    {
+      "id": "opus",
+      "model": "claude-opus-5-5",
+      "run_as": "One fresh agent session with no other context, at its default effort. This is the same model as the judge."
+    },
+    {
+      "id": "codex",
+      "model": "gpt-6-astra",
+      "run_as": "Codex CLI 0.160.1, one run, reasoning effort xhigh, read-only sandbox. This is a different model family from the judge."
+    }
+  ],
+  "labels": [
+    {
+      "id": "c01",
+      "opus": {
+        "label": "supported",
+        "reason": "Paragraph 6.7a says that for a course at degree level or above, where the student is sponsored and taught by a HEP with a track record of compliance, the work placement must not be more than 50% of the total length of the course. The claim only writes HEP out in full."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states the 50% limit for degree-level courses sponsored and taught by a higher education provider with a track record of compliance."
+      }
+    },
+    {
+      "id": "c02",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage lists 18 months for applications on or after 1 January 2027 and 2 years for applications on or before 31 December 2026."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that applications on or after 1 January 2027 receive 18 months."
+      }
+    },
+    {
+      "id": "c03",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage states the 4-year limit on total stay at the reduced rate and that time already spent on a Graduate visa counts towards it. Close call: 'about 2 more years' is not printed in the passage, it is 4 minus the 2 years the user gave, and I counted that plain subtraction as stated."
+      },
+      "codex": {
+        "label": "partially_supported",
+        "reason": "The passage states the four-year limit and includes time on a Graduate visa. The remaining two years is a calculated number that the passage does not state."
+      }
+    },
+    {
+      "id": "c04",
+      "opus": {
+        "label": "supported",
+        "reason": "Under 'Apply from inside the UK' the passage lists 'Apply to extend if you're already in the UK on Student visa'."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly describes applying to extend from inside the UK when already on a Student visa."
+      }
+    },
+    {
+      "id": "c05",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says you must not travel outside the UK, Ireland, the Channel Islands or the Isle of Man until you get a decision, and that the application will be withdrawn if you do."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that travelling outside the listed places before a decision results in withdrawal of the application."
+      }
+    },
+    {
+      "id": "c06",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says the amount depends on the length of the visa and that a visa may last longer than the course of study."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that the amount depends on visa length and that a visa may last longer than the course."
+      }
+    },
+    {
+      "id": "c07",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says that to bring dependants through a government scholarship or sponsorship the award must be government funded and from a national government department."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly requires a government-funded scholarship or sponsorship from a national government department."
+      }
+    },
+    {
+      "id": "c08",
+      "opus": {
+        "label": "supported",
+        "reason": "The Skilled Worker partner-and-children passage covers family members applying as a partner outside the UK and says they must apply before they travel to the UK."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that partners applying from outside the UK must apply before travelling."
+      }
+    },
+    {
+      "id": "c09",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says a Student must not be self-employed or engage in business activity unless the conditions in Appendix Student ST 26.8 apply."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly prohibits Student self-employment unless the conditions in ST 26.8 apply."
+      }
+    },
+    {
+      "id": "c10",
+      "opus": {
+        "label": "supported",
+        "reason": "The passages state the usual £1,035 per year and that the surcharge is paid for each year of the stay. Close call: £3,105 is not printed in the cited passages, it is exactly 3 x £1,035 and the claim marks it as its own arithmetic, and I counted that as stated."
+      },
+      "codex": {
+        "label": "partially_supported",
+        "reason": "The passages state the usual £1,035 annual surcharge and payment for each year of the stay. They do not state the calculated three-year total of £3,105."
+      }
+    },
+    {
+      "id": "c11",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says you need the job's 4-digit occupation code before you can find out if the job is eligible, and to ask your employer for it if you already have a job offer."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states both the need for the four-digit occupation code and that applicants with an offer should ask their employer for it."
+      }
+    },
+    {
+      "id": "c12",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage lists overdrafts under 'You cannot use' in the section on proving you have enough money."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly lists overdrafts among the funds that cannot be used."
+      }
+    },
+    {
+      "id": "c13",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says that if your application is successful you will get a full list of what you can and cannot do with a Graduate visa."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that successful applicants receive a full list of what they can and cannot do."
+      }
+    },
+    {
+      "id": "c14",
+      "opus": {
+        "label": "supported",
+        "reason": "The first passage says a decision can take longer if the Home Office needs more information and that you will not usually get your money back. The second says there is a limit on how many people can apply for a faster decision."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passages state that additional checks can delay decisions, refunds are usually unavailable for delays, and faster-decision places are limited."
+      }
+    },
+    {
+      "id": "c15",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says you get an eVisa when you successfully apply for a visa and that it is a digital record of your immigration status and its conditions, for example whether you are allowed to work."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that successful visa applicants receive an eVisa recording their immigration status and conditions, including work permission."
+      }
+    },
+    {
+      "id": "c16",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage lists the same three steps after finding a new sponsor: get a new CAS reference number, apply for a new visa, and pay the visa application fees and healthcare surcharge."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage lists a new CAS, a new visa application, application fees and the healthcare surcharge as requirements after finding a new sponsor."
+      }
+    },
+    {
+      "id": "c17",
+      "opus": {
+        "label": "supported",
+        "reason": "Option A in the table is 'Salary only (no discounts)' and requires a salary that meets both £41,700 and the full going rate for the occupation code."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "Option A explicitly requires both at least £41,700 and the full going rate."
+      }
+    },
+    {
+      "id": "c18",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage lists having completed the course you were sponsored to study as one of the requirements a Student visa holder can meet to switch. The claim leaves out the job and English requirements and says 'can' where the passage says 'might be able to', but it adds nothing the passage does not state."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage lists completion of the sponsored course as a qualifying condition for switching from a Student visa."
+      }
+    },
+    {
+      "id": "c19",
+      "opus": {
+        "label": "supported",
+        "reason": "Paragraph SK1.10 says that to sponsor a Skilled Worker you must hold a valid sponsor licence for the Skilled Worker route."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly requires a valid Skilled Worker sponsor licence."
+      }
+    },
+    {
+      "id": "c20",
+      "opus": {
+        "label": "supported",
+        "reason": "Under 'Healthcare surcharge' the passage gives £1,152.50 for an 18-month Graduate visa."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly gives £1,152.50 as the healthcare surcharge for an 18-month Graduate visa."
+      }
+    },
+    {
+      "id": "c21",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says your partner needs to have been a dependant on your Student visa or Tier 4 (General) student visa to apply."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that a partner must previously have been a dependant on the Student or Tier 4 visa."
+      }
+    },
+    {
+      "id": "c22",
+      "opus": {
+        "label": "supported",
+        "reason": "Option A in the table is 'Salary only (no discounts)' and requires a salary that meets both £41,700 and the full going rate for the occupation code."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "Option A explicitly requires both at least £41,700 and the full going rate."
+      }
+    },
+    {
+      "id": "c23",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage, which is about dependants on a Graduate visa, says your child can also apply if they were born in the UK during your current Student visa."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly allows a child born in the UK during the current Student visa to apply."
+      }
+    },
+    {
+      "id": "c24",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says you can ask someone else to report the error for you and lists a legal representative, an employer and a member of staff at a university among the examples."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage lists legal representatives, employers and university staff as people who can report an error for someone else."
+      }
+    },
+    {
+      "id": "c25",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says the same thing in nearly the same words."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly instructs holders of expired BRPs with continuing permission to create a UKVI account to access their eVisa."
+      }
+    },
+    {
+      "id": "c26",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage says you need to show money to support yourself unless you have been in the UK with a valid visa for at least 12 months on the date of your application."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states the exemption from showing support funds after at least 12 months in the UK with a valid visa on the application date."
+      }
+    },
+    {
+      "id": "c27",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage gives 2 years or 18 months by application date and 3 years where you have a PhD or other doctoral qualification, so a bachelor's degree falls under the shorter periods. Slightly close because the word 'only' and the bachelor's point come from reading the list as a whole, not from a sentence that says so."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage gives the three-year duration specifically for PhD or other doctoral qualifications, with shorter durations otherwise."
+      }
+    },
+    {
+      "id": "c28",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage lists, as one of the conditions that must all be true, that your education provider has told the Home Office you have successfully completed your course."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly requires the education provider to have told the Home Office about successful course completion."
+      }
+    },
+    {
+      "id": "c29",
+      "opus": {
+        "label": "supported",
+        "reason": "Under 'If you are outside the UK' the passage says that if you cannot update your UKVI account you can ask UKVI to do it, and that you may need to submit fingerprints and a photo at a visa application centre."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage states that UKVI can update the account when the applicant cannot, and that fingerprints and a photo may be required."
+      }
+    },
+    {
+      "id": "c30",
+      "opus": {
+        "label": "supported",
+        "reason": "The passage's Graduate to Skilled Worker example says the overlapping period is calculated from the date the Skilled Worker visa was granted until the expiry of the Graduate visa."
+      },
+      "codex": {
+        "label": "supported",
+        "reason": "The passage explicitly calculates the overlap from the Skilled Worker grant date until the Graduate visa's expiry."
+      }
+    },
+    {
+      "id": "a01",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a lost BRP must be reported even if expired, and that not reporting can lead to a fine of up to £1,000 and being made to leave the UK. It says neither must-not-say statement."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states the reporting requirement despite expiry and both possible consequences, including the £1,000 maximum fine."
+      }
+    },
+    {
+      "id": "a02",
+      "opus": {
+        "label": "4",
+        "points_stated": [true, true, true, true],
+        "zero_rule": false,
+        "reason": "The answer gives the 8 weeks, the Graduate visa's listing for the 5-working-day option, the £500 on top of the application fee and the 5 working days. It ties the next-working-day decision to the £1,000 service, not the £500 one."
+      },
+      "codex": {
+        "label": "3",
+        "points_stated": [false, true, true, true],
+        "zero_rule": false,
+        "reason": "The answer states Graduate priority eligibility, the £500 additional fee and the usual five-working-day decision time. It gives eight weeks without stating that the period follows the online application, identity proof and document submission."
+      }
+    },
+    {
+      "id": "a03",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a degree taught in English and awarded by a UK institution proves English, and that level B2 is needed when switching from a different visa. It says neither must-not-say statement."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states both the English-taught UK degree option and the B2 requirement for switching."
+      }
+    },
+    {
+      "id": "a04",
+      "opus": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer states all three points: apply to update the visa for a different employer, the new job must meet the eligibility requirements with a new certificate of sponsorship, and do not start until the new permission is confirmed."
+      },
+      "codex": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer states the update requirement, job eligibility and new sponsorship certificate requirements, and the need to wait for confirmed permission."
+      }
+    },
+    {
+      "id": "a05",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a UK bachelor's degree is one of the courses you usually must have completed, and that the education provider must be a licensed sponsor with a track record of compliance."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a UK bachelor's degree qualifies and that the provider must be a licensed sponsor with a track record of compliance."
+      }
+    },
+    {
+      "id": "a06",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, false, false, true],
+        "zero_rule": false,
+        "reason": "The answer states the university's duty to report the early finish and that leaving with the lower qualification counts as completing the course, and it says it could not confirm what happens to the Student visa. Close on point 3: it gives course completion only as an example of 'the listed conditions' and never states the job start date alternative, so I counted that point as half stated."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, false, false, true],
+        "zero_rule": false,
+        "reason": "The answer states the university's early-completion reporting duty and that leaving with the lower qualification counts as completion. It omits curtailment of Student permission and the alternative of a job starting after the course ends."
+      }
+    },
+    {
+      "id": "a07",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a degree-level qualification taught in English and awarded by a UK institution proves English, and that the level for someone switching from a different visa is B2. It says a test is needed only without such a qualification, so no must-not-say statement is made."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The claims explicitly state both the English-taught UK qualification option and the B2 requirement when switching."
+      }
+    },
+    {
+      "id": "a08",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, false, true],
+        "zero_rule": false,
+        "reason": "The answer says a child born in the UK during the current Student visa need not have been a dependant to apply, and that her permission runs in line with the expiry of the Graduate visa. It gives a UK birth certificate only as one example of proof, without 'full' or the names of both parents, so point 2 is half stated."
+      },
+      "codex": {
+        "label": "0",
+        "points_stated": [true, false, false],
+        "zero_rule": true,
+        "reason": "The answer states the UK-born child's eligibility but does not require a full birth certificate showing both parents. Its exception allowing earlier expiry conflicts with the expected same-date expiry rule."
+      }
+    },
+    {
+      "id": "a09",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true, false],
+        "zero_rule": false,
+        "reason": "The answer states the partial refund for a period paid twice when switching in the UK and the rounding down to the nearest 6 months. It does not say that the refund is automatic or where it is paid, and it does not say you must apply for it."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true, false],
+        "zero_rule": false,
+        "reason": "The answer states eligibility for a partial overlap refund and rounding down to six-month blocks. It omits automatic payment and the account or card receiving the refund."
+      }
+    },
+    {
+      "id": "a10",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states the 4-year limit on total stay at the recent graduate rate and that it includes time already spent on a Graduate visa."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer explicitly states the four-year limit and that Graduate visa time counts towards it."
+      }
+    },
+    {
+      "id": "a11",
+      "opus": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer states all three points: apply to update the visa for a different employer, the new job must meet the eligibility requirements with a new certificate of sponsorship, and do not start until the new permission is confirmed."
+      },
+      "codex": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer states all three requirements: updating the visa, an eligible job with a new sponsorship certificate, and waiting for confirmed permission."
+      }
+    },
+    {
+      "id": "a12",
+      "opus": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer gives £943 per person from inside the UK for up to 3 years, the usual £1,035 per year surcharge, and that proof of funds is not needed after at least 12 months in the UK with a valid visa. The word 'usually' on the last point does not change the fact."
+      },
+      "codex": {
+        "label": "3",
+        "points_stated": [true, true, true],
+        "zero_rule": false,
+        "reason": "The answer gives the exact £943 application fee and £1,035 annual surcharge, and states the funds-evidence exemption after 12 months with a valid visa."
+      }
+    },
+    {
+      "id": "a13",
+      "opus": {
+        "label": "0",
+        "points_stated": [false, false],
+        "zero_rule": false,
+        "reason": "The answer says it could not confirm whether travel during the wait is allowed, so it states neither point. Its line about travelling abroad applies only once the visa is held, so it does not say or imply a must-not-say statement and the label is 0 by count."
+      },
+      "codex": {
+        "label": "0",
+        "points_stated": [false, false],
+        "zero_rule": false,
+        "reason": "The answer states neither the travel restriction nor withdrawal consequence. It leaves the issue unconfirmed without asserting a prohibited statement."
+      }
+    },
+    {
+      "id": "a14",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states that a placement is allowed if it is an integral and assessed part of the course and that the limit is 50% for this kind of course. Its line that the placement need not be 'credit bearing or assessed as pass or fail' is about the form of assessment and does not conflict with point 1."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, true],
+        "zero_rule": false,
+        "reason": "The answer states both the integral-and-assessed requirement and the applicable 50% limit. Saying assessment need not be pass or fail does not deny that assessment is required."
+      }
+    },
+    {
+      "id": "a15",
+      "opus": {
+        "label": "2",
+        "points_stated": [true, false, true],
+        "zero_rule": false,
+        "reason": "The answer states that you can use your own money and that overdrafts cannot be used. It does not say the money must have been acquired legally, and it does not say illegally earned money can be used."
+      },
+      "codex": {
+        "label": "2",
+        "points_stated": [true, false, true],
+        "zero_rule": false,
+        "reason": "The answer states that personal money can be used and overdrafts cannot. It omits the lawful-acquisition requirement without saying illegally earned money is acceptable."
+      }
+    }
+  ]
+}

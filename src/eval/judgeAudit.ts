@@ -12,6 +12,8 @@ export const AUDIT_CSV_PATH = "eval/judge-audit.csv";
 
 /** The judge's labels for the same items. Kept apart so the person labelling cannot see them. */
 export const AUDIT_KEY_PATH = "eval/judge-audit-key.json";
+/** Labels for the same sample from other model reviewers. It may not exist. */
+export const AUDIT_REVIEWS_PATH = "eval/judge-audit-reviews.json";
 
 const LICENCE_LINE =
   "Contains public sector information licensed under the Open Government Licence v3.0.";
@@ -390,5 +392,87 @@ export function scoreAudit(csvPath: string, keyPath: string): AuditScore {
   }
 
   if (score.labelled > 0) score.agreement_rate = score.agreed / score.labelled;
+  return score;
+}
+
+// ---------- Second opinions from other models ----------
+
+/** One reviewer's label for one item of the sample. */
+type ReviewLabel = { label: string; reason: string };
+
+/** The file of second opinions. Every reviewer labels every item of the sample. */
+export type AuditReviews = {
+  reviewers: { id: string; model: string; run_as: string }[];
+  /** One entry per item. Besides `id` it has one `ReviewLabel` under each reviewer's id. */
+  labels: ({ id: string } & Record<string, ReviewLabel | string>)[];
+};
+
+export type ReviewScore = {
+  /** Items in the sample. */
+  items: number;
+  reviewers: {
+    id: string;
+    model: string;
+    /** Items where this reviewer gave the same label as the judge. */
+    agreed: number;
+    claims: { items: number; agreed: number };
+    answers: { items: number; agreed: number };
+  }[];
+  /** Items where every reviewer gave the same label as every other reviewer. */
+  reviewers_agree: number;
+  /** Items where the judge and every reviewer gave the same label. */
+  all_agree: number;
+  /** Every item where the labels are not all the same. `labels` is keyed by reviewer id. */
+  split: (AuditItem & { labels: Record<string, string> })[];
+};
+
+/**
+ * Compares the labels of other model reviewers with the judge's labels in the key file.
+ * It is a weaker check than a person's labels, because a reviewer is a model too.
+ */
+export function scoreReviews(reviewsPath: string, keyPath: string): ReviewScore {
+  const key = JSON.parse(readFileSync(keyPath, "utf8")) as AuditItem[];
+  const reviews = JSON.parse(readFileSync(reviewsPath, "utf8")) as AuditReviews;
+  const labelsById = new Map(reviews.labels.map((entry) => [entry.id, entry]));
+
+  const score: ReviewScore = {
+    items: key.length,
+    reviewers: reviews.reviewers.map((reviewer) => ({
+      id: reviewer.id,
+      model: reviewer.model,
+      agreed: 0,
+      claims: { items: 0, agreed: 0 },
+      answers: { items: 0, agreed: 0 },
+    })),
+    reviewers_agree: 0,
+    all_agree: 0,
+    split: [],
+  };
+
+  for (const item of key) {
+    const entry = labelsById.get(item.id);
+    const labels: Record<string, string> = {};
+    for (const reviewer of score.reviewers) {
+      const given = entry?.[reviewer.id];
+      if (given === undefined || typeof given === "string") {
+        throw new Error(`${reviewsPath} has no label from ${reviewer.id} for ${item.id}.`);
+      }
+      const label = cleanLabel(given.label, item);
+      labels[reviewer.id] = label;
+
+      const group = item.kind === "claim" ? reviewer.claims : reviewer.answers;
+      group.items += 1;
+      if (label === item.judge_label) {
+        reviewer.agreed += 1;
+        group.agreed += 1;
+      }
+    }
+
+    const given = Object.values(labels);
+    const reviewersAgree = given.every((label) => label === given[0]);
+    if (reviewersAgree) score.reviewers_agree += 1;
+    if (reviewersAgree && given[0] === item.judge_label) score.all_agree += 1;
+    else score.split.push({ ...item, labels });
+  }
   return score;
 }

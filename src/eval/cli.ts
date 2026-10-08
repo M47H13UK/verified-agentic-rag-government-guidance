@@ -3,12 +3,15 @@
 import { existsSync } from "node:fs";
 import { parseArgs } from "node:util";
 import { loadEnv } from "../env";
+import { writeDetail } from "./detail";
 import { gradeFile } from "./grade";
 import {
   AUDIT_CSV_PATH,
   AUDIT_KEY_PATH,
+  AUDIT_REVIEWS_PATH,
   sampleForAudit,
   scoreAudit,
+  scoreReviews,
   writeAuditFiles,
 } from "./judgeAudit";
 import { assertAllVerified, assertScorable, isVerified, loadQuestions } from "./questions";
@@ -24,9 +27,9 @@ const USAGE = `Usage: npm run eval -- <command> [options]
 Commands
   run            Answer the questions with each setup. Costs money.
   grade          Judge the runs and write the grades. Costs money.
-  report         Write summary.json, summary.md and frontier.md. Free.
+  report         Write summary.json, summary.md, frontier.md and detail.md. Free.
   audit-sample   Write the sheet for checking the judge by hand.
-  audit-score    Compare the filled-in sheet with the judge.
+  audit-score    Compare the filled-in sheet, and any model reviewers, with the judge.
 
 Options
   --setups H0,H1        Setups to use. Default all 10.
@@ -160,9 +163,16 @@ async function main(): Promise<void> {
         existsSync(AUDIT_CSV_PATH) && existsSync(AUDIT_KEY_PATH)
           ? scoreAudit(AUDIT_CSV_PATH, AUDIT_KEY_PATH)
           : undefined;
-      const report = writeReport({ questions: loadQuestions(values.questions), outDir, audit });
+      const questions = loadQuestions(values.questions);
+      const report = writeReport({ questions, outDir, audit });
+      // Second opinions on the audit sample from other models, when that file exists.
+      const reviews =
+        existsSync(AUDIT_REVIEWS_PATH) && existsSync(AUDIT_KEY_PATH)
+          ? scoreReviews(AUDIT_REVIEWS_PATH, AUDIT_KEY_PATH)
+          : null;
+      writeDetail(outDir, questions, reviews);
       for (const warning of report.warnings) console.warn(warning);
-      console.log(`Wrote summary.json, summary.md and frontier.md to ${outDir}.`);
+      console.log(`Wrote summary.json, summary.md, frontier.md and detail.md to ${outDir}.`);
       break;
     }
 
@@ -201,9 +211,20 @@ async function main(): Promise<void> {
     }
 
     case "audit-score": {
+      if (existsSync(AUDIT_REVIEWS_PATH) && existsSync(AUDIT_KEY_PATH)) {
+        const reviews = scoreReviews(AUDIT_REVIEWS_PATH, AUDIT_KEY_PATH);
+        for (const reviewer of reviews.reviewers) {
+          console.log(
+            `The judge agrees with the reviewer ${reviewer.id} (${reviewer.model}) on ${reviewer.agreed} of ${reviews.items} items.`,
+          );
+        }
+        console.log(
+          `The judge and every reviewer agree on ${reviews.all_agree} of ${reviews.items} items.`,
+        );
+      }
       const score = scoreAudit(AUDIT_CSV_PATH, AUDIT_KEY_PATH);
       if (score.agreement_rate === null) {
-        console.log("No rows are labelled yet.");
+        console.log("No rows are labelled by a person yet.");
         break;
       }
       console.log(

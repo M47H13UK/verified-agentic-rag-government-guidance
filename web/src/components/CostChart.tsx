@@ -41,8 +41,8 @@ type Box = { left: number; top: number; right: number; bottom: number };
  * so the two kinds can be told apart without colour.
  *
  * The cost axis is a log scale. The cheapest setup costs under one cent an answer and the most
- * expensive costs tens of cents. On a straight scale the cheap setups would all sit in the
- * left corner, on top of each other.
+ * expensive costs tens of cents. On a straight scale the cheap setups would crowd into the left
+ * third of the chart.
  */
 export function CostChart({ setups, frontier }: Props) {
   // The setup under the pointer or with keyboard focus. Its numbers show in a small box.

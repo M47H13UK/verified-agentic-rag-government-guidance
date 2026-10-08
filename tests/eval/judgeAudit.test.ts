@@ -6,6 +6,7 @@ import {
   parseCsv,
   sampleForAudit,
   scoreAudit,
+  scoreReviews,
   seededRandom,
   toCsv,
   writeAuditFiles,
@@ -236,5 +237,90 @@ describe("writeAuditFiles and scoreAudit", () => {
     expect(() => scoreAudit(paths.csvPath, paths.keyPath)).toThrow(
       /Row c02 has the label "suported"/,
     );
+  });
+});
+
+describe("scoreReviews", () => {
+  /** Two claims and one answer, with the judge's labels. */
+  const key: AuditItem[] = [
+    { id: "c01", kind: "claim", judge_label: "supported" },
+    { id: "c02", kind: "claim", judge_label: "partially_supported" },
+    { id: "a01", kind: "answer", judge_label: "2" },
+  ].map((item) => ({
+    ...item,
+    kind: item.kind as "claim" | "answer",
+    question_id: "q01",
+    setup_id: "H0",
+    repeat: 1,
+    claim_index: item.kind === "claim" ? 0 : null,
+  }));
+
+  /** Writes the key and a reviews file where each reviewer gives the labels in `given`. */
+  function writeReviews(given: Record<string, string[]>): { reviews: string; key: string } {
+    const dir = tempDir();
+    const paths = { reviews: join(dir, "reviews.json"), key: join(dir, "key.json") };
+    writeFileSync(paths.key, JSON.stringify(key));
+    writeFileSync(
+      paths.reviews,
+      JSON.stringify({
+        reviewers: Object.keys(given).map((id) => ({ id, model: `model-${id}`, run_as: "" })),
+        labels: key.map((item, index) => ({
+          id: item.id,
+          ...Object.fromEntries(
+            Object.entries(given).map(([id, labels]) => [
+              id,
+              { label: labels[index], reason: "r" },
+            ]),
+          ),
+        })),
+      }),
+    );
+    return paths;
+  }
+
+  it("counts agreement with the judge for each reviewer, by kind of item", () => {
+    // The first reviewer agrees everywhere. The second differs on one claim and on the answer.
+    const paths = writeReviews({
+      one: ["supported", "partially_supported", "2"],
+      two: ["supported", "supported", "1"],
+    });
+    const score = scoreReviews(paths.reviews, paths.key);
+
+    expect(score.items).toBe(3);
+    expect(score.reviewers[0]).toMatchObject({ id: "one", model: "model-one", agreed: 3 });
+    expect(score.reviewers[1]).toMatchObject({
+      id: "two",
+      agreed: 1,
+      claims: { items: 2, agreed: 1 },
+      answers: { items: 1, agreed: 0 },
+    });
+    expect(score.reviewers_agree).toBe(1);
+    expect(score.all_agree).toBe(1);
+    expect(score.split.map((item) => item.id)).toEqual(["c02", "a01"]);
+    expect(score.split[0]!.labels).toEqual({ one: "partially_supported", two: "supported" });
+  });
+
+  it("lists an item where the reviewers agree with each other and not with the judge", () => {
+    const paths = writeReviews({
+      one: ["supported", "supported", "2"],
+      two: ["supported", "supported", "2.0"],
+    });
+    const score = scoreReviews(paths.reviews, paths.key);
+
+    // "2.0" reads as 2, the same way a person's label does.
+    expect(score.reviewers_agree).toBe(3);
+    expect(score.all_agree).toBe(2);
+    expect(score.split.map((item) => item.id)).toEqual(["c02"]);
+  });
+
+  it("rejects a file where a reviewer has no label for an item", () => {
+    const paths = writeReviews({ one: ["supported", "supported", "2"] });
+    const file = JSON.parse(readFileSync(paths.reviews, "utf8")) as {
+      labels: Record<string, unknown>[];
+    };
+    delete file.labels[1]!.one;
+    writeFileSync(paths.reviews, JSON.stringify(file));
+
+    expect(() => scoreReviews(paths.reviews, paths.key)).toThrow(/no label from one for c02/);
   });
 });

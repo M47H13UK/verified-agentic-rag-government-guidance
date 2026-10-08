@@ -301,17 +301,17 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 
 **What it does.** It fixes the file format of the gold set, checks the file for drafting mistakes by code, and gives a local page where a person checks every question against GOV.UK before any eval run.
 
-**How the questions were written.** `eval/personas.md` describes six invented users. A model drafted 60 questions from the stored passages, 20 at a time, with a quote as evidence for every expected point. A second model then answered each question from scratch, compared its answer with the draft, and fixed or flagged what it found. Two more reviews followed. One was by a model from a different vendor, which saw only the questions and their passages. The other could search the whole corpus. They disagreed on 28 questions, and each of those was settled against the stored pages. A 61st question was added later that day at the owner's request. It was drafted from the stored passages in the same way and had the same two reviews. The doubts that the pages could not settle are in the `notes` field, starting with `CHECK:`. At this step every question was marked as not verified. In step 10 the owner read the set on the check page, against the stored pages, and signed off all 61. Nobody compared the answers with the live site.
+**How the questions were written.** `eval/personas.md` describes six invented users. A model drafted 60 questions from the stored passages, 20 at a time, with a quote as evidence for every expected point. A second model then answered each question from scratch, compared its answer with the draft, and fixed or flagged what it found. Two more reviews followed. One was by a model from a different vendor, which saw only the questions and their passages. The other could search the whole corpus. Between them they flagged 28 of the 60 questions, and their verdicts differed on 24. Each flagged question was settled against the stored pages. A 61st question was added later that day at the owner's request. It was drafted from the stored passages in the same way and had the same two reviews. The doubts that the pages could not settle are in the `notes` field, starting with `CHECK:`. At this step every question was marked as not verified. In step 10 the owner read the set on the check page, against the stored pages, and signed off all 61. Nobody compared the answers with the live site.
 
 **The pieces.**
 
 - `eval/personas.md` holds the six personas. Each question carries the number of one of them.
 
-- `eval/questions.jsonl` is the gold set. Each line is one question as a JSON object. Shown here over several lines:
+- `eval/questions.jsonl` is the gold set. Each line is one question as a JSON object. Shown here over several lines, as an example. The real IDs run from q001 to q061.
 
   ```json
   {
-    "id": "gq-001",
+    "id": "q000",
     "persona": 1,
     "category": "single_page",
     "question": "How long does a Graduate visa last?",
@@ -348,7 +348,7 @@ The `VerificationRecord` says what happened. `dropped_by_quote_check` and `dropp
 - `eval/review-log.json` records what the two model reviews said about each question. Each entry has the question `id`, a `bundle_review` and a `corpus_review` that are each `ok`, `doubt` or `fix`, a `decision` and a one-line `summary`. The decision is `not_flagged`, `no_change`, `note_only` or `changed`. The check page uses the file to sort its queue. The file is optional.
 - `src/eval/types.ts` holds the `GoldQuestion` and `Category` types.
 - `src/eval/questions.ts` reads and writes the file. `questionSchema` is the Zod schema. It rejects an unknown category, a persona outside 1 to 6 and a misspelt key. `loadQuestions(path)` skips blank lines and stops at a bad line with an error that names the line number. `saveQuestions(path, questions)` writes a temporary file and renames it over the real one. `assertAllVerified(questions)` throws and lists the IDs of the questions nobody has checked. It is there for the eval runner to call before a run.
-- `src/eval/lint.ts` holds `lintQuestions(questions, passages, sourceExists)`. It is plain code with no database. It returns a list of problems, each with a question ID, a level and a message. A problem about the whole set has the ID `null`. Errors are a duplicate ID, an answer question with no expected point or no gold source, a gold source that matches no passage, an evidence passage that does not exist, an evidence quote that fails the quote check of step 6, evidence written for a point the question does not have, and `verified_by` set without `verified_on` or the other way round. Warnings are a decline or clarify question with expected points, an expected point with no evidence, evidence from a passage that no gold source covers, and a category more than 2 questions away from its target. The targets are single_page 18, multi_page 10, numbers 10, not_covered 8, personal_judgement 6, false_premise 5 and ambiguous 3.
+- `src/eval/lint.ts` holds `lintQuestions(questions, passages, sourceExists)`. It is plain code with no database. It returns a list of problems, each with a question ID, a level and a message. A problem about the whole set has the ID `null`. Errors are a duplicate ID, an answer question with no expected point or no gold source, a gold source that matches no passage, an evidence passage that does not exist, an evidence quote that fails the quote check of step 6, evidence written for a point the question does not have, and `verified_by` set without `verified_on` or the other way round. Warnings are a decline or clarify question with expected points, an expected point with no evidence, evidence from a passage that no gold source covers, and a category more than 2 questions away from its target. The targets are single_page 18, multi_page 11, numbers 10, not_covered 8, personal_judgement 6, false_premise 5 and ambiguous 3.
 - The same file has two MongoDB lookups. `findPassagesForSource(db, source)` returns the passages a gold source points at. `lintWithDb(db, questions)` fetches what the lint needs and runs it. `passageMatchesSource` is the one place that holds the rule for matching a gold source to a passage.
 - `scripts/gold-lint.ts` is `npm run gold:lint`. It prints the problems under the ID of their question, a table of counts by category and persona, and how many questions are verified. The exit code is 1 when there is any error. `--file` reads another file, for example a batch of drafts.
 - `scripts/gold-check.ts` is `npm run gold:check`. It starts a small HTTP server on `127.0.0.1:4174`, built with `node:http` only, and opens the page in the browser. `--port` changes the port. `--no-open` leaves the browser alone. `--name` sets the name written to `verified_by`. Without it the name comes from `git config user.name`. The API has six routes:
@@ -572,7 +572,8 @@ What differs:
 **What could break.**
 
 - The API is not running. The page shows "Could not reach the API". Start it with `npm run api:mock`.
-- `npm run api` cannot reach MongoDB or has no credential. The server starts, and the first question returns an error that the page shows. Check `npm run db:ping` and the `.env` file.
+- `npm run api` cannot reach MongoDB. The server does not start. It stops with a `MongoServerSelectionError`. Check `npm run db:ping`.
+- `npm run api` has no credential. The server starts, and the first question returns an error that the page shows. Check the `.env` file.
 - Port 8787 is taken. Set `API_PORT` for both commands, for example `API_PORT=8911 npm run api:mock` and `API_PORT=8911 npm run web`.
 - A type imported by the web page starts to import Node code. The web type check then fails with an error about a missing `node:` module. Shared types belong in `src/types.ts`, which imports nothing.
 - Mock runs live in memory. They are gone when the server stops, so an old run ID no longer loads.
@@ -581,3 +582,37 @@ What differs:
 - A setup has a cost of zero. A log scale has no place for zero, so the chart draws it at a tenth of a cent.
 - React runs each effect twice in development because of `StrictMode`. The page then asks for the setups and the results twice. The built page asks once.
 - A claim cites a passage that is missing from the database. The quote is still shown, with a note that the source page was not found.
+
+## Step 12. README and docs
+
+**What it does.** It writes the README from the committed results, adds a second report that breaks the runs down further, and adds two screenshots of the web page. No model was run for the report. It only counts what step 10 stored.
+
+**The pieces.**
+
+- `src/eval/detail.ts` builds `results/detail.md`. `npm run eval -- report` now writes it next to `summary.md`. It has eight tables.
+  1. What the two checks did. For each verifier-on setup it counts the claims in the drafts, how many failed the quote check, how many the verifier model did not support or only partly supported, how many runs had a repair, how many claims were still not supported after the repair, and how many summaries were rebuilt.
+  2. Pairs that share a draft. When a verifier-on run ends with the same answer as its twin, the judge graded the same text twice, so a different score is the judge's own noise. When the answer changed, the table gives the mean change in correctness.
+  3. Correctness by category.
+  4. Behaviour. How often the agent answered, declined or asked when it should.
+  5. Missing points and retrieval. For each expected point the judge found missing, it looks up the passage the point was drafted from, in the `evidence` field of the question. Then it checks the trace. The passage was never returned by a search, or it was in a search result only, or the agent read it in full. For the passages never returned, one more column counts those where another passage of the same page was returned or read. In those runs the agent had the right page and not the right passage.
+  6. The 12 hardest questions.
+  7. Runs with no answer, with the reason.
+  8. Second opinions on the judge. Two other models labelled the 45 items of the judge audit sample without seeing the judge's labels. The table says how often each one gave the same label as the judge, and lists the items where the labels differ.
+- `eval/judge-audit-reviews.json` holds those labels with each reviewer's reasons, the rules the reviewers were given and how each one was run. `scoreReviews` in `src/eval/judgeAudit.ts` compares them with the key file. `npm run eval -- audit-score` prints the result, and `report` writes table 8 from it.
+- `README.md` follows the order of a customer project. It gives the results first, then the problem, the demo, how it works, the data, the evaluation, what the eval taught, the limits, what to improve next, deployment notes and the design decisions.
+- `docs/img/` holds the two screenshots. They were taken from the page running on the real results, and the answer in `ask.png` is one real run.
+
+**Why it is built this way.**
+
+- Every number in the README can be found in a file under `results/`. The findings that `summary.md` cannot show, such as how many missing points are a search problem, needed their own report. Writing that report as code means it can be rerun and tested, and nobody has to trust a number worked out by hand.
+- The retrieval hit rate of step 9 is measured per page. A long page has dozens of passages, so the right page can be in the results while the right passage is not. Table 5 measures the passage. That is what showed that search loses more points than reading does.
+- The judge was meant to be checked by a person. That has not happened, so two other models labelled the sample instead. One is the same model as the judge, so its agreement mostly shows that the judge is consistent. The other is from a different model family, so it is the more independent of the two. Both are still models, and the README says so. The sheet stays empty for a person, and `audit-score` reports both kinds of label apart.
+- The README says what was not done. No person has labelled the judge audit sheet, the gold set was not compared with the live site, and the search was not improved. A reader can then tell a measured result from a plan. The section on what to improve next lists those plans in order, and each one points back to a finding.
+
+**What could break.**
+
+- The eval is run again. The README is written by hand from the results, so its numbers no longer match. Run `report`, then update the README from `summary.md` and `detail.md`.
+- A column of `summary.md` is misread. "Dropped by quote check" and "Dropped by verifier" count the claims that were not supported in the first pass, before the repair. The number of claims removed in the end is in table 1 of `detail.md`.
+- A question loses its `evidence` field. Table 5 then counts its missing points as never returned. The linter of step 8 warns about an expected point with no evidence.
+- A setup has runs for only some repeats of its twin. The pairs table skips the runs that have no partner and does not say so.
+- The audit sample is drawn again. The second opinions then belong to another sample. `scoreReviews` stops with an error when an item of the key has no label from a reviewer.
