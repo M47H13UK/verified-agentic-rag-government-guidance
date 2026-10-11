@@ -1,0 +1,21 @@
+README.md
+  s_d1eb10ce0ed8a1::t_3e08f2d2408334 1,35,37,43,45,52,91-93,115,127,129,140,142,157,159,161-166,168,170,172-176,188-214,218-225,240,242,250,254
+docs/notes.md
+  s_d1eb10ce0ed8a1::t_9162af27939fcd 1-133
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5d7ea1c99c38d305634c11290307efc05223859b",
+  "prompts": {},
+  "sessions": {
+    "s_d1eb10ce0ed8a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "56fcfe75-4d9b-4147-9542-27965eea65e9",
+        "model": "unknown"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
