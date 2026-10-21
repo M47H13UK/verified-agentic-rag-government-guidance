@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_13a556904aa47a::t_0617974a92dd9e 16-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7ff918ea2fde6db524662df6be73d1e964bd0669",
+  "prompts": {},
+  "sessions": {
+    "s_13a556904aa47a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c8738e37-8712-4a54-a557-eeee44b47bfb",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
