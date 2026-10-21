@@ -1,0 +1,19 @@
+README.md
+  s_50409a8a20f1df::t_f5a7c1f340c2b4 161-166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "48fcb995048056d0a0fcea8b4edbd8db8eab8bef",
+  "prompts": {},
+  "sessions": {
+    "s_50409a8a20f1df": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1601b1b0-5e2e-4620-99bc-36a869181294",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Mathieu Kusno <mathieukusno03@gmail.com>"
+    }
+  }
+}
