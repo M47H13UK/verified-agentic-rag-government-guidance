@@ -158,12 +158,12 @@ A rule written before any run picks the two setups to lead with. It names OX0, t
 
 **Checking the judge.**
 
-| Check                                                    | Result                                             |
-| -------------------------------------------------------- | -------------------------------------------------- |
-| The same answer graded twice, 761 times                  | A different correctness score 6 times              |
-| Opus 5.5 in a fresh session labels 45 sampled decisions  | Same label as the judge on 43 of 45                |
-| Codex running `gpt-6-astra` labels the same 45           | Same label as the judge on 41 of 45                |
-| A person labels the same 45                              | Not done yet. `npm run judge:check` is ready for it |
+| Check                                                   | Result                                              |
+| ------------------------------------------------------- | --------------------------------------------------- |
+| The same answer graded twice, 761 times                 | A different correctness score 6 times               |
+| Opus 5.5 in a fresh session labels 45 sampled decisions | Same label as the judge on 43 of 45                 |
+| Codex running `gpt-6-astra` labels the same 45          | Same label as the judge on 41 of 45                 |
+| A person labels the same 45                             | Not done yet. `npm run judge:check` is ready for it |
 
 Until a person checks it, the scores are one model's reading. That is the biggest gap in this eval. The whole eval, 1,830 runs and their judge calls, came to $178.11 at list prices.
 
